@@ -1,0 +1,10 @@
+errors,fail_rate,feature_coverage,median_gap,policy_id,score,split,verified
+,0.0,0.0,0.064554,vanilla,-0.291923,train,True
+,0.0,0.4,0.784892,adaptive,-2.68248,train,True
+,0.0,0.0,0.423342,conservative,-1.304557,train,True
+,0.0,0.0,0.061108,vanilla,-0.27674,validation,True
+,0.0,0.4,0.750894,adaptive,-3.064325,validation,True
+,0.0,0.0,0.338916,conservative,-1.17433,validation,True
+,0.0,0.0,0.064655,vanilla,-0.283955,test,True
+,0.0,0.4,0.963522,adaptive,-3.859892,test,True
+,0.0,0.0,0.412531,conservative,-1.661912,test,True

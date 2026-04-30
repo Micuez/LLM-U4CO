@@ -1,0 +1,4 @@
+algorithm=ADMM problem=admm_qp
+{'algorithm': 'ADMM', 'problem_family': 'admm_qp', 'policy_id': 'vanilla', 'origin': 'baseline', 'score': -0.200193, 'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.00129, 'median_primal_residual': 0.0, 'median_dual_residual': 0.0, 'median_iterations': 60, 'fail_rate': 0.0}
+{'algorithm': 'ADMM', 'problem_family': 'admm_qp', 'policy_id': 'adaptive', 'origin': 'baseline', 'score': -0.350203, 'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.001356, 'median_primal_residual': 0.0, 'median_dual_residual': 0.0, 'median_iterations': 60, 'fail_rate': 0.0}
+{'algorithm': 'ADMM', 'problem_family': 'admm_qp', 'policy_id': 'conservative', 'origin': 'baseline', 'score': -0.400207, 'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.001379, 'median_primal_residual': 0.0, 'median_dual_residual': 0.0, 'median_iterations': 60, 'fail_rate': 0.0}

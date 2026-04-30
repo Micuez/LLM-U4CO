@@ -1,0 +1,10 @@
+seed: 13
+algorithm: ADMM
+problem_family: admm_qp
+budget:
+  max_iters: 70
+  time_limit_s: 10.0
+evaluation:
+  train_instances: 5
+  validation_instances: 3
+  test_instances: 3

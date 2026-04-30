@@ -1,0 +1,20 @@
+policy_id: search_seed_reflect
+problem_family: drs_feasibility
+verified: True
+errors: []
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('residual_norm', 0.0) > 0.02:
+        actions.append({'name': 'damp', 'value': 0.85})
+    elif state.get('gap', 1.0) < 0.15:
+        actions.append({'name': 'damp', 'value': 0.65})
+    else:
+        actions.append({'name': 'damp', 'value': 0.8})
+    if state.get('stagnation_count', 0) >= 5:
+        actions.append({'name': 'restart'})
+    return {'actions': actions}
+
+origin: reflection
+parent: search_seed
+score: -1.3030256089268453

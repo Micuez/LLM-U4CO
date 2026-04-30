@@ -1,0 +1,7 @@
+errors,fail_rate,family,feature_coverage,median_gap,policy_id,score,split,variant,verified
+,0.0,pdhg_lp,0.0,0.064554,vanilla,-0.292435,train,baseline,True
+,0.0,pdhg_lp,0.4,0.784892,adaptive,-2.682502,train,baseline,True
+,0.0,pdhg_lp,0.0,0.423342,conservative,-1.30453,train,baseline,True
+,0.0,pdhg_lp,0.4,0.784892,search_seed,-2.682478,train,search,True
+,0.0,pdhg_lp,0.0,0.278459,search_variant_1,-1.222962,train,search,True
+,0.0,pdhg_lp,0.0,0.271429,search_variant_2,-1.26778,train,search,True

@@ -1,0 +1,7 @@
+policy_id: PySCIPOpt
+origin: solver_baseline
+split: train
+score: -0.135396607002592
+aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.0015106096267700196, 'median_primal_residual': 0.0, 'median_dual_residual': 0.3104104032379415, 'median_iterations': 1.0, 'fail_rate': 0.0}
+available: False
+source: PySCIPOpt

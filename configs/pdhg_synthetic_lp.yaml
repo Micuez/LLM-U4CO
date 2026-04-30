@@ -1,0 +1,11 @@
+seed: 7
+algorithm: PDHG
+problem_family: pdhg_lp
+budget:
+  max_iters: 60
+  time_limit_s: 10.0
+evaluation:
+  train_instances: 5
+  validation_instances: 3
+  test_instances: 3
+phase1_table_name: phase1.csv

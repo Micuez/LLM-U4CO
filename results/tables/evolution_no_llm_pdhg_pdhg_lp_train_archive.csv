@@ -1,0 +1,12 @@
+algorithm,meta_parent,meta_split,origin,policy_id,problem_family,score,verified
+PDHG,,train,search_seed,search_seed,pdhg_lp,-2.6823640351580247,True
+PDHG,,train,mutation,search_variant_1,pdhg_lp,-1.2228279981836,True
+PDHG,,train,mutation,search_variant_2,pdhg_lp,-1.2676326758904928,True
+PDHG,search_variant_1,train,evolution_no_llm,evo_g01_p00_c00,pdhg_lp,-1.2092719907383362,True
+PDHG,search_variant_1,train,evolution_no_llm,evo_g01_p00_c01,pdhg_lp,-1.223384129470146,True
+PDHG,search_variant_2,train,evolution_no_llm,evo_g01_p01_c00,pdhg_lp,-1.2676214253132256,True
+PDHG,search_variant_2,train,evolution_no_llm,evo_g01_p01_c01,pdhg_lp,-1.2676230683072847,True
+PDHG,evo_g01_p00_c00,train,evolution_no_llm,evo_g02_p00_c00,pdhg_lp,-1.2745772800586554,True
+PDHG,evo_g01_p00_c00,train,evolution_no_llm,evo_g02_p00_c01,pdhg_lp,-1.2247497491140513,True
+PDHG,search_variant_1,train,evolution_no_llm,evo_g02_p01_c00,pdhg_lp,-1.2824075806408606,True
+PDHG,search_variant_1,train,evolution_no_llm,evo_g02_p01_c01,pdhg_lp,-1.2833036893891419,True

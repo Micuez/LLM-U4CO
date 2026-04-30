@@ -1,0 +1,4 @@
+algorithm,fail_rate,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,origin,policy_id,problem_family,score
+DRS,0.0,0.00179,0.724358,70,0.001525,0.000891,0.001525,baseline,vanilla,drs_feasibility,-0.747711
+DRS,0.0,0.003156,0.729108,70,0.002708,0.000915,0.002708,baseline,adaptive,drs_feasibility,-1.302564
+DRS,0.0,0.005684,0.737791,70,0.004848,0.000911,0.004848,baseline,conservative,drs_feasibility,-0.961389

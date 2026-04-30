@@ -1,0 +1,4 @@
+algorithm,fail_rate,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,origin,policy_id,problem_family,score
+FISTA,0.0,0.000208,2e-06,80,0.192335,0.017493,0.0,baseline,vanilla,fista_lasso,-0.290664
+FISTA,0.0,5e-05,1.1e-05,80,0.193443,0.019065,0.0,baseline,adaptive,fista_lasso,-0.44129
+FISTA,0.0,0.000873,0.000709,80,0.202837,0.018866,0.0,baseline,conservative,fista_lasso,-0.496289

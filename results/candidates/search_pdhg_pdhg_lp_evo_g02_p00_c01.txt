@@ -1,0 +1,21 @@
+policy_id: evo_g02_p00_c01
+problem_family: pdhg_lp
+verified: True
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.6660257852052434, 'violation': 0.6101183237145742, 'runtime': 0.0001819133758544922}
+errors: []
+warnings: ['Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau']
+feature_coverage: 0.0
+proof_obligations: ["path[1]: fallback satisfied under if state.get('stagnation_count', 0) >= 2", "path[2]: fallback satisfied under else not (state.get('stagnation_count', 0) >= 2)"]
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('stagnation_count', 0) >= 2:
+        actions.append({'name': 'restart'})
+    actions.append({'name': 'damp', 'value': 0.811})
+    return {'actions': actions}
+
+origin: evolution_no_llm
+parent: evo_g01_p00_c00
+score: -1.2247497491140513

@@ -1,0 +1,10 @@
+seed: 17
+algorithm: PCG
+problem_family: pcg_linear_system
+budget:
+  max_iters: 50
+  time_limit_s: 10.0
+evaluation:
+  train_instances: 4
+  validation_instances: 2
+  test_instances: 2

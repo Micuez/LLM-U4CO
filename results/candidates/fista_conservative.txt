@@ -1,0 +1,12 @@
+policy_id: conservative
+origin: baseline
+score: -0.49628947146382474
+aggregate: {'median_gap': 0.000708535407992466, 'median_violation': 0.0, 'median_runtime': 0.01886606216430664, 'median_primal_residual': 0.20283706042747213, 'median_dual_residual': 0.0008726794670697877, 'median_iterations': 80.0, 'fail_rate': 0.0}
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('stagnation_count', 0) > 5:
+        actions.append({'name': 'restart'})
+    actions.append({'name': 'damp', 'value': 0.7})
+    return {'actions': actions}
+

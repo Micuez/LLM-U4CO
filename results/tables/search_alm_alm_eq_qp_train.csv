@@ -1,0 +1,11 @@
+algorithm,errors,fail_rate,feature_coverage,median_gap,origin,parent,policy_id,proof_count,score,smoke_ok,smoke_reason,verified,warnings
+ALM,,0.0,0.3333,0.003682,search_seed,,search_seed,6,-0.707153,True,,True,"Action scale_rho is emitted without reading state feature rho. | Action scale_rho is emitted without reading state feature rho. | Action set_rho is emitted without reading state feature rho. | Action set_rho is emitted without reading state feature rho. | Action set_rho is emitted without reading state feature rho. | Required features not referenced by policy: k, rho"
+ALM,,0.0,0.6667,0.006121,mutation,,search_variant_1,12,-1.114438,True,,True,Required features not referenced by policy: k
+ALM,,0.0,0.6667,0.008027,mutation,,search_variant_2,6,-0.968667,True,,True,Required features not referenced by policy: k
+ALM,,0.0,0.0,0.003083,llm_generated,llm,llm_seed,1,-0.207137,True,,True,"Required features not referenced by policy: k, rho, violation"
+ALM,,0.0,0.3333,0.003064,reflection,search_seed,search_seed_reflect,6,-0.707474,True,,True,"Action scale_rho is emitted without reading state feature rho. | Action scale_rho is emitted without reading state feature rho. | Action set_rho is emitted without reading state feature rho. | Action set_rho is emitted without reading state feature rho. | Action set_rho is emitted without reading state feature rho. | Required features not referenced by policy: k, rho"
+ALM,,0.0,0.6667,0.004657,funsearch_mutation,search_variant_1,search_variant_1_g2,12,-1.110616,True,,True,Required features not referenced by policy: k
+ALM,,0.0,0.6667,0.006382,funsearch_mutation,search_variant_2,search_variant_2_g2,6,-0.962943,True,,True,Required features not referenced by policy: k
+ALM,,0.0,0.0,0.003083,llm_generated,llm_seed,llm_seed_reflect,1,-0.207132,True,,True,"Required features not referenced by policy: k, rho, violation"
+ALM,,0.0,0.0,0.003083,funsearch_mutation,llm_seed_reflect,llm_seed_reflect_top1,1,-0.207129,True,,True,"Required features not referenced by policy: k, rho, violation"
+ALM,,0.0,0.0,0.003083,funsearch_mutation,llm_seed,llm_seed_top2,1,-0.207129,True,,True,"Required features not referenced by policy: k, rho, violation"

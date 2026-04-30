@@ -1,0 +1,4 @@
+algorithm,fail_rate,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,origin,policy_id,problem_family,score
+ADMM,0.0,0.0,0.0,60,0.0,0.00129,0.0,baseline,vanilla,admm_qp,-0.200193
+ADMM,0.0,0.0,0.0,60,0.0,0.001356,0.0,baseline,adaptive,admm_qp,-0.350203
+ADMM,0.0,0.0,0.0,60,0.0,0.001379,0.0,baseline,conservative,admm_qp,-0.400207

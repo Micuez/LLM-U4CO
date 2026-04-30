@@ -1,0 +1,7 @@
+policy_id: OR-Tools
+origin: solver_baseline
+split: train
+score: -0.13536677426703872
+aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.001311444091796875, 'median_primal_residual': 0.0, 'median_dual_residual': 0.3104104032379415, 'median_iterations': 1.0, 'fail_rate': 0.0}
+available: False
+source: OR-Tools

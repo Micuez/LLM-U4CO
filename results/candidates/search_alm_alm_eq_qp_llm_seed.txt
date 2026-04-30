@@ -1,0 +1,18 @@
+policy_id: llm_seed
+problem_family: alm_eq_qp
+verified: True
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.35977794164699334, 'violation': 0.1141059580449232, 'runtime': 0.00018525123596191406}
+errors: []
+warnings: ['Required features not referenced by policy: k, rho, violation']
+feature_coverage: 0.0
+proof_obligations: ['path[1]: fallback satisfied under root']
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    return {'actions': actions}
+
+origin: llm_generated
+parent: llm
+score: -0.20713657117100745

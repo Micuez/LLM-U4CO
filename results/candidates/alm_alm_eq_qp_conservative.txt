@@ -1,0 +1,14 @@
+policy_id: conservative
+origin: baseline
+split: train
+score: -0.5019367861343038
+aggregate: {'median_gap': 0.0010570396027335361, 'median_violation': 0.0004237314465203954, 'median_runtime': 0.0010679960250854492, 'median_primal_residual': 0.0004237314465203954, 'median_dual_residual': 0.0004237314465203954, 'median_iterations': 70.0, 'fail_rate': 0.0}
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('violation', 0.0) > 0.1:
+        actions.append({'name': 'set_rho', 'value': 1.2})
+    if state.get('stagnation_count', 0) > 5:
+        actions.append({'name': 'restart'})
+    return {'actions': actions}
+

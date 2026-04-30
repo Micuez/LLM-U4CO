@@ -1,0 +1,9 @@
+algorithm,errors,fail_rate,median_gap,origin,parent,policy_id,score,verified
+PCG,,0.0,5e-06,search_seed,,search_seed,-0.918099,True
+PCG,,0.0,5e-06,mutation,,search_variant_1,-1.218092,True
+PCG,,0.0,7.4e-05,mutation,,search_variant_2,-1.168204,True
+PCG,,0.0,5e-06,reflection,search_seed,search_seed_reflect,-0.918092,True
+PCG,,0.0,5e-06,funsearch_mutation,search_variant_1,search_variant_1_g2,-1.218098,True
+PCG,,0.0,6e-06,funsearch_mutation,search_variant_2,search_variant_2_g2,-1.168088,True
+PCG,,0.0,4e-06,funsearch_mutation,search_seed_reflect,search_seed_reflect_top1,-0.918084,True
+PCG,,0.0,5e-06,funsearch_mutation,search_seed,search_seed_top2,-0.91808,True

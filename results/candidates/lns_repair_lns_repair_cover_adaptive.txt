@@ -1,0 +1,18 @@
+policy_id: adaptive
+origin: baseline
+split: train
+score: -0.8853805030203733
+aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.0014030933380126953, 'median_primal_residual': 0.0, 'median_dual_residual': 0.3104104032379415, 'median_iterations': 60.0, 'fail_rate': 0.0}
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('violation', 0.0) > 0.0:
+        actions.append({'name': 'damp', 'value': 1.0})
+    elif state.get('fractionality', 0.0) > 0.22:
+        actions.append({'name': 'damp', 'value': 0.85})
+    else:
+        actions.append({'name': 'damp', 'value': 0.7})
+    if state.get('stagnation_count', 0) >= 4 and state.get('mip_gap', 0.0) > 0.05:
+        actions.append({'name': 'restart'})
+    return {'actions': actions}
+

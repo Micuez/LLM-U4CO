@@ -1,0 +1,4 @@
+algorithm,fail_rate,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,origin,policy_id,problem_family,score
+PDHG,0.0,0.012773,0.064554,60,0.019118,0.001315,0.019118,baseline,vanilla,pdhg_lp,-0.291825
+PDHG,0.0,0.015552,0.258642,60,0.493462,0.001467,0.493462,baseline,adaptive,pdhg_lp,-1.069286
+PDHG,0.0,0.006557,0.429162,60,0.446636,0.001387,0.446636,baseline,conservative,pdhg_lp,-1.203653

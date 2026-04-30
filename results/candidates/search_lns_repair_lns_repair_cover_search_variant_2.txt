@@ -1,0 +1,24 @@
+policy_id: search_variant_2
+problem_family: lns_repair_cover
+verified: True
+errors: []
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    fractionality = state.get('fractionality', 0.0)
+    mip_gap = state.get('mip_gap', 0.0)
+    incumbent = state.get('incumbent_obj', 0.0)
+    best_bound = state.get('best_bound', 0.0)
+    if fractionality > 0.24 and mip_gap > 0.08:
+        actions.append({'name': 'damp', 'value': 0.92})
+    elif fractionality < 0.1 and mip_gap < 0.04:
+        actions.append({'name': 'damp', 'value': 0.58})
+    else:
+        actions.append({'name': 'damp', 'value': 0.76})
+    if incumbent > best_bound * 1.18 and state.get('stagnation_count', 0) > 2:
+        actions.append({'name': 'restart'})
+    return {'actions': actions}
+
+origin: mutation
+parent: 
+score: -1.0853975727094807

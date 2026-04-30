@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="640" viewBox="0 0 1080 640">
+<rect width="100%" height="100%" fill="#ffffff" />
+<text x="36" y="40" font-size="24" font-family="Arial, Helvetica, sans-serif" fill="#111827">Baseline Score</text>
+<text x="36" y="62" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">chart=bar generated_from_csv=true</text>
+<line x1="84.0" y1="528.0" x2="1052.0" y2="528.0" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="532.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-3.505</text>
+<line x1="84.0" y1="438.4" x2="1052.0" y2="438.4" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="442.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-2.729</text>
+<line x1="84.0" y1="348.8" x2="1052.0" y2="348.8" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="352.8" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-1.953</text>
+<line x1="84.0" y1="259.2" x2="1052.0" y2="259.2" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="263.2" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-1.177</text>
+<line x1="84.0" y1="169.6" x2="1052.0" y2="169.6" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="173.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.4007</text>
+<line x1="84.0" y1="80.0" x2="1052.0" y2="80.0" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="84.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.3753</text>
+<line x1="84.0" y1="123.3" x2="1052.0" y2="123.3" stroke="#111827" stroke-width="1.2" />
+<rect x="330.0" y="123.3" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>PDHG/HiGHS [surrogate] | score=-0.0002 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'highspy'</title></rect>
+<text x="372.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 372.0 578.0)">PDHG/HiGHS [surrogate]</text>
+<text x="372.0" y="140.3" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.0002</text>
+<rect x="428.0" y="123.3" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>PDHG/OR-Tools [surrogate] | score=-0.0002 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'ortools'</title></rect>
+<text x="470.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 470.0 578.0)">PDHG/OR-Tools [surrogate]</text>
+<text x="470.0" y="140.3" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.0002</text>
+<rect x="526.0" y="123.3" width="84.0" height="23.1" rx="4" fill="#16a34a"><title>PDHG/vanilla | score=-0.2004 | origin=baseline</title></rect>
+<text x="568.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 568.0 578.0)">PDHG/vanilla</text>
+<text x="568.0" y="162.5" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.2004</text>
+<rect x="624.0" y="123.3" width="84.0" height="268.5" rx="4" fill="#16a34a"><title>PDHG/conservative | score=-2.326 | origin=baseline</title></rect>
+<text x="666.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 666.0 578.0)">PDHG/conservative</text>
+<text x="666.0" y="407.9" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-2.326</text>
+<rect x="722.0" y="123.3" width="84.0" height="361.3" rx="4" fill="#16a34a"><title>PDHG/adaptive | score=-3.129 | origin=baseline</title></rect>
+<text x="764.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 764.0 578.0)">PDHG/adaptive</text>
+<text x="764.0" y="500.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-3.129</text>
+<rect x="84" y="608" width="12" height="12" rx="2" fill="#2563eb" />
+<text x="102.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">solver_baseline</text>
+<rect x="232" y="608" width="12" height="12" rx="2" fill="#16a34a" />
+<text x="250.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">baseline</text>
+<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=score items=5</text>
+<text x="22.0" y="90.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start" transform="rotate(-90 22.0 90.0)">score</text>
+</svg>

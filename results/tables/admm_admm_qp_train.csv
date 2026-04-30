@@ -1,0 +1,6 @@
+algorithm,backend_detail,backend_mode,errors,fail_rate,feature_coverage,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,native_backend,native_used,origin,policy_id,problem_family,proof_count,score,smoke_ok,smoke_reason,verified,warnings
+ADMM,,,,0.0,0.0,0.0,0.0,60,0.0,0.001259,0.0,,,baseline,vanilla,admm_qp,1,-0.200189,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, rho"
+ADMM,,,,0.0,0.5,0.0,0.0,60,0.0,0.001251,0.0,,,baseline,adaptive,admm_qp,6,-0.850188,True,,True,"Action scale_rho is emitted without reading state feature rho. | Action scale_rho is emitted without reading state feature rho. | Required features not referenced by policy: k, rho"
+ADMM,,,,0.0,0.5,0.0,0.0,60,0.0,0.001263,0.0,,,baseline,conservative,admm_qp,3,-0.600189,True,,True,"Action scale_rho is emitted without reading state feature rho. | Action scale_rho is emitted without reading state feature rho. | Required features not referenced by policy: k, rho"
+ADMM,ModuleNotFoundError: No module named 'highspy',surrogate,,0.0,,0.0,0.0,1,0.0,0.001204,0.0,,False,solver_baseline,HiGHS,admm_qp,,-0.00018,,,,
+ADMM,ModuleNotFoundError: No module named 'osqp',surrogate,,0.0,,0.0,0.0,1,0.0,0.001003,0.0,,False,solver_baseline,OSQP,admm_qp,,-0.00015,,,,

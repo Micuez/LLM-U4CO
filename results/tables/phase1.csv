@@ -1,0 +1,45 @@
+algorithm,backend_detail,backend_mode,errors,fail_rate,feature_coverage,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,native_backend,native_used,origin,parent,policy_id,problem_family,proof_count,score,smoke_ok,smoke_reason,verified,warnings
+ADMM,,,,0.0,0.0,0.0,0.0,60,0.0,0.001259,0.0,,,baseline,,vanilla,admm_qp,1,-0.200189,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, rho"
+ADMM,,,,0.0,0.5,0.0,0.0,60,0.0,0.001251,0.0,,,baseline,,adaptive,admm_qp,6,-0.850188,True,,True,"Action scale_rho is emitted without reading state feature rho. | Action scale_rho is emitted without reading state feature rho. | Required features not referenced by policy: k, rho"
+ADMM,,,,0.0,0.5,0.0,0.0,60,0.0,0.001263,0.0,,,baseline,,conservative,admm_qp,3,-0.600189,True,,True,"Action scale_rho is emitted without reading state feature rho. | Action scale_rho is emitted without reading state feature rho. | Required features not referenced by policy: k, rho"
+ADMM,ModuleNotFoundError: No module named 'highspy',surrogate,,0.0,,0.0,0.0,1,0.0,0.001204,0.0,,False,solver_baseline,,HiGHS,admm_qp,,-0.00018,,,,
+ADMM,ModuleNotFoundError: No module named 'osqp',surrogate,,0.0,,0.0,0.0,1,0.0,0.001003,0.0,,False,solver_baseline,,OSQP,admm_qp,,-0.00015,,,,
+ALM,,,,0.0,,0.002136,0.002001,70,0.000664,0.001037,0.000664,,,baseline,,vanilla,alm_eq_qp,,-0.204018,,,,
+ALM,,,,0.0,,0.00053,0.000214,70,0.000108,0.001066,0.000108,,,baseline,,adaptive,alm_eq_qp,,-0.700768,,,,
+ALM,,,,0.0,,0.000424,0.001057,70,0.000424,0.001068,0.000424,,,baseline,,conservative,alm_eq_qp,,-0.501937,,,,
+DRS,,,,0.0,,0.00179,0.724358,70,0.001525,0.000891,0.001525,,,baseline,,vanilla,drs_feasibility,,-0.747711,,,,
+DRS,,,,0.0,,0.003156,0.729108,70,0.002708,0.000915,0.002708,,,baseline,,adaptive,drs_feasibility,,-1.302564,,,,
+DRS,,,,0.0,,0.005684,0.737791,70,0.004848,0.000911,0.004848,,,baseline,,conservative,drs_feasibility,,-0.961389,,,,
+PDHG,,,,0.0,0.4,,0.784892,,,,,,,search_seed,,search_seed,,6,-2.682364,True,,True,"Action scale_tau is emitted without reading state feature tau. | Action scale_sigma is emitted without reading state feature sigma. | Action scale_tau is emitted without reading state feature tau. | Action scale_sigma is emitted without reading state feature sigma. | Required features not referenced by policy: k, sigma, tau"
+PDHG,,,,0.0,0.0,,0.278459,,,,,,,mutation,,search_variant_1,,2,-1.222828,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.271429,,,,,,,mutation,,search_variant_2,,2,-1.267633,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.251052,,,,,,,evolution_no_llm,search_variant_1,evo_g01_p00_c00,,2,-1.209272,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.279666,,,,,,,evolution_no_llm,search_variant_1,evo_g01_p00_c01,,2,-1.223384,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.271429,,,,,,,evolution_no_llm,search_variant_2,evo_g01_p01_c00,,2,-1.267621,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.271429,,,,,,,evolution_no_llm,search_variant_2,evo_g01_p01_c01,,2,-1.267623,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.298036,,,,,,,evolution_no_llm,evo_g01_p00_c00,evo_g02_p00_c00,,2,-1.274577,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.283264,,,,,,,evolution_no_llm,evo_g01_p00_c00,evo_g02_p00_c01,,2,-1.22475,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.297804,,,,,,,evolution_no_llm,search_variant_1,evo_g02_p01_c00,,2,-1.282408,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.0,,0.297571,,,,,,,evolution_no_llm,search_variant_1,evo_g02_p01_c01,,2,-1.283304,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+FISTA,,,,0.0,0.0,0.000208,2e-06,80,0.192335,0.018792,0.0,,,baseline,,vanilla,fista_lasso,1,-0.290855,True,,True,"Required features not referenced by policy: k, momentum, obj, obj_prev, tau"
+FISTA,,,,0.0,0.4,1.7e-05,1.9e-05,80,0.19328,0.019459,0.0,,,baseline,,adaptive,fista_lasso,4,-0.941272,True,,True,"Action set_momentum is emitted without reading state feature momentum. | Action scale_tau is emitted without reading state feature tau. | Action set_momentum is emitted without reading state feature momentum. | Action set_momentum is emitted without reading state feature momentum. | Action scale_tau is emitted without reading state feature tau. | Required features not referenced by policy: k, momentum, tau"
+FISTA,,,,0.0,0.4,0.000156,0.000597,80,0.200273,0.019202,0.0,,,baseline,,conservative,fista_lasso,2,-0.594802,True,,True,"Action set_momentum is emitted without reading state feature momentum. | Action scale_tau is emitted without reading state feature tau. | Required features not referenced by policy: k, momentum, tau"
+LNS_REPAIR,,,,0.0,,0.31041,0.0,60,0.0,0.001421,0.0,,,baseline,,vanilla,lns_repair_cover,,-0.335383,,,,
+LNS_REPAIR,,,,0.0,,0.31041,0.0,60,0.0,0.001403,0.0,,,baseline,,adaptive,lns_repair_cover,,-0.885381,,,,
+LNS_REPAIR,,,,0.0,,0.31041,0.0,60,0.0,0.001402,0.0,,,baseline,,conservative,lns_repair_cover,,-0.53538,,,,
+LNS_REPAIR,,,,0.0,,0.31041,0.0,1,0.0,0.001511,0.0,,,solver_baseline,,PySCIPOpt,lns_repair_cover,,-0.135397,,,,
+LNS_REPAIR,,,,0.0,,0.31041,0.0,1,0.0,0.001311,0.0,,,solver_baseline,,OR-Tools,lns_repair_cover,,-0.135367,,,,
+LNS_REPAIR,,,,0.0,,0.31041,0.0,1,0.0,0.00141,0.0,,,solver_baseline,,Ecole,lns_repair_cover,,-0.135382,,,,
+PCG,,,,0.0,,0.708275,3e-06,50,3e-06,0.003696,3e-06,,,baseline,,vanilla,pcg_linear_system,,-0.468302,,,,
+PCG,,,,0.0,,0.708273,5e-06,50,4e-06,0.003482,4e-06,,,baseline,,adaptive,pcg_linear_system,,-0.918272,,,,
+PCG,,,,0.0,,0.708271,6e-06,50,5e-06,0.003198,5e-06,,,baseline,,conservative,pcg_linear_system,,-0.668232,,,,
+PDHG,,,,0.0,0.0,0.000109,6.4e-05,80,9e-05,0.001321,9e-05,,,baseline,,vanilla,miplib_rootlp,1,-0.200424,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.4,0.0,1.0,80,2.44949,0.001843,2.44949,,,baseline,,adaptive,miplib_rootlp,6,-3.129295,True,,True,"Action scale_tau is emitted without reading state feature tau. | Action scale_sigma is emitted without reading state feature sigma. | Action scale_tau is emitted without reading state feature tau. | Action scale_sigma is emitted without reading state feature sigma. | Required features not referenced by policy: k, sigma, tau"
+PDHG,,,,0.0,0.0,0.0,0.779422,80,1.832307,0.001311,1.832307,,,baseline,,conservative,miplib_rootlp,2,-2.325795,True,,True,"Action scale_tau is emitted without reading state feature tau. | Action scale_sigma is emitted without reading state feature sigma. | Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,ModuleNotFoundError: No module named 'highspy',surrogate,,0.0,,0.0,0.0,1,0.0,0.00121,0.0,,False,solver_baseline,,HiGHS,miplib_rootlp,,-0.000181,,,,
+PDHG,ModuleNotFoundError: No module named 'ortools',surrogate,,0.0,,0.0,0.0,1,0.0,0.001305,0.0,,False,solver_baseline,,OR-Tools,miplib_rootlp,,-0.000196,,,,
+PDHG,,,,0.0,0.0,0.012773,0.064554,60,0.019118,0.001386,0.019118,,,baseline,,vanilla,pdhg_lp,1,-0.291835,True,,True,"Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,,,,0.0,0.4,0.024302,0.784892,60,1.587353,0.001405,1.587353,,,baseline,,adaptive,pdhg_lp,6,-2.682336,True,,True,"Action scale_tau is emitted without reading state feature tau. | Action scale_sigma is emitted without reading state feature sigma. | Action scale_tau is emitted without reading state feature tau. | Action scale_sigma is emitted without reading state feature sigma. | Required features not referenced by policy: k, sigma, tau"
+PDHG,,,,0.0,0.0,0.004379,0.423342,60,0.45379,0.001558,0.45379,,,baseline,,conservative,pdhg_lp,2,-1.304435,True,,True,"Action scale_tau is emitted without reading state feature tau. | Action scale_sigma is emitted without reading state feature sigma. | Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau"
+PDHG,ModuleNotFoundError: No module named 'highspy',surrogate,,0.0,,0.0,0.0,1,0.0,0.001208,0.0,,False,solver_baseline,,HiGHS,pdhg_lp,,-0.000181,,,,
+PDHG,ModuleNotFoundError: No module named 'ortools',surrogate,,0.0,,0.0,0.0,1,0.0,0.001305,0.0,,False,solver_baseline,,OR-Tools,pdhg_lp,,-0.000196,,,,

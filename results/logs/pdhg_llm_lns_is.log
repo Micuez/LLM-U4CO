@@ -1,0 +1,4 @@
+algorithm=PDHG problem=llm_lns_is
+{'algorithm': 'PDHG', 'problem_family': 'llm_lns_is', 'policy_id': 'vanilla', 'origin': 'baseline', 'score': -0.200241, 'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.001604, 'median_primal_residual': 0.0, 'median_dual_residual': 0.0, 'median_iterations': 80, 'fail_rate': 0.0}
+{'algorithm': 'PDHG', 'problem_family': 'llm_lns_is', 'policy_id': 'adaptive', 'origin': 'baseline', 'score': -0.556485, 'median_gap': 0.059472, 'median_violation': 0.130702, 'median_runtime': 0.001455, 'median_primal_residual': 0.130702, 'median_dual_residual': 0.002181, 'median_iterations': 80, 'fail_rate': 0.0}
+{'algorithm': 'PDHG', 'problem_family': 'llm_lns_is', 'policy_id': 'conservative', 'origin': 'baseline', 'score': -2.821956, 'median_gap': 1.213451, 'median_violation': 2.880502, 'median_runtime': 0.001632, 'median_primal_residual': 2.880502, 'median_dual_residual': 2e-06, 'median_iterations': 80, 'fail_rate': 0.0}

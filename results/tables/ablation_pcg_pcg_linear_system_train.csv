@@ -1,0 +1,7 @@
+fail_rate,family,median_gap,policy_id,score,split,variant,verified
+0.0,pcg_linear_system,3e-06,vanilla,-0.46808,train,baseline,True
+0.0,pcg_linear_system,3e-06,adaptive,-0.618093,train,baseline,True
+0.0,pcg_linear_system,0.000328,conservative,-0.668662,train,baseline,True
+0.0,pcg_linear_system,3e-06,search_seed,-0.618107,train,search,True
+0.0,pcg_linear_system,4e-06,search_variant_1,-0.66808,train,search,True
+0.0,pcg_linear_system,6e-06,search_variant_2,-0.668084,train,search,True

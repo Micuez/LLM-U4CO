@@ -1,0 +1,7 @@
+algorithm,errors,fail_rate,median_gap,origin,parent,policy_id,score,verified
+LNS_REPAIR,,0.0,0.0,search_seed,,search_seed,-0.885384,True
+LNS_REPAIR,,0.0,0.0,mutation,,search_variant_1,-1.035417,True
+LNS_REPAIR,,0.0,0.0,mutation,,search_variant_2,-1.085398,True
+LNS_REPAIR,,0.0,0.0,reflection,search_seed,search_seed_reflect,-0.885392,True
+LNS_REPAIR,,0.0,0.0,funsearch_mutation,search_variant_1,search_variant_1_g2,-1.035399,True
+LNS_REPAIR,,0.0,0.0,funsearch_mutation,search_variant_2,search_variant_2_g2,-1.085381,True

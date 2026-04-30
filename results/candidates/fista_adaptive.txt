@@ -1,0 +1,11 @@
+policy_id: adaptive
+origin: baseline
+score: -0.4412902073321395
+aggregate: {'median_gap': 1.0922721451651283e-05, 'median_violation': 0.0, 'median_runtime': 0.019064903259277344, 'median_primal_residual': 0.19344328932613075, 'median_dual_residual': 5.0287621111467706e-05, 'median_iterations': 80.0, 'fail_rate': 0.0}
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('stagnation_count', 0) > 2:
+        actions.append({'name': 'restart'})
+    return {'actions': actions}
+

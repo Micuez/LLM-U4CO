@@ -1,0 +1,75 @@
+{
+  "solver_backends": [
+    {
+      "name": "highspy",
+      "available": false,
+      "mode": "python_package",
+      "detail": "ModuleNotFoundError: No module named 'highspy'"
+    },
+    {
+      "name": "osqp",
+      "available": false,
+      "mode": "python_package",
+      "detail": "ModuleNotFoundError: No module named 'osqp'"
+    },
+    {
+      "name": "ortools",
+      "available": false,
+      "mode": "python_package",
+      "detail": "ModuleNotFoundError: No module named 'ortools'"
+    },
+    {
+      "name": "pyscipopt",
+      "available": false,
+      "mode": "python_package",
+      "detail": "ModuleNotFoundError: No module named 'pyscipopt'"
+    },
+    {
+      "name": "ecole",
+      "available": false,
+      "mode": "python_package",
+      "detail": "ModuleNotFoundError: No module named 'ecole'"
+    },
+    {
+      "name": "highs",
+      "available": false,
+      "mode": "command",
+      "detail": "not found"
+    },
+    {
+      "name": "scip",
+      "available": false,
+      "mode": "command",
+      "detail": "not found"
+    }
+  ],
+  "llm_backends": [
+    {
+      "mode": "mock",
+      "available": true,
+      "detail": "always available"
+    },
+    {
+      "mode": "openai_compatible",
+      "available": true,
+      "detail": "requires configured base_url/model/api_key"
+    }
+  ],
+  "miplib": {
+    "list_path": "data/miplib/miplib_small.txt",
+    "configured": true,
+    "existing_files": 1,
+    "missing_files": 0,
+    "listed_files": 1
+  },
+  "llm_lns": {
+    "root": "data/llm_lns",
+    "lp_files": 6,
+    "families": {
+      "SC_easy_instance": 3,
+      "IS_easy_instance": 3,
+      "MVC_easy_instance": 0,
+      "MIKS_easy_instance": 0
+    }
+  }
+}

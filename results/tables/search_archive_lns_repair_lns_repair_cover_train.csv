@@ -1,0 +1,7 @@
+algorithm,meta_parent,meta_split,origin,policy_id,problem_family,score,verified
+LNS_REPAIR,,train,search_seed,search_seed,lns_repair_cover,-0.8853843777959595,True
+LNS_REPAIR,,train,mutation,search_variant_1,lns_repair_cover,-1.0354169076782296,True
+LNS_REPAIR,,train,mutation,search_variant_2,lns_repair_cover,-1.0853975727094807,True
+LNS_REPAIR,search_seed,train,reflection,search_seed_reflect,lns_repair_cover,-0.8853920377720622,True
+LNS_REPAIR,search_variant_1,train,funsearch_mutation,search_variant_1_g2,lns_repair_cover,-1.0353991617344245,True
+LNS_REPAIR,search_variant_2,train,funsearch_mutation,search_variant_2_g2,lns_repair_cover,-1.0853806815836604,True

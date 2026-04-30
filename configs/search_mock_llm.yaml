@@ -1,0 +1,12 @@
+seed: 21
+algorithm: ALM
+problem_family: alm_eq_qp
+budget:
+  max_iters: 50
+  time_limit_s: 10.0
+evaluation:
+  train_instances: 3
+  validation_instances: 2
+  test_instances: 2
+llm:
+  provider: mock

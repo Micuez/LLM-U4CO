@@ -1,0 +1,4 @@
+algorithm,meta_split,origin,policy_id,problem_family,score,verified
+PDHG,train,search_seed,search_seed,llm_lns_sc,-1.5904536564862763,True
+PDHG,train,mutation,search_variant_1,llm_lns_sc,-2.8046246381687454,True
+PDHG,train,mutation,search_variant_2,llm_lns_sc,-3.318118128639073,True

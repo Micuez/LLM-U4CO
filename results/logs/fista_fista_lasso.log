@@ -1,0 +1,4 @@
+algorithm=FISTA problem=fista_lasso
+{'algorithm': 'FISTA', 'problem_family': 'fista_lasso', 'policy_id': 'vanilla', 'origin': 'baseline', 'score': -0.290664, 'median_gap': 2e-06, 'median_violation': 0.0, 'median_runtime': 0.017493, 'median_primal_residual': 0.192335, 'median_dual_residual': 0.000208, 'median_iterations': 80, 'fail_rate': 0.0}
+{'algorithm': 'FISTA', 'problem_family': 'fista_lasso', 'policy_id': 'adaptive', 'origin': 'baseline', 'score': -0.44129, 'median_gap': 1.1e-05, 'median_violation': 0.0, 'median_runtime': 0.019065, 'median_primal_residual': 0.193443, 'median_dual_residual': 5e-05, 'median_iterations': 80, 'fail_rate': 0.0}
+{'algorithm': 'FISTA', 'problem_family': 'fista_lasso', 'policy_id': 'conservative', 'origin': 'baseline', 'score': -0.496289, 'median_gap': 0.000709, 'median_violation': 0.0, 'median_runtime': 0.018866, 'median_primal_residual': 0.202837, 'median_dual_residual': 0.000873, 'median_iterations': 80, 'fail_rate': 0.0}

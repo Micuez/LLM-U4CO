@@ -1,0 +1,19 @@
+seed: 21
+algorithm: ALM
+problem_family: alm_eq_qp
+# Local/remote LLM config below is independent from solver backend selection.
+# Solver baselines auto-upgrade to native mode when packages like highspy,
+# osqp, ortools, pyscipopt, or ecole are installed.
+budget:
+  max_iters: 50
+  time_limit_s: 10.0
+evaluation:
+  train_instances: 3
+  validation_instances: 2
+  test_instances: 2
+llm:
+  provider: openai_compatible
+  base_url: http://127.0.0.1:8000/v1
+  model: your-local-or-remote-model
+  api_key: ""
+  timeout_s: 60.0

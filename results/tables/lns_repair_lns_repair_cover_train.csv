@@ -1,0 +1,7 @@
+algorithm,fail_rate,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,origin,policy_id,problem_family,score
+LNS_REPAIR,0.0,0.31041,0.0,60,0.0,0.001421,0.0,baseline,vanilla,lns_repair_cover,-0.335383
+LNS_REPAIR,0.0,0.31041,0.0,60,0.0,0.001403,0.0,baseline,adaptive,lns_repair_cover,-0.885381
+LNS_REPAIR,0.0,0.31041,0.0,60,0.0,0.001402,0.0,baseline,conservative,lns_repair_cover,-0.53538
+LNS_REPAIR,0.0,0.31041,0.0,1,0.0,0.001511,0.0,solver_baseline,PySCIPOpt,lns_repair_cover,-0.135397
+LNS_REPAIR,0.0,0.31041,0.0,1,0.0,0.001311,0.0,solver_baseline,OR-Tools,lns_repair_cover,-0.135367
+LNS_REPAIR,0.0,0.31041,0.0,1,0.0,0.00141,0.0,solver_baseline,Ecole,lns_repair_cover,-0.135382

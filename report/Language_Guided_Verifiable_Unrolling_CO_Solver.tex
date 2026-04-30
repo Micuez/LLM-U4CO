@@ -1,0 +1,871 @@
+% !TEX program = xelatex
+\documentclass[UTF8,a4paper,12pt,fontset=fandol]{ctexart}
+
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{array}
+\usepackage{multirow}
+
+\geometry{left=2.6cm,right=2.6cm,top=2.6cm,bottom=2.6cm}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    citecolor=blue!60!black,
+    urlcolor=blue!60!black
+}
+
+\newtheorem{definition}{定义}
+\newtheorem{assumption}{假设}
+\newtheorem{theorem}{定理}
+\newtheorem{proposition}{命题}
+\newtheorem{lemma}{引理}
+\newtheorem{remark}{备注}
+
+\title{\textbf{博士研究开题报告}\\[0.5em]
+\Large Language-Guided Verifiable Algorithm Unrolling for Operator-Splitting Optimisers\\
+\large 面向组合优化专业求解器的语言引导可验证算法展开}
+\author{拟研究方向：大模型辅助优化算法设计、算法展开、组合优化专业求解器}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+组合优化问题广泛存在于物流调度、能源系统、网络设计、生产计划、广告分配和芯片设计等真实工业场景中。现代专业求解器（如 SCIP、HiGHS、OR-Tools、Gurobi、CPLEX 等）通常依赖分支定界/分支切割、线性或二次松弛、启发式、切平面、预处理与局部搜索等模块协同工作。近年来，大模型在自动算法设计、组合优化启发式生成、程序搜索和反思式进化中显示出潜力；与此同时，将 PDHG、ADMM、proximal gradient 等经典 operator-splitting 优化算法展开为可学习迭代网络，也成为 learning-to-optimise 和 differentiable optimisation 的重要路线。然而，现有研究仍存在明显断层：大模型生成的组合优化算法多偏启发式，缺少与专业求解器内部松弛求解、证书和稳定性的深度结合；而现有 algorithm unrolling 工作多依赖人工设计结构，尚未形成面向组合优化专业求解器的可验证自动设计框架。
+
+本开题报告提出一个博士研究课题：\textbf{Language-Guided Verifiable Algorithm Unrolling for Operator-Splitting Optimisers}。核心思想是：不让大模型直接求解组合优化问题，而让大模型作为离线算法设计器，在受约束的算法领域特定语言（DSL）中生成可验证的展开策略，包括步长调度、罚参数更新、restart 规则、残差平衡、混合算子切换和松弛-修复接口；随后通过静态验证器、理论安全类、执行反馈和多层 benchmark 对候选策略进行筛选。研究目标是将该框架嵌入组合优化专业求解器中的 LP/QP 松弛、拉格朗日松弛、Benders/ADMM 分解子问题和 LNS 子问题，形成兼具可解释性、可验证性、跨规模泛化和工程实用性的 LLM-guided unrolled optimiser。
+
+预期贡献包括：（1）建立面向 operator-splitting optimiser 的语言引导可验证算法搜索空间；（2）提出大模型生成、验证器过滤、执行反馈进化和小规模到大规模迁移的闭环方法；（3）给出安全策略类下的收敛性、残差稳定性、松弛误差传递和求解器集成理论；（4）构建面向组合优化专业求解器的系统 benchmark 与消融协议；（5）在 MIPLIB、Distributional MIPLIB、ML4CO benchmark、CO-Bench/HeuriGym 相关任务及若干真实 MILP/CO 问题上验证方法效果。
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{研究背景与意义}
+
+\subsection{组合优化专业求解器的现实需求}
+
+组合优化（Combinatorial Optimisation, CO）问题通常可以通过混合整数线性规划（MILP）、混合整数二次规划（MIQP）、约束规划（CP）、网络流、集合覆盖、车辆路径、最大独立集、调度和装箱等形式表达。以 MILP 为例，其标准形式可写为：
+\begin{equation}
+\begin{aligned}
+\min_{x \in \mathbb{R}^{n}} \quad & c^\top x \\
+\text{s.t.} \quad & A x \le b,\\
+& \ell \le x \le u,\\
+& x_i \in \mathbb{Z}, \quad i \in \mathcal{I}.
+\end{aligned}
+\end{equation}
+现代专业求解器通常不会单靠一种算法，而是将多个模块组合为复杂系统：
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{松弛求解器}：在每个节点求解 LP/QP 松弛，提供 lower bound、dual 信息、reduced cost 和分支信息；
+    \item \textbf{分支定界/分支切割}：通过分支、cut separation、domain propagation 和剪枝控制搜索树；
+    \item \textbf{启发式与修复}：产生高质量可行解，改善 primal bound；
+    \item \textbf{大邻域搜索（LNS）}：固定部分变量并重解子问题；
+    \item \textbf{分解与并行化}：对网络流、调度、能源系统等结构化问题使用 ADMM、Benders、Lagrangian relaxation 等。
+\end{itemize}
+
+这类专业求解器的优势在于可靠、可解释、具有证书；劣势在于大量策略依赖人工经验，且不同问题族的最优参数和策略差异显著。因此，一个自然问题是：
+
+\begin{quote}
+能否利用大模型的程序生成和算法设计能力，自动生成可验证、可集成、可迁移的优化算法展开策略，从而增强专业组合优化求解器？
+\end{quote}
+
+\subsection{大模型辅助算法设计的兴起}
+
+近年来，LLM 不再只被用于自然语言任务，也开始被用于程序搜索、数学发现和组合优化启发式生成。FunSearch 通过将预训练大模型与系统化 evaluator 结合，在函数空间中搜索代码形式的解法，强调 evaluator 对幻觉和错误方案的约束作用。EoH 使用大模型和进化计算共同演化启发式思想与可执行代码，面向组合优化启发式自动设计。ReEvo 进一步将反思式语言反馈与进化搜索结合，提出 LLM-based hyper-heuristics。LLM-LNS 将 LLM 用于 MILP 的大邻域搜索策略设计，说明 LLM 设计求解器组件具有现实潜力。CO-Bench 和 HeuriGym 则开始系统评估大模型在组合优化算法搜索与启发式生成上的能力。
+
+这些工作说明：\textbf{LLM 作为算法设计器}是一条正在形成的研究路线。然而，当前 LLM-for-CO 研究主要集中在启发式、元启发式或完整代码生成，常见不足包括：
+\begin{enumerate}[leftmargin=2em]
+    \item 输出空间过于开放，难以保证稳定性和可验证性；
+    \item 与专业求解器内部 LP/QP 松弛、dual bound、certificate、node processing 的结合不足；
+    \item 大模型贡献容易退化为昂贵的黑盒超参数搜索；
+    \item 缺少跨求解器、跨问题族、跨规模的系统评估协议。
+\end{enumerate}
+
+\subsection{算法展开与 operator-splitting optimiser}
+
+Algorithm unrolling/unfolding 将经典迭代算法的有限步展开成可学习结构。对优化算法而言，常见形式为：
+\begin{equation}
+z_{k+1} = \mathcal{T}_{\theta_k}(z_k; P), \quad k=0,\ldots,K-1,
+\end{equation}
+其中 $P$ 是问题实例，$z_k$ 是算法状态，$\mathcal{T}_{\theta_k}$ 是带参数的更新算子。与纯黑盒神经网络不同，algorithm unrolling 具有结构清晰、可解释、易结合理论和可控制迭代步数等优点。
+
+在组合优化专业求解器中，最适合展开的不是 simplex 或 branch-and-bound 主循环本身，而是以下 operator-splitting 模块：
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{PDHG / PDLP}：适合大规模 LP 松弛，矩阵向量乘友好，可部署于 GPU；
+    \item \textbf{ADMM / Douglas--Rachford splitting}：适合可分结构、分解式约束和 Lagrangian relaxation；
+    \item \textbf{Proximal gradient / FISTA}：适合正则化松弛、二次罚函数和连续 surrogate；
+    \item \textbf{Augmented Lagrangian / SQP 子问题}：适合约束优化与 MIQP/NLP 松弛；
+    \item \textbf{PCG/linear solver module}：适合 QP、Newton、Gauss--Newton 或 KKT reduced system 的内层线性求解。
+\end{itemize}
+
+这些算法天然拥有层状结构、残差信息、步长/罚参数/restart 规则和可验证的安全条件。因此，相比直接让 LLM 生成任意启发式，\textbf{在 operator-splitting optimiser 的受控搜索空间内使用 LLM 自动设计展开策略}更有希望形成兼具新意和可靠性的 AI 会议论文方向。
+
+\section{相关工作综述}
+
+\subsection{LLM 自动算法设计与组合优化}
+
+\paragraph{FunSearch.}
+FunSearch 将 LLM 与自动 evaluator 配对，在代码函数空间中进行演化搜索，强调“LLM 提出候选，evaluator 负责验证”的闭环范式。该思想对本课题具有基础性启发：LLM 不应直接被当作 solver，而应作为 candidate generator。
+
+\paragraph{EoH 与 ReEvo.}
+EoH 将启发式的自然语言思想与可执行代码同时进化；ReEvo 通过反思式语言反馈进一步提升 heuristic generation 的效率和质量。二者共同说明，LLM 可以利用已有算法知识生成有价值的组合优化启发式。然而，这类方法通常输出开放式 heuristic，缺少与 solver certificate 和 operator-splitting 更新条件的紧密绑定。
+
+\paragraph{LLM-LNS.}
+LLM-LNS 将 LLM 用于 MILP 中的大邻域搜索策略设计，与 Gurobi、SCIP、手工 LNS 和学习型 LNS 进行比较。该工作最接近本课题的“专业求解器组件设计”动机，但其核心仍偏 neighborhood selection heuristic，而不是面向 LP/QP 松弛或 operator-splitting unrolled optimiser 的可验证更新设计。
+
+\paragraph{CO-Bench 与 HeuriGym.}
+CO-Bench 和 HeuriGym 说明研究社区正在重视 LLM 在组合优化算法搜索中的系统评估。这对本课题的 benchmark 设计具有直接参考价值：必须设置明确目标函数、可执行反馈、质量指标、失败率和样本效率指标，避免只做 narrative demo。
+
+\subsection{Algorithm unrolling 与 learned optimisation}
+
+\paragraph{PDHG-Net.}
+PDHG-Unrolled Learning-to-Optimize Method for Large-Scale LP 将 PDHG 展开为 PDHG-Net，并采用“两阶段”方法：先由网络生成近似解，再由 PDHG 精修。其重要启发是：AI 会议认可“经典一阶优化器 + 展开结构 + 可靠后处理”的混合求解模式。
+
+\paragraph{DeepDistributedQP.}
+DeepDistributedQP 将 OSQP/consensus 风格的 QP 求解器展开成深度架构，并通过 PAC-Bayes 理论给出泛化边界。该工作表明：operator-splitting optimiser 的 learned unfolding 可以与大规模 QP、跨规模泛化和理论保证结合。
+
+\paragraph{Deep FlexQP.}
+Deep FlexQP 通过 deep unfolding 加速 nonlinear programming 中的 QP 子问题，并强调可行性、松弛与求解器集成。该方向说明，unrolled solver 若想走向真实专业求解器，必须关注 infeasibility、constraint violation 和 solver-compatible certificates，而不仅是 objective loss。
+
+\subsection{ML for CO 与专业求解器增强}
+
+ML4CO 研究包括 branching policy learning、cut selection、node selection、primal heuristic、LNS、neural diving、neural rounding、solver configuration 和 instance embedding 等。已有方法多使用 GNN 表示变量--约束二部图，并学习求解器局部决策。与之相比，本课题更关注：
+\begin{itemize}[leftmargin=2em]
+    \item 不直接替代 solver 的关键决策，而是设计可验证的松弛求解和分解优化模块；
+    \item 不只学习数值参数，而是通过 LLM 生成结构化更新规则；
+    \item 不追求端到端黑盒，而是保留 operator-splitting 的理论骨架；
+    \item 强调与专业 solver 的安全接口：bound、feasibility、certificate、repair。
+\end{itemize}
+
+\section{问题陈述与研究目标}
+
+\subsection{核心研究问题}
+
+本课题拟研究如下核心问题：
+
+\begin{quote}
+如何利用大语言模型，在可验证的受控算法空间中自动设计 operator-splitting optimiser 的展开策略，并将其嵌入组合优化专业求解器，以提升松弛求解、启发式修复、分解子问题和 LNS 子问题的效率与泛化能力？
+\end{quote}
+
+该问题可分解为四个研究问题：
+
+\begin{description}[leftmargin=2em]
+    \item[RQ1：搜索空间] 如何定义适合 LLM 生成、可执行、可验证、可理论分析的 unrolled optimiser DSL？
+    \item[RQ2：安全验证] 如何保证 LLM 生成的策略不破坏基本优化性质，如有界步长、残差稳定、proximal non-expansiveness、feasibility repair 和 bound validity？
+    \item[RQ3：求解器集成] 如何将生成策略嵌入 MILP/CO solver 的 LP/QP 松弛、Lagrangian/ADMM 分解、LNS 子问题和 rounding/repair 模块？
+    \item[RQ4：实验评估] 如何设计 benchmark 和 baseline，证明方法不是 prompt engineering、不是黑盒超参数搜索、不是只在 toy problem 上有效？
+\end{description}
+
+\subsection{研究对象}
+
+本文将组合优化专业求解器中的候选模块抽象为：
+\begin{equation}
+\mathcal{S}(P;\pi) = \texttt{SolverCore}\Big(P, \texttt{RelaxSolver}_{\pi}, \texttt{Heuristics}_{\pi}, \texttt{Repair}, \texttt{Certify}\Big),
+\end{equation}
+其中 $P$ 为组合优化实例，$\pi$ 是由 LLM 生成并通过 verifier 筛选的策略程序。$\pi$ 不直接输出解，而是输出以下组件之一或多个：
+\begin{itemize}[leftmargin=2em]
+    \item PDHG/ADMM/FISTA 的步长、罚参数、momentum 和 restart 调度；
+    \item 残差平衡规则和 adaptive scaling；
+    \item operator switching 规则，例如从 PDHG 切换到 proximal refinement；
+    \item LNS 中 destroy/repair 的 schedule，与松弛残差、reduced cost 或 incumbent improvement 绑定；
+    \item rounding-aware penalty update 与 feasibility repair 接口；
+    \item 可选的 PCG/linear solver restart、truncation 或 preconditioning policy。
+\end{itemize}
+
+\subsection{总体目标}
+
+本课题的总体目标是提出一个可复用框架：
+\begin{equation}
+\boxed{
+\text{LLM} + \text{DSL} + \text{Verifier} + \text{Evaluator} + \text{Solver Integration}
+}
+\end{equation}
+使得大模型生成的算法展开策略能够：
+\begin{enumerate}[leftmargin=2em]
+    \item 在小规模实例上通过自动评估和反思进化快速筛选；
+    \item 在大规模和分布外实例上保持稳定；
+    \item 在专业求解器中提供可解释的加速或质量提升；
+    \item 在理论上满足某类安全条件；
+    \item 在评估上战胜手工规则、随机搜索、贝叶斯优化、进化搜索、常规 learned schedule 和 LLM heuristic generation baseline。
+\end{enumerate}
+
+\section{拟提出的方法框架}
+
+\subsection{总体框架}
+
+整体流程如算法 \ref{alg:framework} 所示。
+
+\begin{algorithm}[h]
+\caption{Language-Guided Verifiable Algorithm Unrolling}
+\label{alg:framework}
+\begin{algorithmic}[1]
+\Require Problem family $\mathcal{D}$, algorithm templates $\mathcal{A}$, DSL grammar $\mathcal{G}$, verifier $\mathcal{V}$, evaluator $\mathcal{E}$, LLM $\mathcal{M}$
+\State Initialise candidate pool $\mathcal{P}_0$ with human-safe baseline policies
+\For{$t=0,1,\ldots,T-1$}
+    \State Select elite policies from $\mathcal{P}_t$ according to validation score
+    \State Prompt LLM $\mathcal{M}$ with problem description, DSL grammar, failure cases, and elite policies
+    \State Generate candidate policies $\{\pi_i\}_{i=1}^{m} \subset \mathcal{G}$
+    \For{each $\pi_i$}
+        \State Apply static verifier: type check, bound check, operator legality
+        \State Apply mathematical verifier: safe parameter ranges, monotonicity proxy, proximal validity
+        \State Apply smoke-test evaluator on small instances
+        \If{$\mathcal{V}(\pi_i)=\texttt{pass}$}
+            \State Evaluate $\pi_i$ on training instances using $\mathcal{E}$
+            \State Add $\pi_i$ to candidate pool
+        \EndIf
+    \EndFor
+    \State Construct reflection messages from failures and successful cases
+    \State $\mathcal{P}_{t+1} \leftarrow$ elites + diverse verified candidates
+\EndFor
+\State Return best policies and optionally fine-tuned scalar constants
+\end{algorithmic}
+\end{algorithm}
+
+框架关键点如下：
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{LLM 离线设计}：LLM 只在策略搜索阶段调用，部署求解时不调用 LLM；
+    \item \textbf{受控 DSL}：LLM 只能生成有限、安全、可解释的策略程序；
+    \item \textbf{多级 verifier}：先过滤不可运行和不安全策略，再进行 expensive benchmark；
+    \item \textbf{执行反馈闭环}：候选策略通过真实优化指标排序，而不是通过语言判断；
+    \item \textbf{求解器兼容}：最终策略必须能够嵌入专业 solver 的 relaxation、heuristic 或 LNS 模块。
+\end{itemize}
+
+\subsection{Operator-splitting optimiser 模板}
+
+\subsubsection{PDHG/PDLP 模板}
+
+考虑 saddle-point 形式：
+\begin{equation}
+\min_{x \in X} \max_{y \in Y} \; f(x) + \langle Kx, y\rangle - g^\ast(y).
+\end{equation}
+标准 PDHG 更新为：
+\begin{equation}
+\begin{aligned}
+y^{k+1} &= \operatorname{prox}_{\sigma_k g^\ast}\left(y^k + \sigma_k K\bar{x}^k\right),\\
+x^{k+1} &= \operatorname{prox}_{\tau_k f}\left(x^k - \tau_k K^\top y^{k+1}\right),\\
+\bar{x}^{k+1} &= x^{k+1} + \theta_k(x^{k+1}-x^k).
+\end{aligned}
+\end{equation}
+LLM 可设计：
+\begin{equation}
+(\tau_k,\sigma_k,\theta_k,\texttt{restart}_k,\texttt{rescale}_k)
+= \pi_{\text{PDHG}}(s_k),
+\end{equation}
+其中 $s_k$ 包括 primal residual、dual residual、duality gap proxy、objective change、iteration index、constraint violation 和 bound progress。
+
+\subsubsection{ADMM 模板}
+
+考虑可分问题：
+\begin{equation}
+\min_{x,z} f(x)+g(z) \quad \text{s.t.} \quad Bx+Cz=d.
+\end{equation}
+ADMM 更新为：
+\begin{equation}
+\begin{aligned}
+x^{k+1} &= \arg\min_x f(x) + \frac{\rho_k}{2}\|Bx+Cz^k-d+u^k\|^2,\\
+z^{k+1} &= \arg\min_z g(z) + \frac{\rho_k}{2}\|Bx^{k+1}+Cz-d+u^k\|^2,\\
+u^{k+1} &= u^k + Bx^{k+1}+Cz^{k+1}-d.
+\end{aligned}
+\end{equation}
+LLM 可生成 residual balancing 规则：
+\begin{equation}
+\rho_{k+1}=h_\pi(\rho_k,\|r^k_p\|,\|r^k_d\|,\Delta f_k,k),
+\end{equation}
+并由 verifier 保证：
+\begin{equation}
+0<\rho_{\min}\le \rho_k \le \rho_{\max}<\infty.
+\end{equation}
+
+\subsubsection{Proximal gradient / FISTA 模板}
+
+对连续松弛或正则化 surrogate：
+\begin{equation}
+\min_x F(x)=\phi(x)+\lambda R(x),
+\end{equation}
+其中 $\phi$ 光滑，$R$ 可 prox。基本更新为：
+\begin{equation}
+x^{k+1}=\operatorname{prox}_{\eta_k\lambda R}(v^k-\eta_k \nabla \phi(v^k)).
+\end{equation}
+LLM 可设计：
+\begin{equation}
+(\eta_k,\beta_k,\texttt{restart}_k,\texttt{rounding\_trigger}_k)
+=\pi_{\text{prox}}(s_k).
+\end{equation}
+
+\subsection{算法 DSL 设计}
+
+DSL 的目标是限制 LLM 的输出空间，使其既有表达能力，又能被验证。一个策略程序可写为：
+\begin{verbatim}
+policy PDHG_Schedule:
+    features:
+        rp = norm(primal_residual)
+        rd = norm(dual_residual)
+        gap = gap_proxy
+        prog = previous_gap - gap
+    update:
+        if rp > c1 * rd:
+            tau = clip(tau * a1, tau_min, tau_max)
+            sigma = clip(sigma / a1, sigma_min, sigma_max)
+        elif rd > c2 * rp:
+            tau = clip(tau / a2, tau_min, tau_max)
+            sigma = clip(sigma * a2, sigma_min, sigma_max)
+        if prog < eps and k > k_min:
+            restart_momentum()
+        enforce tau * sigma * K_norm_sq <= 1 - margin
+\end{verbatim}
+
+DSL 包含：
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{状态特征}：残差、gap proxy、bound progress、incumbent improvement、node depth、constraint violation；
+    \item \textbf{安全算子}：clip、normalize、restart、damping、rescale、prox、projection；
+    \item \textbf{模板变量}：$\tau,\sigma,\rho,\theta,\eta,\beta,K_{\text{inner}}$；
+    \item \textbf{约束语句}：boundedness、step-size product、monotonic proxy、repair requirement；
+    \item \textbf{求解器接口}：return relaxed solution, dual certificate, rounding hint, LNS neighbourhood score。
+\end{itemize}
+
+\subsection{Verifier 设计}
+
+Verifier 分为四层。
+
+\paragraph{第一层：语法与类型验证。}
+检查 DSL 是否可解析，变量是否定义，算子是否在允许集合中，输出是否符合求解器接口。
+
+\paragraph{第二层：静态安全验证。}
+检查参数范围、步长积、罚参数上下界、restart 规则是否可能导致非法状态。例如 PDHG 安全条件：
+\begin{equation}
+\tau_k\sigma_k\|K\|^2 \le 1-\delta.
+\end{equation}
+
+\paragraph{第三层：动态 smoke test。}
+在极小实例上运行若干步，检查是否出现 NaN、Inf、残差爆炸、不可恢复 infeasibility、时间超限或违反 solver API。
+
+\paragraph{第四层：数学安全类验证。}
+将候选策略归入某个安全类 $\Pi_{\text{safe}}$。例如：
+\begin{equation}
+\Pi_{\text{PDHG}} =
+\left\{
+\pi:\;
+\tau_k,\sigma_k>0,\;
+\tau_k\sigma_k\|K\|^2\le 1-\delta,\;
+\theta_k\in[0,1],\;
+\forall k
+\right\}.
+\end{equation}
+后续理论只需对 $\Pi_{\text{safe}}$ 成立，而不必证明 LLM 本身可靠。
+
+\subsection{Evaluator 设计}
+
+候选策略评分函数应同时考虑质量、速度、稳定性和泛化。对单个实例 $P$，可定义：
+\begin{equation}
+\operatorname{Score}(\pi;P)
+=
+w_1 \cdot \operatorname{Gap}(P,\pi)
++
+w_2 \cdot \operatorname{Viol}(P,\pi)
++
+w_3 \cdot \operatorname{Time}(P,\pi)
++
+w_4 \cdot \operatorname{Fail}(P,\pi)
++
+w_5 \cdot \operatorname{Cost}_{\text{LLM}}(\pi),
+\end{equation}
+其中：
+\begin{itemize}[leftmargin=2em]
+    \item $\operatorname{Gap}$：objective gap、duality gap、integrality gap 或 primal integral；
+    \item $\operatorname{Viol}$：约束违反、整数违反、可行性修复失败率；
+    \item $\operatorname{Time}$：wall-clock、迭代数、node time；
+    \item $\operatorname{Fail}$：数值失败、超时、不可解析、solver crash；
+    \item $\operatorname{Cost}_{\text{LLM}}$：LLM 查询成本与候选生成次数。
+\end{itemize}
+
+对训练集 $\mathcal{D}_{\text{train}}$，总体评分为：
+\begin{equation}
+\operatorname{Score}(\pi)
+=
+\mathbb{E}_{P\sim \mathcal{D}_{\text{train}}}
+\left[\operatorname{Score}(\pi;P)\right]
++
+\lambda \operatorname{Complexity}(\pi),
+\end{equation}
+其中 $\operatorname{Complexity}(\pi)$ 惩罚过长、过深、不可解释的策略程序。
+
+\section{面向组合优化专业求解器的集成方案}
+
+\subsection{集成层次}
+
+本课题不试图重写完整商业求解器，而采用由浅入深的三层集成路线。
+
+\subsubsection{Level 1：外部 relaxation accelerator}
+
+将 MILP/CO 问题的 LP/QP 松弛导出为标准格式，用 LLM-generated PDHG/ADMM/FISTA 策略加速松弛求解，输出：
+\begin{itemize}[leftmargin=2em]
+    \item relaxation objective bound；
+    \item approximate primal/dual solution；
+    \item reduced-cost-like score；
+    \item rounding 或 branching hint。
+\end{itemize}
+该层最容易实现，适合早期验证。
+
+\subsubsection{Level 2：求解器 callback / primal heuristic}
+
+将生成策略嵌入 SCIP/OR-Tools/HiGHS 等开源求解器的 callback：
+\begin{itemize}[leftmargin=2em]
+    \item 使用松弛解指导 rounding；
+    \item 使用 residual/gap 信息触发 local repair；
+    \item 使用 LNS schedule 选择需要释放的变量集合；
+    \item 将候选解交给专业 solver repair，保证最终可行性。
+\end{itemize}
+
+\subsubsection{Level 3：分解式子问题求解}
+
+对网络流、能源调度、设施选址、多商品流、车辆路径等结构化问题，使用 ADMM/Benders/Lagrangian relaxation 构建分解求解器。LLM 设计：
+\begin{itemize}[leftmargin=2em]
+    \item penalty update；
+    \item block update order；
+    \item restart/damping；
+    \item subproblem time allocation；
+    \item primal recovery 和 repair schedule。
+\end{itemize}
+
+\subsection{与分支定界的安全接口}
+
+在专业 MILP solver 中，任何学习模块都不能破坏 soundness。因而本课题采用如下原则：
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{不替代 pruning certificate}：学习模块给出的 lower bound 若不满足严格认证，则只能作为启发式信号，不能用于剪枝；
+    \item \textbf{可行解必须由 solver 验证}：rounding 或 LNS 产生的解必须经过原始约束检查；
+    \item \textbf{松弛误差有记录}：approximate relaxation bound 必须携带 residual/gap certificate；
+    \item \textbf{失败可回退}：任何 LLM-generated policy 失败时立即回退到 vanilla PDHG/ADMM/solver default。
+\end{enumerate}
+
+\section{理论研究计划}
+
+本课题的理论目标不是证明“大模型会生成好算法”，而是证明：\textbf{只要大模型生成的策略属于某个可验证安全类，则展开优化器保留基本性质；其近似误差在专业求解器中以可控方式传播。}
+
+\subsection{安全类下的 PDHG 稳定性}
+
+\begin{assumption}[凸松弛与有界算子]
+考虑凸-凹 saddle-point 问题，$f$ 和 $g^\ast$ 为闭真凸函数，$K$ 为有界线性算子。
+\end{assumption}
+
+\begin{definition}[PDHG 安全策略类]
+称策略 $\pi$ 属于 $\Pi_{\mathrm{PDHG}}(\delta)$，若其生成的参数满足：
+\begin{equation}
+\tau_k>0,\quad \sigma_k>0,\quad \theta_k\in[0,1],
+\quad
+\tau_k\sigma_k\|K\|^2 \le 1-\delta,
+\quad \forall k.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[安全类下的 ergodic gap 收敛目标]
+若 $\pi\in\Pi_{\mathrm{PDHG}}(\delta)$，则在标准 PDHG 假设下，展开迭代的 ergodic primal-dual gap 可由 $O(1/K)$ 控制；常数依赖于 $\delta$、初始距离和参数上下界。
+\end{theorem}
+
+\begin{remark}
+该定理可作为第一阶段理论目标。实际论文中需处理 adaptive $\tau_k,\sigma_k$ 和 restart 对 Lyapunov 函数的影响。核心思想是 verifier 将 LLM 生成策略限制在不破坏 PDHG 基本收敛条件的区域内。
+\end{remark}
+
+\subsection{ADMM 罚参数策略的收敛稳定性}
+
+\begin{definition}[ADMM bounded penalty policy]
+称 $\pi$ 属于 $\Pi_{\mathrm{ADMM}}(\rho_{\min},\rho_{\max})$，若：
+\begin{equation}
+0 < \rho_{\min}\le \rho_k \le \rho_{\max}<\infty,
+\quad \forall k,
+\end{equation}
+并且每次 $\rho$ 变化时对 scaled dual variable 进行一致重标定。
+\end{definition}
+
+\begin{theorem}[变罚参数 ADMM 的残差稳定性目标]
+在闭真凸、鞍点存在和子问题精确求解的条件下，若 $\pi\in\Pi_{\mathrm{ADMM}}$ 且参数变化总变差受控，则 primal residual 和 dual residual 收敛到零，objective value 收敛到最优值。
+\end{theorem}
+
+该方向将为 LLM 设计 residual balancing rule 提供理论安全边界。
+
+\subsection{松弛误差向 MILP 求解器的传播}
+
+设某节点 LP 松弛最优值为 $v^\star$，approximate relaxation solver 输出 $\hat v$ 与 gap certificate $\epsilon$，满足：
+\begin{equation}
+|\hat v - v^\star| \le \epsilon.
+\end{equation}
+
+\begin{proposition}[近似松弛 bound 的安全使用]
+若当前 incumbent 为 $U$，则只有当
+\begin{equation}
+\hat v - \epsilon \ge U
+\end{equation}
+时，才可安全剪枝；若无法给出严格 $\epsilon$，则 $\hat v$ 只能用于 node scoring、branching hint 或 heuristic，而不能用于 correctness-critical pruning。
+\end{proposition}
+
+该命题体现专业求解器集成的基本原则：学习模块可以增强效率，但不能破坏求解器正确性。
+
+\subsection{展开策略的跨规模泛化分析}
+
+对于策略程序 $\pi$，其复杂度可以用 DSL 长度、条件分支数、连续参数数目和算子组合深度度量。可考虑 PAC-Bayes 或 algorithmic stability 风格的泛化界：
+\begin{equation}
+\mathbb{E}_{P\sim\mathcal{D}}\left[\ell(\pi;P)\right]
+\le
+\frac{1}{N}\sum_{i=1}^N \ell(\pi;P_i)
++
+\mathcal{O}\left(
+\sqrt{\frac{\operatorname{Complexity}(\pi)+\log(1/\delta)}{N}}
+\right).
+\end{equation}
+该方向可解释为什么受控 DSL 比开放式代码生成更容易泛化。
+
+\section{实验设计}
+
+\subsection{实验原则}
+
+为避免“纯讲故事”，实验必须遵循以下原则：
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{固定查询预算}：LLM、进化搜索、随机搜索、BO 使用相同候选评估预算；
+    \item \textbf{训练/验证/测试分离}：小规模实例用于搜索，大规模和分布外实例用于最终评估；
+    \item \textbf{报告失败率}：包括不可运行、验证失败、数值爆炸、超时和可行性失败；
+    \item \textbf{报告求解器指标}：不仅报告 loss，还报告 gap、time、node count、primal integral、feasibility 和 bound；
+    \item \textbf{消融 LLM 的贡献}：比较 LLM、随机生成、进化无 LLM、BO、手工规则和 learned controller。
+\end{enumerate}
+
+\subsection{Benchmark 选择}
+
+\begin{longtable}{p{3.2cm}p{4.6cm}p{5.2cm}}
+\toprule
+阶段 & 数据/问题 & 目的 \\
+\midrule
+Stage 1 & 合成 LP/QP、LASSO、network flow、assignment relaxation & 快速验证 DSL、verifier、PDHG/ADMM/FISTA 策略是否有效 \\
+Stage 2 & MIPLIB 2017、Distributional MIPLIB、ML4CO competition-style MILP distributions & 测试与专业 MILP solver 相关的 relaxation、rounding、LNS、node-level 指标 \\
+Stage 3 & set cover、facility location、knapsack、MIS、TSP/VRP MILP formulation & 测试结构化 CO 问题上的泛化和 solver integration \\
+Stage 4 & CO-Bench、HeuriGym 相关任务 & 与 LLM heuristic generation benchmark 对齐，展示本方法不是普通 LLM heuristic \\
+Stage 5 & 真实应用案例：物流、能源调度、广告分配或网络设计 & 检验工程价值与鲁棒性 \\
+\bottomrule
+\end{longtable}
+
+\subsection{Baseline 设计}
+
+\begin{longtable}{p{3.5cm}p{9.2cm}}
+\toprule
+Baseline 类型 & 具体方法 \\
+\midrule
+专业求解器 & Gurobi、CPLEX、SCIP、HiGHS、OR-Tools PDLP/PDHG、OSQP \\
+原始算法 & vanilla PDHG、vanilla ADMM、FISTA、Douglas--Rachford、solver default LNS \\
+手工自适应规则 & residual balancing ADMM、adaptive restart FISTA、hand-crafted PDHG restart/scaling \\
+黑盒搜索 & random search、grid search、Bayesian optimisation、CMA-ES、evolutionary search without LLM \\
+学习型 unrolling & learned scalar schedule、MLP/LSTM controller、hypernetwork-generated parameters、GNN policy \\
+LLM 算法设计 & FunSearch-style program search、EoH-style heuristic evolution、ReEvo-style reflective evolution、LLM-LNS-style neighbourhood design \\
+消融版本 & no verifier、no reflection、no evolution、no DSL constraints、LLM-only、small-scale only、without solver repair \\
+\bottomrule
+\end{longtable}
+
+\subsection{评价指标}
+
+\paragraph{松弛求解指标}
+\begin{itemize}[leftmargin=2em]
+    \item primal residual、dual residual、duality gap；
+    \item time-to-$\epsilon$ gap；
+    \item fixed-budget final gap；
+    \item GPU/CPU wall-clock；
+    \item memory footprint。
+\end{itemize}
+
+\paragraph{MILP/CO 求解器指标}
+\begin{itemize}[leftmargin=2em]
+    \item primal bound、dual bound、integrality gap；
+    \item primal integral；
+    \item number of explored nodes；
+    \item time to first feasible solution；
+    \item time to best incumbent；
+    \item final optimality gap under time limit；
+    \item feasibility violation 和 repair success rate。
+\end{itemize}
+
+\paragraph{LLM algorithm design 指标}
+\begin{itemize}[leftmargin=2em]
+    \item valid program rate；
+    \item verified safe program rate；
+    \item query budget；
+    \item candidate evaluation budget；
+    \item best score vs. number of generated candidates；
+    \item transfer performance from small to large instances；
+    \item diversity and interpretability of discovered policies。
+\end{itemize}
+
+\subsection{关键实验}
+
+\subsubsection{实验一：LLM 是否优于黑盒搜索？}
+
+在固定候选数量 $B$ 下比较：
+\begin{equation}
+\text{LLM+Verifier+Evolution}
+\quad \text{vs.} \quad
+\text{Random DSL Search}
+\quad \text{vs.} \quad
+\text{BO/CMA-ES}
+\quad \text{vs.} \quad
+\text{Human Rule}.
+\end{equation}
+核心指标为 best verified score、valid rate 和大规模迁移表现。
+
+\subsubsection{实验二：可验证约束是否必要？}
+
+比较：
+\begin{itemize}[leftmargin=2em]
+    \item full method；
+    \item no static verifier；
+    \item no mathematical safety constraints；
+    \item open-ended code generation；
+    \item LLM natural language prompt only。
+\end{itemize}
+预期验证器能显著降低 crash rate 和 OOD failure rate。
+
+\subsubsection{实验三：求解器集成收益}
+
+在 MIPLIB/Distributional MIPLIB 子集上测试：
+\begin{itemize}[leftmargin=2em]
+    \item default solver；
+    \item solver + vanilla relaxation accelerator；
+    \item solver + hand-crafted unrolled strategy；
+    \item solver + LLM-generated verified strategy。
+\end{itemize}
+指标包括 time-to-incumbent、gap、node count、primal integral。
+
+\subsubsection{实验四：跨规模泛化}
+
+在小规模实例上搜索策略，在大规模实例上测试：
+\begin{equation}
+n_{\text{train}} \ll n_{\text{test}}, \quad m_{\text{train}} \ll m_{\text{test}}.
+\end{equation}
+分析策略是否依赖绝对维度，或只依赖归一化残差和比例特征。
+
+\subsubsection{实验五：策略可解释性与失败分析}
+
+对最优策略进行人工解释：
+\begin{itemize}[leftmargin=2em]
+    \item 它是否类似已知 residual balancing 或 restart 规则？
+    \item 它在哪些实例族上失败？
+    \item 失败是否由 ill-conditioning、infeasibility、弱松弛、整数结构或 solver callback overhead 引起？
+\end{itemize}
+
+\section{预期创新点}
+
+\subsection{从 LLM heuristic generation 到 verifiable unrolled optimiser design}
+
+现有 LLM-for-CO 多生成启发式或完整代码。本课题强调生成的是 operator-splitting optimiser 的结构化展开策略，并由 verifier 和理论安全类约束。这使得方法更适合专业求解器，而不是只做开放式 heuristic search。
+
+\subsection{面向专业求解器的安全接口}
+
+本课题明确区分：
+\begin{itemize}[leftmargin=2em]
+    \item correctness-critical 信息：必须由严格 solver 或 certificate 保证；
+    \item heuristic information：可由学习模块提供，用于 node scoring、branching hint、rounding、LNS；
+    \item approximate relaxation 信息：必须携带 residual/gap 证书。
+\end{itemize}
+这使得 LLM-generated optimiser 能安全嵌入专业 solver。
+
+\subsection{可验证 DSL 与理论安全类}
+
+通过 DSL 控制表达空间，并将候选策略映射到 $\Pi_{\text{safe}}$，避免开放式代码生成的不可控性。理论上证明的是安全类性质，而不是 LLM 本身。
+
+\subsection{跨算法族统一视角}
+
+将 PDHG、ADMM、FISTA、Douglas--Rachford、PCG 等算法统一为：
+\begin{equation}
+z_{k+1}=\mathcal{T}_{a_k,\theta_k}(z_k;P),
+\end{equation}
+其中 LLM 生成的是 $a_k$ 和 $\theta_k$ 的策略程序。这比单一算法 unrolling 更具有博士研究容量。
+
+\subsection{组合优化 benchmark 与 LLM cost-aware 评估}
+
+本课题将专业求解器指标与 LLM algorithm design 指标结合，报告 valid rate、query cost、candidate budget、OOD failure 等，使得可行性论证更扎实。
+
+\section{可行性分析}
+
+\subsection{技术可行性}
+
+\begin{itemize}[leftmargin=2em]
+    \item PDHG/ADMM/FISTA 等算法已有成熟理论和开源实现，适合作为第一阶段模板；
+    \item SCIP、HiGHS、OR-Tools、Pyomo、JuMP 等生态支持求解器集成和 benchmark；
+    \item LLM program search 可以先基于 API 调用和离线执行，不需要训练大模型；
+    \item DSL 限制输出空间，降低 hallucination 和不可运行风险；
+    \item benchmark 可从合成实例逐步扩展到 MIPLIB 和 Distributional MIPLIB。
+\end{itemize}
+
+\subsection{研究风险与应对}
+
+\begin{longtable}{p{4cm}p{8.5cm}}
+\toprule
+风险 & 应对方案 \\
+\midrule
+LLM 生成策略不优于随机搜索 & 设置相同预算下的 random/BO/evolution baseline；强调 LLM 是否提升 sample efficiency 和 valid rate \\
+开放式代码不可控 & 使用 DSL、static verifier 和安全类理论；禁止任意 Python 代码进入 solver core \\
+求解器集成过难 & 先做 external relaxation accelerator，再做 callback/LNS，最后考虑深度集成 \\
+理论只能覆盖凸松弛 & 明确理论对象为 LP/QP/convex surrogate；对整数层只证明安全接口和误差传播 \\
+效果只在小规模有效 & 从一开始设计 train-small-test-large 和 OOD benchmark \\
+LLM cost 过高 & 离线生成，部署不调用 LLM；报告 query budget 和 amortised cost \\
+审稿人认为是 prompt engineering & 公开 DSL、evaluator、query logs、候选池、失败案例和固定预算协议 \\
+\bottomrule
+\end{longtable}
+
+\section{研究计划与时间安排}
+
+\subsection{第一阶段：文献、DSL 与基础原型（第 1 年）}
+
+\begin{itemize}[leftmargin=2em]
+    \item 系统整理 LLM-for-CO、algorithm unrolling、operator-splitting、ML4CO solver enhancement 文献；
+    \item 实现 PDHG、ADMM、FISTA 三个基础模板；
+    \item 设计第一版 DSL 和 static verifier；
+    \item 在 LASSO、network flow、assignment relaxation 和合成 QP 上验证；
+    \item 目标产出：一篇 workshop/CCF-B 论文或技术报告。
+\end{itemize}
+
+\subsection{第二阶段：LLM 搜索闭环与理论安全类（第 2 年）}
+
+\begin{itemize}[leftmargin=2em]
+    \item 实现 LLM + reflection + evolutionary search；
+    \item 完成 dynamic verifier 和 evaluator；
+    \item 形成 PDHG/ADMM 安全策略类理论；
+    \item 与 random search、BO、evolution、learned controller 系统对比；
+    \item 目标产出：AAAI/IJCAI/ICLR 投稿。
+\end{itemize}
+
+\subsection{第三阶段：专业求解器集成与组合优化 benchmark（第 3 年）}
+
+\begin{itemize}[leftmargin=2em]
+    \item 集成 SCIP/HiGHS/OR-Tools 或 Gurobi callback；
+    \item 在 MIPLIB、Distributional MIPLIB、ML4CO-style distributions 上测试；
+    \item 设计 LNS/rounding/repair 接口；
+    \item 完成跨规模、跨问题族泛化实验；
+    \item 目标产出：ICLR/ICML/NeurIPS 或高水平 OR/AI 交叉会议论文。
+\end{itemize}
+
+\subsection{第四阶段：统一理论、真实应用与博士论文（第 4 年）}
+
+\begin{itemize}[leftmargin=2em]
+    \item 完善泛化理论、误差传播理论和 solver soundness 接口；
+    \item 在真实工业问题上验证；
+    \item 开源框架与 benchmark 协议；
+    \item 汇总形成博士论文。
+\end{itemize}
+
+\section{拟投稿方向}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{ICLR}：最适合 language-guided unrolled optimiser、结构化学习求解器、跨规模泛化；
+    \item \textbf{ICML/NeurIPS}：适合理论更强的 safe policy class、泛化、differentiable optimisation 和算法设计；
+    \item \textbf{AAAI/IJCAI}：适合 solver-integrated LLM algorithm design 和组合优化应用；
+    \item \textbf{CPAIOR/INFORMS/Mathematical Programming Computation}：适合更偏专业求解器和运筹优化的版本；
+    \item \textbf{NeurIPS/ICLR workshop}：适合早期 benchmark、DSL 和系统原型。
+\end{itemize}
+
+\section{预期成果}
+
+\begin{enumerate}[leftmargin=2em]
+    \item 一个可复用的 \textbf{Language-Guided Verifiable Unrolling} 框架；
+    \item 一个面向 operator-splitting optimiser 的 DSL 和 verifier；
+    \item 若干被 LLM 发现的可解释 PDHG/ADMM/FISTA/LNS 策略；
+    \item 安全策略类下的收敛性、稳定性和误差传播理论；
+    \item 面向组合优化专业求解器的 benchmark 协议；
+    \item 开源代码、query logs、candidate library 和实验脚本；
+    \item 2--4 篇高水平论文，包括至少一篇 AI 顶会或 CCF-A 会议目标论文。
+\end{enumerate}
+
+\section{结论}
+
+本课题的核心判断是：单纯让 LLM 直接求解组合优化问题，容易退化为黑盒启发式；单纯做某个经典优化算法的展开，又可能缺少会议新意。更有潜力的方向是将二者结合：\textbf{让 LLM 在受控、可验证、可理论分析的算法空间中，离线设计专业求解器可使用的 operator-splitting unrolled optimiser 组件。}
+
+该方向具有三方面优势：
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{方法新意}：连接 LLM 自动算法设计与 algorithm unrolling；
+    \item \textbf{理论抓手}：通过 safe policy class 分析收敛、残差稳定和误差传播；
+    \item \textbf{工程价值}：面向组合优化专业求解器中的 LP/QP 松弛、LNS、分解子问题和 repair 模块。
+\end{itemize}
+
+因此，本课题既具有博士研究的深度和持续性，也具有面向 AI 会议和专业优化社区的双重投稿潜力。
+
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{funsearch}
+B. Romera-Paredes, M. Barekatain, A. Novikov, et al.
+\newblock Mathematical discoveries from program search with large language models.
+\newblock \emph{Nature}, 2024.
+
+\bibitem{eoh}
+F. Liu, X. Tong, M. Yuan, X. Lin, F. Luo, Z. Wang, Z. Lu, and Q. Zhang.
+\newblock Evolution of heuristics: Towards efficient automatic algorithm design using large language model.
+\newblock \emph{Proceedings of ICML}, 2024.
+
+\bibitem{reevo}
+H. Ye, J. Wang, Z. Cao, F. Berto, C. Hua, H. Kim, J. Park, and G. Song.
+\newblock ReEvo: Large language models as hyper-heuristics with reflective evolution.
+\newblock \emph{Proceedings of NeurIPS}, 2024.
+
+\bibitem{llmlns}
+Large Language Model-driven Large Neighborhood Search for Large-Scale MILP Problems.
+\newblock \emph{ICML}, 2025.
+
+\bibitem{pdhgnet}
+B. Li, L. Yang, Y. Chen, S. Wang, Q. Chen, H. Mao, Y. Ma, A. Wang, T. Ding, J. Tang, and R. Sun.
+\newblock PDHG-Unrolled Learning-to-Optimize Method for Large-Scale Linear Programming.
+\newblock \emph{Proceedings of ICML}, 2024.
+
+\bibitem{deepdistributedqp}
+A. D. Saravanos, H. Kuperman, A. Oshin, A. T. Abdul, V. Pacelli, and E. A. Theodorou.
+\newblock Deep Distributed Optimization for Large-Scale Quadratic Programming.
+\newblock \emph{ICLR}, 2025.
+
+\bibitem{deepflexqp}
+A. Oshin, R. V. Ghosh, A. D. Saravanos, and E. A. Theodorou.
+\newblock Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding.
+\newblock \emph{ICLR}, 2026.
+
+\bibitem{cobench}
+W. Sun, S. Feng, S. Li, and Y. Yang.
+\newblock CO-Bench: Benchmarking Language Model Agents in Algorithm Search for Combinatorial Optimization.
+\newblock \emph{Proceedings of AAAI}, 2026.
+
+\bibitem{heurigym}
+H. Chen, Y. Wang, Y. Cai, H. Hu, J. Li, S. Huang, C. Deng, R. Liang, S. Kong, H. Ren, S. Samaranayake, C. Gomes, and Z. Zhang.
+\newblock HeuriGym: An Agentic Benchmark for LLM-Crafted Heuristics in Combinatorial Optimization.
+\newblock \emph{ICLR Benchmark Track}, 2026.
+
+\bibitem{miplib2017}
+A. Gleixner, G. Hendel, G. Gamrath, et al.
+\newblock MIPLIB 2017: Data-driven compilation of the 6th mixed-integer programming library.
+\newblock \emph{Mathematical Programming Computation}, 2021.
+
+\bibitem{pdlp}
+D. Applegate, M. Díaz, H. Lu, and M. Lubin.
+\newblock Practical Large-Scale Linear Programming using Primal-Dual Hybrid Gradient.
+\newblock \emph{NeurIPS}, 2021.
+
+\bibitem{chambollepock}
+A. Chambolle and T. Pock.
+\newblock A first-order primal-dual algorithm for convex problems with applications to imaging.
+\newblock \emph{Journal of Mathematical Imaging and Vision}, 2011.
+
+\bibitem{admm}
+S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein.
+\newblock Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers.
+\newblock \emph{Foundations and Trends in Machine Learning}, 2011.
+
+\bibitem{osqp}
+B. Stellato, G. Banjac, P. Goulart, A. Bemporad, and S. Boyd.
+\newblock OSQP: An operator splitting solver for quadratic programs.
+\newblock \emph{Mathematical Programming Computation}, 2020.
+
+\bibitem{ml4co}
+M. Gasse, D. Chételat, N. Ferroni, L. Charlin, and A. Lodi.
+\newblock The Machine Learning for Combinatorial Optimization Competition.
+\newblock \emph{Proceedings of Machine Learning Research}, 2022.
+
+\end{thebibliography}
+
+\end{document}

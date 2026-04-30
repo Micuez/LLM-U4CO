@@ -1,0 +1,25 @@
+policy_id: search_seed
+problem_family: alm_eq_qp
+verified: True
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.42286824406455015, 'violation': 0.14077231785227223, 'runtime': 0.00015401840209960938}
+errors: []
+warnings: ['Action scale_rho is emitted without reading state feature rho.', 'Action scale_rho is emitted without reading state feature rho.', 'Action set_rho is emitted without reading state feature rho.', 'Action set_rho is emitted without reading state feature rho.', 'Action set_rho is emitted without reading state feature rho.', 'Required features not referenced by policy: k, rho']
+feature_coverage: 0.3333333333333333
+proof_obligations: ["path[1]: fallback satisfied under if state.get('violation', 0.0) > 0.05, if state.get('stagnation_count', 0) >= 4", "path[2]: fallback satisfied under if state.get('violation', 0.0) > 0.05, else not (state.get('stagnation_count', 0) >= 4)", "path[3]: fallback satisfied under else not (state.get('violation', 0.0) > 0.05), if state.get('gap', 1.0) < 0.02, if state.get('stagnation_count', 0) >= 4", "path[4]: fallback satisfied under else not (state.get('violation', 0.0) > 0.05), if state.get('gap', 1.0) < 0.02, else not (state.get('stagnation_count', 0) >= 4)", "path[5]: fallback satisfied under else not (state.get('violation', 0.0) > 0.05), else not (state.get('gap', 1.0) < 0.02), if state.get('stagnation_count', 0) >= 4", "path[6]: fallback satisfied under else not (state.get('violation', 0.0) > 0.05), else not (state.get('gap', 1.0) < 0.02), else not (state.get('stagnation_count', 0) >= 4)"]
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('violation', 0.0) > 0.05:
+        actions.append({'name': 'scale_rho', 'value': 1.25})
+    elif state.get('gap', 1.0) < 0.02:
+        actions.append({'name': 'scale_rho', 'value': 0.92})
+    if state.get('stagnation_count', 0) >= 4:
+        actions.append({'name': 'restart'})
+        actions.append({'name': 'set_rho', 'value': 0.8})
+    return {'actions': actions}
+
+origin: search_seed
+parent: 
+score: -0.7071532207308052

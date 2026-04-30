@@ -1,0 +1,11 @@
+algorithm,meta_parent,meta_split,origin,policy_id,problem_family,score,verified
+ALM,,train,search_seed,search_seed,alm_eq_qp,-0.7071532207308052,True
+ALM,,train,mutation,search_variant_1,alm_eq_qp,-1.114438479966953,True
+ALM,,train,mutation,search_variant_2,alm_eq_qp,-0.9686668521372586,True
+ALM,llm,train,llm_generated,llm_seed,alm_eq_qp,-0.20713657117100745,True
+ALM,search_seed,train,reflection,search_seed_reflect,alm_eq_qp,-0.7074738730474125,True
+ALM,search_variant_1,train,funsearch_mutation,search_variant_1_g2,alm_eq_qp,-1.1106158623851057,True
+ALM,search_variant_2,train,funsearch_mutation,search_variant_2_g2,alm_eq_qp,-0.9629430732272447,True
+ALM,llm_seed,train,llm_generated,llm_seed_reflect,alm_eq_qp,-0.20713178255390727,True
+ALM,llm_seed_reflect,train,funsearch_mutation,llm_seed_reflect_top1,alm_eq_qp,-0.2071286377072744,True
+ALM,llm_seed,train,funsearch_mutation,llm_seed_top2,alm_eq_qp,-0.2071291022910413,True

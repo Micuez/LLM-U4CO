@@ -1,0 +1,9 @@
+algorithm,meta_parent,meta_split,origin,policy_id,problem_family,score,verified
+PCG,,train,search_seed,search_seed,pcg_linear_system,-0.9180991145870335,True
+PCG,,train,mutation,search_variant_1,pcg_linear_system,-1.218092317845893,True
+PCG,,train,mutation,search_variant_2,pcg_linear_system,-1.1682035048257875,True
+PCG,search_seed,train,reflection,search_seed_reflect,pcg_linear_system,-0.9180916860695074,True
+PCG,search_variant_1,train,funsearch_mutation,search_variant_1_g2,pcg_linear_system,-1.218098370696414,True
+PCG,search_variant_2,train,funsearch_mutation,search_variant_2_g2,pcg_linear_system,-1.1680879190760993,True
+PCG,search_seed_reflect,train,funsearch_mutation,search_seed_reflect_top1,pcg_linear_system,-0.9180837522840087,True
+PCG,search_seed,train,funsearch_mutation,search_seed_top2,pcg_linear_system,-0.9180803584805541,True

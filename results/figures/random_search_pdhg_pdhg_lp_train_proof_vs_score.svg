@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="640" viewBox="0 0 1080 640">
+<rect width="100%" height="100%" fill="#ffffff" />
+<text x="36" y="40" font-size="24" font-family="Arial, Helvetica, sans-serif" fill="#111827">Proof Count vs Score</text>
+<text x="36" y="62" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">chart=scatter generated_from_csv=true</text>
+<line x1="84.0" y1="528.0" x2="1052.0" y2="528.0" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="532.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-3.017</text>
+<line x1="84.0" y1="438.4" x2="1052.0" y2="438.4" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="442.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-2.414</text>
+<line x1="84.0" y1="348.8" x2="1052.0" y2="348.8" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="352.8" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-1.810</text>
+<line x1="84.0" y1="259.2" x2="1052.0" y2="259.2" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="263.2" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-1.207</text>
+<line x1="84.0" y1="169.6" x2="1052.0" y2="169.6" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="173.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.6034</text>
+<line x1="84.0" y1="80.0" x2="1052.0" y2="80.0" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="84.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.0000</text>
+<line x1="84.0" y1="80.0" x2="84.0" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="84.0" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">0.0000</text>
+<line x1="277.6" y1="80.0" x2="277.6" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="277.6" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">1.296</text>
+<line x1="471.2" y1="80.0" x2="471.2" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="471.2" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">2.592</text>
+<line x1="664.8" y1="80.0" x2="664.8" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="664.8" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">3.888</text>
+<line x1="858.4" y1="80.0" x2="858.4" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="858.4" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">5.184</text>
+<line x1="1052.0" y1="80.0" x2="1052.0" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="1052.0" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">6.480</text>
+<circle cx="980.3" cy="478.3" r="7" fill="#2563eb" fill-opacity="0.85" />
+<text x="980.3" y="466.3" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/search_seed</text>
+<circle cx="382.8" cy="261.6" r="7" fill="#f97316" fill-opacity="0.85" />
+<text x="382.8" y="249.6" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/search_variant_1</text>
+<circle cx="382.8" cy="268.2" r="7" fill="#f97316" fill-opacity="0.85" />
+<text x="382.8" y="256.2" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/search_variant_2</text>
+<circle cx="382.8" cy="261.9" r="7" fill="#dc2626" fill-opacity="0.85" />
+<text x="382.8" y="249.9" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/random_00</text>
+<circle cx="382.8" cy="268.2" r="7" fill="#dc2626" fill-opacity="0.85" />
+<text x="382.8" y="256.2" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/random_01</text>
+<circle cx="980.3" cy="499.3" r="7" fill="#dc2626" fill-opacity="0.85" />
+<text x="980.3" y="487.3" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/random_02</text>
+<circle cx="980.3" cy="487.8" r="7" fill="#dc2626" fill-opacity="0.85" />
+<text x="980.3" y="475.8" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/random_03</text>
+<circle cx="382.8" cy="260.2" r="7" fill="#dc2626" fill-opacity="0.85" />
+<text x="382.8" y="248.2" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/random_04</text>
+<circle cx="382.8" cy="260.2" r="7" fill="#dc2626" fill-opacity="0.85" />
+<text x="382.8" y="248.2" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/random_05</text>
+<circle cx="980.3" cy="477.3" r="7" fill="#dc2626" fill-opacity="0.85" />
+<text x="980.3" y="465.3" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/random_06</text>
+<circle cx="382.8" cy="268.2" r="7" fill="#dc2626" fill-opacity="0.85" />
+<text x="382.8" y="256.2" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">PDHG/random_07</text>
+<rect x="84" y="608" width="12" height="12" rx="2" fill="#2563eb" />
+<text x="102.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">search_seed</text>
+<rect x="232" y="608" width="12" height="12" rx="2" fill="#f97316" />
+<text x="250.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">mutation</text>
+<rect x="380" y="608" width="12" height="12" rx="2" fill="#dc2626" />
+<text x="398.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">random_search</text>
+<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=proof_count vs score items=11</text>
+<text x="22.0" y="90.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start" transform="rotate(-90 22.0 90.0)">proof_count vs score</text>
+<text x="540.0" y="588.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">proof_count</text>
+</svg>

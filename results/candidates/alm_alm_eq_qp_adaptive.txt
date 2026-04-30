@@ -1,0 +1,17 @@
+policy_id: adaptive
+origin: baseline
+split: train
+score: -0.7007680037142863
+aggregate: {'median_gap': 0.00021370597070668868, 'median_violation': 0.00010811025384709313, 'median_runtime': 0.001066446304321289, 'median_primal_residual': 0.00010811025384709313, 'median_dual_residual': 0.0005295673210038804, 'median_iterations': 70.0, 'fail_rate': 0.0}
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('violation', 0.0) > 0.05:
+        actions.append({'name': 'scale_rho', 'value': 1.25})
+    elif state.get('gap', 1.0) < 0.02:
+        actions.append({'name': 'scale_rho', 'value': 0.92})
+    if state.get('stagnation_count', 0) >= 4:
+        actions.append({'name': 'restart'})
+        actions.append({'name': 'set_rho', 'value': 0.8})
+    return {'actions': actions}
+

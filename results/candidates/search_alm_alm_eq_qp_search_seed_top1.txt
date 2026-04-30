@@ -1,0 +1,19 @@
+policy_id: search_seed_top1
+problem_family: alm_eq_qp
+verified: True
+errors: []
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    if state.get('violation', 0.0) > 0.05:
+        actions.append({'name': 'scale_rho', 'value': 1.18})
+    elif state.get('gap', 1.0) < 0.02:
+        actions.append({'name': 'scale_rho', 'value': 0.95})
+    if state.get('stagnation_count', 0) >= 4:
+        actions.append({'name': 'restart'})
+        actions.append({'name': 'set_rho', 'value': 0.9})
+    return {'actions': actions}
+
+origin: funsearch_mutation
+parent: search_seed
+score: -0.7009246491364897

@@ -1,0 +1,10 @@
+policy_id: PySCIPOpt
+origin: solver_baseline
+split: train
+score: -0.0002259026914258768
+aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.001507152557373047, 'median_primal_residual': 0.0, 'median_dual_residual': 0.0, 'median_iterations': 1.0, 'fail_rate': 0.0}
+available: False
+backend_status: {'solver_name': 'PySCIPOpt', 'available': False, 'mode': 'surrogate', 'backend_mode': 'surrogate', 'backend_detail': "ModuleNotFoundError: No module named 'pyscipopt'", 'command': 'scip', 'package': 'pyscipopt'}
+native_used: False
+native_backend: 
+source: PySCIPOpt

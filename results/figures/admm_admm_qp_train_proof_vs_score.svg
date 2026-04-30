@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="640" viewBox="0 0 1080 640">
+<rect width="100%" height="100%" fill="#ffffff" />
+<text x="36" y="40" font-size="24" font-family="Arial, Helvetica, sans-serif" fill="#111827">Proof Count vs Score</text>
+<text x="36" y="62" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">chart=scatter generated_from_csv=true</text>
+<line x1="84.0" y1="528.0" x2="1052.0" y2="528.0" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="532.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.9282</text>
+<line x1="84.0" y1="438.4" x2="1052.0" y2="438.4" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="442.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.7426</text>
+<line x1="84.0" y1="348.8" x2="1052.0" y2="348.8" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="352.8" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.5569</text>
+<line x1="84.0" y1="259.2" x2="1052.0" y2="259.2" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="263.2" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.3713</text>
+<line x1="84.0" y1="169.6" x2="1052.0" y2="169.6" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="173.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.1856</text>
+<line x1="84.0" y1="80.0" x2="1052.0" y2="80.0" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="84.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.0000</text>
+<line x1="84.0" y1="80.0" x2="84.0" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="84.0" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">0.0000</text>
+<line x1="277.6" y1="80.0" x2="277.6" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="277.6" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">1.320</text>
+<line x1="471.2" y1="80.0" x2="471.2" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="471.2" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">2.640</text>
+<line x1="664.8" y1="80.0" x2="664.8" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="664.8" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">3.960</text>
+<line x1="858.4" y1="80.0" x2="858.4" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="858.4" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">5.280</text>
+<line x1="1052.0" y1="80.0" x2="1052.0" y2="528.0" stroke="#f3f4f6" stroke-width="1.0" />
+<text x="1052.0" y="586.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="middle">6.600</text>
+<circle cx="230.7" cy="176.6" r="7" fill="#2563eb" fill-opacity="0.85" />
+<text x="230.7" y="164.6" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">ADMM/vanilla</text>
+<circle cx="964.0" cy="490.4" r="7" fill="#2563eb" fill-opacity="0.85" />
+<text x="964.0" y="478.4" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">ADMM/adaptive</text>
+<circle cx="524.0" cy="369.7" r="7" fill="#2563eb" fill-opacity="0.85" />
+<text x="524.0" y="357.7" font-size="10" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">ADMM/conservative</text>
+<rect x="84" y="608" width="12" height="12" rx="2" fill="#2563eb" />
+<text x="102.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">baseline</text>
+<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=proof_count vs score items=3</text>
+<text x="22.0" y="90.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start" transform="rotate(-90 22.0 90.0)">proof_count vs score</text>
+<text x="540.0" y="588.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">proof_count</text>
+</svg>

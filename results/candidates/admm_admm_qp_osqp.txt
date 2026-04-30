@@ -1,0 +1,10 @@
+policy_id: OSQP
+origin: solver_baseline
+split: train
+score: -0.00015038950102095052
+aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.0010030994415283203, 'median_primal_residual': 0.0, 'median_dual_residual': 0.0, 'median_iterations': 1.0, 'fail_rate': 0.0}
+available: False
+backend_status: {'solver_name': 'OSQP', 'available': False, 'mode': 'surrogate', 'backend_mode': 'surrogate', 'backend_detail': "ModuleNotFoundError: No module named 'osqp'", 'command': 'osqp', 'package': 'osqp'}
+native_used: False
+native_backend: 
+source: OSQP

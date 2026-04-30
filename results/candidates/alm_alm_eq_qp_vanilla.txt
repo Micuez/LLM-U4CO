@@ -1,0 +1,10 @@
+policy_id: vanilla
+origin: baseline
+split: train
+score: -0.20401767159387652
+aggregate: {'median_gap': 0.0020014316016560532, 'median_violation': 0.0006635712923085228, 'median_runtime': 0.0010374784469604492, 'median_primal_residual': 0.0006635712923085228, 'median_dual_residual': 0.002135632463107477, 'median_iterations': 70.0, 'fail_rate': 0.0}
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    return {'actions': actions}
+
