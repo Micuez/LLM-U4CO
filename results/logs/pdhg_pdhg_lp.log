@@ -1,4 +1,0 @@
-algorithm=PDHG problem=pdhg_lp
-{'algorithm': 'PDHG', 'problem_family': 'pdhg_lp', 'policy_id': 'vanilla', 'origin': 'baseline', 'score': -0.291825, 'median_gap': 0.064554, 'median_violation': 0.019118, 'median_runtime': 0.001315, 'median_primal_residual': 0.019118, 'median_dual_residual': 0.012773, 'median_iterations': 60, 'fail_rate': 0.0}
-{'algorithm': 'PDHG', 'problem_family': 'pdhg_lp', 'policy_id': 'adaptive', 'origin': 'baseline', 'score': -1.069286, 'median_gap': 0.258642, 'median_violation': 0.493462, 'median_runtime': 0.001467, 'median_primal_residual': 0.493462, 'median_dual_residual': 0.015552, 'median_iterations': 60, 'fail_rate': 0.0}
-{'algorithm': 'PDHG', 'problem_family': 'pdhg_lp', 'policy_id': 'conservative', 'origin': 'baseline', 'score': -1.203653, 'median_gap': 0.429162, 'median_violation': 0.446636, 'median_runtime': 0.001387, 'median_primal_residual': 0.446636, 'median_dual_residual': 0.006557, 'median_iterations': 60, 'fail_rate': 0.0}
