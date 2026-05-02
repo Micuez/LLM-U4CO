@@ -1,0 +1,32 @@
+policy_id: llm_one_shot
+origin: baseline
+split: train
+score: -1.1053701015051054
+aggregate: {'median_gap': 0.0021732983046371768, 'median_violation': 0.0009144571530664127, 'median_runtime': 0.0011529922485351562, 'median_primal_residual': 0.0009144571530664127, 'median_dual_residual': 0.003866385332148388, 'median_iterations': 70.0, 'fail_rate': 0.0}
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    rho = state.get('rho', 1.0)
+    violation = state.get('violation', 0.0)
+    gap = state.get('gap', 1.0)
+    if violation > 0.08 and gap > 0.04:
+        actions.append({'name': 'scale_rho', 'value': 1.3})
+    elif violation < 0.01 and gap < 0.015 and rho > 0.2:
+        actions.append({'name': 'scale_rho', 'value': 0.9})
+    if state.get('stagnation_count', 0) >= 3 and violation > 0.015:
+        actions.append({'name': 'restart'})
+        actions.append({'name': 'damp', 'value': 0.92})
+    if violation > 0.03:
+        actions.append({'name': 'damp', 'value': 0.9})
+    else:
+        actions.append({'name': 'damp', 'value': 1.0})
+    return {'actions': actions}
+
+verified: True
+errors: []
+warnings: ['Required features not referenced by policy: k']
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.4148131617415313, 'violation': 0.2764105916059325, 'runtime': 0.00015211105346679688}
+feature_coverage: 0.6666666666666666
+proof_obligations: ["path[1]: fallback satisfied under if violation > 0.08 and gap > 0.04, if state.get('stagnation_count', 0) >= 3 and violation > 0.015, if violation > 0.03", "path[2]: fallback satisfied under if violation > 0.08 and gap > 0.04, if state.get('stagnation_count', 0) >= 3 and violation > 0.015, else not (violation > 0.03)", "path[3]: fallback satisfied under if violation > 0.08 and gap > 0.04, else not (state.get('stagnation_count', 0) >= 3 and violation > 0.015), if violation > 0.03", "path[4]: fallback satisfied under if violation > 0.08 and gap > 0.04, else not (state.get('stagnation_count', 0) >= 3 and violation > 0.015), else not (violation > 0.03)", "path[5]: fallback satisfied under else not (violation > 0.08 and gap > 0.04), if violation < 0.01 and gap < 0.015 and (rho > 0.2), if state.get('stagnation_count', 0) >= 3 and violation > 0.015, if violation > 0.03", "path[6]: fallback satisfied under else not (violation > 0.08 and gap > 0.04), if violation < 0.01 and gap < 0.015 and (rho > 0.2), if state.get('stagnation_count', 0) >= 3 and violation > 0.015, else not (violation > 0.03)", "path[7]: fallback satisfied under else not (violation > 0.08 and gap > 0.04), if violation < 0.01 and gap < 0.015 and (rho > 0.2), else not (state.get('stagnation_count', 0) >= 3 and violation > 0.015), if violation > 0.03", "path[8]: fallback satisfied under else not (violation > 0.08 and gap > 0.04), if violation < 0.01 and gap < 0.015 and (rho > 0.2), else not (state.get('stagnation_count', 0) >= 3 and violation > 0.015), else not (violation > 0.03)", "path[9]: fallback satisfied under else not (violation > 0.08 and gap > 0.04), else not (violation < 0.01 and gap < 0.015 and (rho > 0.2)), if state.get('stagnation_count', 0) >= 3 and violation > 0.015, if violation > 0.03", "path[10]: fallback satisfied under else not (violation > 0.08 and gap > 0.04), else not (violation < 0.01 and gap < 0.015 and (rho > 0.2)), if state.get('stagnation_count', 0) >= 3 and violation > 0.015, else not (violation > 0.03)", "path[11]: fallback satisfied under else not (violation > 0.08 and gap > 0.04), else not (violation < 0.01 and gap < 0.015 and (rho > 0.2)), else not (state.get('stagnation_count', 0) >= 3 and violation > 0.015), if violation > 0.03", "path[12]: fallback satisfied under else not (violation > 0.08 and gap > 0.04), else not (violation < 0.01 and gap < 0.015 and (rho > 0.2)), else not (state.get('stagnation_count', 0) >= 3 and violation > 0.015), else not (violation > 0.03)"]

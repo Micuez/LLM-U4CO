@@ -22,6 +22,7 @@ link_repo() {
 }
 
 link_repo "baselines/LLM-LNS" "external/LLM-LNS"
+link_repo "baselines/MILPBench" "external/MILPBench"
 link_repo "baselines/EoH" "external/EoH"
 link_repo "baselines/ReEvo" "external/reevo"
 link_repo "baselines/OSQP" "external/osqp"

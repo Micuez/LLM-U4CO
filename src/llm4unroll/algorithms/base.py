@@ -10,6 +10,10 @@ from llm4unroll.dsl.guards import RuntimeSafetyGuard
 class RunBudget:
     max_iters: int
     time_limit_s: float = 30.0
+    profile: str = "default"
+    same_budget_candidates: int = 8
+    controller_train_multiplier: float = 1.0
+    native_probe_time_limit_s: float = 30.0
 
 
 @dataclass

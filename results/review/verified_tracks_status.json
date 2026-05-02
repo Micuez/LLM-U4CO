@@ -1,0 +1,936 @@
+{
+  "schema_version": 1,
+  "name": "llm4unroll_verified_tracks",
+  "tracks": [
+    {
+      "track_id": "pdhg_synthetic_lp",
+      "algorithm": "PDHG",
+      "problem_family": "pdhg_lp",
+      "label": "PDHG synthetic LP",
+      "section": "实验计划 / Phase 1",
+      "runner": "PDHGRunner",
+      "plan_section": "Phase 1 / minimal runnable demo",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/base.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/algorithms/pdhg.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/registry/algorithm_registry.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/pdhg_synthetic_lp.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/pdhg_synthetic_lp.yaml",
+        "python3 -m llm4unroll.experiments.run_search --config configs/pdhg_synthetic_lp.yaml"
+      ],
+      "key_state_actions": [
+        "r_p_norm",
+        "r_d_norm",
+        "tau",
+        "sigma",
+        "restart",
+        "scale_tau",
+        "scale_sigma"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/pdhg_pdhg_lp_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/pdhg_pdhg_lp_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_pdhg_pdhg_lp.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_pdhg_pdhg_lp.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "pdhg_lp",
+            "target_problem_family": "pdhg_lp",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "synthetic_to_setcover_relaxation",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "pdhg_lp",
+            "target_problem_family": "setcover_relaxation",
+            "source_scale": "synthetic_lp",
+            "target_scale": "setcover_relaxation"
+          },
+          {
+            "name": "synthetic_to_miplib",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "pdhg_lp",
+            "target_problem_family": "miplib_rootlp",
+            "source_scale": "synthetic",
+            "target_scale": "miplib"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "pdhg_miplib_rootlp",
+      "algorithm": "PDHG",
+      "problem_family": "miplib_rootlp",
+      "label": "PDHG MIPLIB root-LP",
+      "section": "与专业求解器结合 / 路线 A",
+      "runner": "PDHGRunner",
+      "plan_section": "Route A / root LP-QP relaxation accelerator",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/pdhg.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/benchmarks/miplib.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/solvers/highs_interface.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/experiments/check_native_backends.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/pdhg_miplib_rootlp.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/pdhg_miplib_rootlp.yaml --split train",
+        "python3 -m llm4unroll.experiments.check_native_backends --config configs/pdhg_miplib_rootlp.yaml --split train"
+      ],
+      "key_state_actions": [
+        "gap",
+        "violation",
+        "tau",
+        "sigma",
+        "native probe"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/pdhg_miplib_rootlp_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/native_probe_pdhg_miplib_rootlp_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_pdhg_miplib_rootlp.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_pdhg_miplib_rootlp.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "miplib_rootlp",
+            "target_problem_family": "miplib_rootlp",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "miplib_to_llm_lns_sc",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "miplib_rootlp",
+            "target_problem_family": "llm_lns_sc",
+            "source_scale": "miplib",
+            "target_scale": "llm_lns_sc"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "pdhg_llm_lns_sc",
+      "algorithm": "PDHG",
+      "problem_family": "llm_lns_sc",
+      "label": "PDHG LLM-LNS SC",
+      "section": "实验计划 / Phase 2",
+      "runner": "PDHGRunner",
+      "plan_section": "Phase 2 / LLM-LNS set cover",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/pdhg.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/benchmarks/llm_lns_data.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/experiments/run_ood.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/pdhg_llm_lns_sc.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/pdhg_llm_lns_sc.yaml --split train",
+        "python3 -m llm4unroll.experiments.run_external_baseline_replay --config configs/pdhg_llm_lns_sc.yaml --split train"
+      ],
+      "key_state_actions": [
+        "mip-style LP relaxation",
+        "residual balancing",
+        "solver baseline"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/pdhg_llm_lns_sc_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/pdhg_llm_lns_sc_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_pdhg_llm_lns_sc.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/external_replay_pdhg_llm_lns_sc_train.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_pdhg_llm_lns_sc.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "llm_lns_sc",
+            "target_problem_family": "llm_lns_sc",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "setcover_to_independent_set",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "llm_lns_sc",
+            "target_problem_family": "llm_lns_is",
+            "source_scale": "set_cover",
+            "target_scale": "independent_set"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "pdhg_llm_lns_is",
+      "algorithm": "PDHG",
+      "problem_family": "llm_lns_is",
+      "label": "PDHG LLM-LNS IS",
+      "section": "实验计划 / Phase 2",
+      "runner": "PDHGRunner",
+      "plan_section": "Phase 2 / LLM-LNS independent set",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/pdhg.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/benchmarks/llm_lns_data.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/experiments/run_ood.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/pdhg_llm_lns_is.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/pdhg_llm_lns_is.yaml --split train",
+        "python3 -m llm4unroll.experiments.run_external_baseline_replay --config configs/pdhg_llm_lns_is.yaml --split train"
+      ],
+      "key_state_actions": [
+        "instance_features",
+        "residual balancing",
+        "solver baseline"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/pdhg_llm_lns_is_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/pdhg_llm_lns_is_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/external_replay_pdhg_llm_lns_is_train.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "llm_lns_is",
+            "target_problem_family": "llm_lns_is",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "independent_set_to_setcover",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "llm_lns_is",
+            "target_problem_family": "llm_lns_sc",
+            "source_scale": "independent_set",
+            "target_scale": "set_cover"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "admm_synthetic_qp",
+      "algorithm": "ADMM",
+      "problem_family": "admm_qp",
+      "label": "ADMM synthetic QP",
+      "section": "实验计划 / Phase 1",
+      "runner": "ADMMRunner",
+      "plan_section": "Phase 1 / minimal runnable demo",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/admm.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/registry/algorithm_registry.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/solvers/osqp_interface.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/experiments/check_native_backends.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/admm_synthetic_qp.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/admm_synthetic_qp.yaml",
+        "python3 -m llm4unroll.experiments.check_native_backends --config configs/admm_synthetic_qp.yaml --split train"
+      ],
+      "key_state_actions": [
+        "r_p_norm",
+        "r_d_norm",
+        "rho",
+        "scale_rho",
+        "restart"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/admm_admm_qp_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/admm_admm_qp_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/native_probe_admm_admm_qp_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_admm_admm_qp.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_admm_admm_qp.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "admm_qp",
+            "target_problem_family": "admm_qp",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "box_qp_to_relaxation",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "admm_qp",
+            "target_problem_family": "admm_qp_relaxation",
+            "source_scale": "box_qp",
+            "target_scale": "relaxation_shift"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "fista_lasso",
+      "algorithm": "FISTA",
+      "problem_family": "fista_lasso",
+      "label": "FISTA LASSO",
+      "section": "实验计划 / Phase 1",
+      "runner": "FISTARunner",
+      "plan_section": "Phase 1 / minimal runnable demo",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/fista.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/registry/algorithm_registry.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/fista_lasso.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/fista_lasso.yaml"
+      ],
+      "key_state_actions": [
+        "obj",
+        "obj_prev",
+        "gap",
+        "momentum",
+        "restart",
+        "scale_tau"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/fista_fista_lasso_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/fista_fista_lasso_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_fista_fista_lasso.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_fista_fista_lasso.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "fista_lasso",
+            "target_problem_family": "fista_lasso",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "lasso_to_sparse_coding",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "fista_lasso",
+            "target_problem_family": "fista_sparse_coding",
+            "source_scale": "lasso",
+            "target_scale": "sparse_coding"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "alm_eq_qp",
+      "algorithm": "ALM",
+      "problem_family": "alm_eq_qp",
+      "label": "ALM equality-QP",
+      "section": "算法 Runner 设计 / 扩展线",
+      "runner": "ALMRunner",
+      "plan_section": "Algorithm runner expansion / ALM",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/alm.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/registry/algorithm_registry.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/alm_eq_qp.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/alm_eq_qp.yaml",
+        "python3 -m llm4unroll.experiments.check_native_backends --config configs/alm_eq_qp.yaml --split train"
+      ],
+      "key_state_actions": [
+        "violation",
+        "rho",
+        "dual_residual",
+        "grad_norm",
+        "clip_update"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/alm_alm_eq_qp_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/alm_alm_eq_qp_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/native_probe_alm_alm_eq_qp_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_alm_alm_eq_qp.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_alm_alm_eq_qp.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "alm_eq_qp",
+            "target_problem_family": "alm_eq_qp",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "equality_qp_to_cover_relaxation",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "alm_eq_qp",
+            "target_problem_family": "alm_cover_relaxation",
+            "source_scale": "equality_qp",
+            "target_scale": "cover_relaxation"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "drs_feasibility",
+      "algorithm": "DRS",
+      "problem_family": "drs_feasibility",
+      "label": "DRS feasibility",
+      "section": "算法 Runner 设计 / 扩展线",
+      "runner": "DouglasRachfordRunner",
+      "plan_section": "Algorithm runner expansion / DRS",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/douglas_rachford.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/registry/algorithm_registry.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/drs_feasibility.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/drs_feasibility.yaml"
+      ],
+      "key_state_actions": [
+        "residual_norm",
+        "lambda_relax",
+        "dual_residual",
+        "set_lambda_relax",
+        "clip_update"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/drs_drs_feasibility_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/drs_drs_feasibility_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_drs_drs_feasibility.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_drs_drs_feasibility.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "drs_feasibility",
+            "target_problem_family": "drs_feasibility",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "affine_box_to_shifted_box",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "drs_feasibility",
+            "target_problem_family": "drs_affine_box_shifted",
+            "source_scale": "affine_box",
+            "target_scale": "shifted_box"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "pcg_linear_system",
+      "algorithm": "PCG",
+      "problem_family": "pcg_linear_system",
+      "label": "PCG linear system",
+      "section": "算法 Runner 设计 / 扩展线",
+      "runner": "PCGRunner",
+      "plan_section": "Algorithm runner expansion / PCG",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/pcg.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/registry/algorithm_registry.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/pcg_linear_system.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/pcg_linear_system.yaml",
+        "python3 -m llm4unroll.experiments.check_native_backends --config configs/pcg_linear_system.yaml --split train"
+      ],
+      "key_state_actions": [
+        "residual_ratio",
+        "direction_curvature",
+        "gap",
+        "clip_update",
+        "restart"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/pcg_pcg_linear_system_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/pcg_pcg_linear_system_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/native_probe_pcg_pcg_linear_system_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_pcg_pcg_linear_system.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_pcg_pcg_linear_system.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "pcg_linear_system",
+            "target_problem_family": "pcg_linear_system",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "linear_system_to_graph_laplacian",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "pcg_linear_system",
+            "target_problem_family": "pcg_graph_laplacian",
+            "source_scale": "dense_spd",
+            "target_scale": "graph_laplacian"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    },
+    {
+      "track_id": "lns_repair_cover",
+      "algorithm": "LNS_REPAIR",
+      "problem_family": "lns_repair_cover",
+      "label": "LNS repair cover",
+      "section": "与专业求解器结合 / 路线 B",
+      "runner": "LNSRepairRunner",
+      "plan_section": "Route B / relaxation-guided LNS repair",
+      "code_modules": [
+        {
+          "path": "src/llm4unroll/algorithms/lns_repair.py",
+          "exists": true
+        },
+        {
+          "path": "src/llm4unroll/registry/algorithm_registry.py",
+          "exists": true
+        }
+      ],
+      "config": {
+        "path": "configs/lns_repair_cover.yaml",
+        "exists": true
+      },
+      "experiment_entrypoints": [
+        "python3 -m llm4unroll.experiments.run_baselines --config configs/lns_repair_cover.yaml",
+        "python3 -m llm4unroll.experiments.run_solver_tracks --config configs/lns_repair_cover.yaml --split train"
+      ],
+      "key_state_actions": [
+        "mip_gap",
+        "fractionality",
+        "neighbourhood_size",
+        "repair_progress",
+        "set_neighbourhood_size"
+      ],
+      "artifacts": [
+        {
+          "path": "results/tables/lns_repair_lns_repair_cover_train.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/lns_repair_lns_repair_cover_train.md",
+          "exists": true
+        },
+        {
+          "path": "results/tables/ood_lns_repair_lns_repair_cover.csv",
+          "exists": true
+        },
+        {
+          "path": "results/tables/solver_tracks_lns_repair_lns_repair_cover_train.csv",
+          "exists": true
+        }
+      ],
+      "ood_coverage": {
+        "artifact_paths": [
+          {
+            "path": "results/tables/ood_lns_repair_lns_repair_cover.csv",
+            "exists": true
+          }
+        ],
+        "scenario_types": [
+          "cross_problem_transfer",
+          "train_small_test_large"
+        ],
+        "scenarios": [
+          {
+            "name": "train_small_test_large",
+            "type": "train_small_test_large",
+            "source_problem_family": "lns_repair_cover",
+            "target_problem_family": "lns_repair_cover",
+            "source_scale": "small_train",
+            "target_scale": "large_test"
+          },
+          {
+            "name": "cover_repair_to_dense_cover",
+            "type": "cross_problem_transfer",
+            "source_problem_family": "lns_repair_cover",
+            "target_problem_family": "lns_repair_cover_dense",
+            "source_scale": "sparse_cover",
+            "target_scale": "dense_cover"
+          }
+        ]
+      },
+      "status": {
+        "implemented": true,
+        "config_present": true,
+        "artifacts_present": true,
+        "verification_state": "verified_artifacts_present"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "section": "与专业求解器结合 / 路线 A",
+      "tracks": [
+        "pdhg_miplib_rootlp"
+      ]
+    },
+    {
+      "section": "与专业求解器结合 / 路线 B",
+      "tracks": [
+        "lns_repair_cover"
+      ]
+    },
+    {
+      "section": "实验计划 / Phase 1",
+      "tracks": [
+        "pdhg_synthetic_lp",
+        "admm_synthetic_qp",
+        "fista_lasso"
+      ]
+    },
+    {
+      "section": "实验计划 / Phase 2",
+      "tracks": [
+        "pdhg_llm_lns_sc",
+        "pdhg_llm_lns_is"
+      ]
+    },
+    {
+      "section": "算法 Runner 设计 / 扩展线",
+      "tracks": [
+        "alm_eq_qp",
+        "drs_feasibility",
+        "pcg_linear_system"
+      ]
+    }
+  ],
+  "summary": {
+    "track_count": 10,
+    "tracks_with_artifacts": 10,
+    "tracks_missing_artifacts": 0
+  }
+}

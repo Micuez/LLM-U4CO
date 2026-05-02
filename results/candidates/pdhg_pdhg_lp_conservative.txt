@@ -1,8 +1,8 @@
 policy_id: conservative
 origin: baseline
 split: train
-score: -1.3044349419577457
-aggregate: {'median_gap': 0.423342339233254, 'median_violation': 0.45379027695937046, 'median_runtime': 0.001558065414428711, 'median_primal_residual': 0.45379027695937046, 'median_dual_residual': 0.004378743017924122, 'median_iterations': 60.0, 'fail_rate': 0.0}
+score: -1.304396016110908
+aggregate: {'median_gap': 0.423342339233254, 'median_violation': 0.45379027695937046, 'median_runtime': 0.0012981891632080078, 'median_primal_residual': 0.45379027695937046, 'median_dual_residual': 0.004378743017924122, 'median_iterations': 60.0, 'fail_rate': 0.0}
 source: def policy(state):
     actions = []
     actions.append({'name': 'fallback'})
@@ -18,6 +18,6 @@ errors: []
 warnings: ['Action scale_tau is emitted without reading state feature tau.', 'Action scale_sigma is emitted without reading state feature sigma.', 'Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau']
 smoke_ok: True
 smoke_reason: 
-smoke_diagnostics: {'iterations': 8, 'gap': 0.680075817898536, 'violation': 0.6245127996575945, 'runtime': 0.0001971721649169922}
+smoke_diagnostics: {'iterations': 8, 'gap': 0.680075817898536, 'violation': 0.6245127996575945, 'runtime': 0.0001862049102783203}
 feature_coverage: 0.0
 proof_obligations: ["path[1]: fallback satisfied under if state.get('stagnation_count', 0) > 5", "path[2]: fallback satisfied under else not (state.get('stagnation_count', 0) > 5)"]

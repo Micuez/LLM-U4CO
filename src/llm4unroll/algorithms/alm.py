@@ -47,6 +47,9 @@ class ALMRunner(UnrolledAlgorithmRunner):
                 "gap": gap,
                 "violation": violation,
                 "rho": rho,
+                "dual_residual": norm2(lam),
+                "grad_norm": norm2(gradient),
+                "clip_scale": clip_scale,
                 "stagnation_count": stagnation_count,
                 "instance_features": instance.instance_features,
             }
@@ -67,6 +70,8 @@ class ALMRunner(UnrolledAlgorithmRunner):
                     rho = self.guard.clip_named("rho", float(value))
                 elif name == "scale_rho" and value is not None:
                     rho = self.guard.clip_named("rho", rho * float(value))
+                elif name == "clip_update" and value is not None:
+                    clip_scale = max(1e-3, min(5.0, float(value)))
                 elif name == "damp" and value is not None:
                     clip_scale = max(0.05, min(1.0, float(value)))
                 elif name == "restart":

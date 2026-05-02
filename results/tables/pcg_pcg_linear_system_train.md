@@ -1,7 +1,11 @@
 # Baseline Summary
 
-| algorithm | problem_family | policy_id | origin | score | median_gap | median_violation | median_runtime | median_primal_residual | median_dual_residual | median_iterations | fail_rate |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| PCG | pcg_linear_system | vanilla | baseline | -0.468302 | 3e-06 | 3e-06 | 0.003696 | 3e-06 | 0.708275 | 50 | 0.0 |
-| PCG | pcg_linear_system | adaptive | baseline | -0.918272 | 5e-06 | 4e-06 | 0.003482 | 4e-06 | 0.708273 | 50 | 0.0 |
-| PCG | pcg_linear_system | conservative | baseline | -0.668232 | 6e-06 | 5e-06 | 0.003198 | 5e-06 | 0.708271 | 50 | 0.0 |
+| algorithm | problem_family | policy_id | origin | native_used | native_backend | verified | smoke_ok | smoke_reason | errors | warnings | feature_coverage | proof_count | score | median_gap | median_violation | median_runtime | median_primal_residual | median_dual_residual | median_iterations | fail_rate | backend_mode | backend_detail | support_level | supports_native | supports_surrogate | paper_scale_pending |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| PCG | pcg_linear_system | vanilla | baseline |  |  | True | True |  |  | Required features not referenced by policy: k, residual_norm | 0.0 | 1 | -0.46823 | 3e-06 | 3e-06 | 0.003211 | 3e-06 | 0.708275 | 50 | 0.0 |  |  |  |  |  |  |
+| PCG | pcg_linear_system | adaptive | baseline |  |  | True | True |  |  | Required features not referenced by policy: k, residual_norm | 0.0 | 3 | -0.918656 | 5e-06 | 4e-06 | 0.006049 | 4e-06 | 0.708273 | 50 | 0.0 |  |  |  |  |  |  |
+| PCG | pcg_linear_system | conservative | baseline |  |  | True | True |  |  | Required features not referenced by policy: k, residual_norm | 0.0 | 2 | -0.668251 | 6e-06 | 5e-06 | 0.003323 | 5e-06 | 0.708271 | 50 | 0.0 |  |  |  |  |  |  |
+| PCG | pcg_linear_system | safe_fallback_only | baseline |  |  | True | True |  |  | Required features not referenced by policy: k, residual_norm | 0.0 | 1 | -0.468213 | 3e-06 | 3e-06 | 0.003099 | 3e-06 | 0.708275 | 50 | 0.0 |  |  |  |  |  |  |
+| PCG | pcg_linear_system | learned_controller | baseline |  |  | True | True |  |  | Required features not referenced by policy: k, residual_norm | 0.0 | 3 | -0.918213 | 5e-06 | 4e-06 | 0.003083 | 4e-06 | 0.708273 | 50 | 0.0 |  |  |  |  |  |  |
+| PCG | pcg_linear_system | llm_one_shot | baseline |  |  | True | True |  |  | Required features not referenced by policy: k, residual_norm | 0.0 | 4 | -1.218193 | 5e-06 | 4e-06 | 0.002946 | 4e-06 | 0.708273 | 50 | 0.0 |  |  |  |  |  |  |
+| PCG | pcg_linear_system | OSQP | solver_baseline | False |  |  |  |  |  |  |  |  | -0.267894 | 0.0 | 0.0 | 0.001017 | 0.0 | 0.708275 | 1 | 0.0 | surrogate | ModuleNotFoundError: No module named 'osqp' | surrogate_only | False | True | True |

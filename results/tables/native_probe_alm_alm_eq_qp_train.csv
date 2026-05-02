@@ -1,0 +1,3 @@
+algorithm,backend_detail,backend_mode,fail_rate,median_gap,median_runtime,native_used,paper_scale_pending,problem_family,score,solver_name,split,support_level,supports_native,supports_surrogate
+ALM,python package highspy importable,python_package,0.0,0.0,0.001214,True,True,alm_eq_qp,-0.000182,HiGHS,train,native_verified,True,False
+ALM,python package osqp importable,python_package,0.0,0.0,0.001074,True,True,alm_eq_qp,-0.000161,OSQP,train,,False,False

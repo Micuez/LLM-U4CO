@@ -1,8 +1,8 @@
 policy_id: adaptive
 origin: baseline
 split: train
-score: -1.3025639659483457
-aggregate: {'median_gap': 0.7291077832789121, 'median_violation': 0.002708309911536799, 'median_runtime': 0.0009145736694335938, 'median_primal_residual': 0.002708309911536799, 'median_dual_residual': 0.0031564119493770093, 'median_iterations': 70.0, 'fail_rate': 0.0}
+score: -1.3026125153088932
+aggregate: {'median_gap': 0.7291077832789121, 'median_violation': 0.002708309911536799, 'median_runtime': 0.0012385845184326172, 'median_primal_residual': 0.002708309911536799, 'median_dual_residual': 0.0031564119493770093, 'median_iterations': 70.0, 'fail_rate': 0.0}
 source: def policy(state):
     actions = []
     actions.append({'name': 'fallback'})
@@ -16,3 +16,11 @@ source: def policy(state):
         actions.append({'name': 'restart'})
     return {'actions': actions}
 
+verified: True
+errors: []
+warnings: ['Required features not referenced by policy: k']
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.8332607643253621, 'violation': 0.035516116657302435, 'runtime': 0.00019621849060058594}
+feature_coverage: 0.5
+proof_obligations: ["path[1]: fallback satisfied under if state.get('residual_norm', 0.0) > 0.02, if state.get('stagnation_count', 0) >= 5", "path[2]: fallback satisfied under if state.get('residual_norm', 0.0) > 0.02, else not (state.get('stagnation_count', 0) >= 5)", "path[3]: fallback satisfied under else not (state.get('residual_norm', 0.0) > 0.02), if state.get('gap', 1.0) < 0.15, if state.get('stagnation_count', 0) >= 5", "path[4]: fallback satisfied under else not (state.get('residual_norm', 0.0) > 0.02), if state.get('gap', 1.0) < 0.15, else not (state.get('stagnation_count', 0) >= 5)", "path[5]: fallback satisfied under else not (state.get('residual_norm', 0.0) > 0.02), else not (state.get('gap', 1.0) < 0.15), if state.get('stagnation_count', 0) >= 5", "path[6]: fallback satisfied under else not (state.get('residual_norm', 0.0) > 0.02), else not (state.get('gap', 1.0) < 0.15), else not (state.get('stagnation_count', 0) >= 5)"]

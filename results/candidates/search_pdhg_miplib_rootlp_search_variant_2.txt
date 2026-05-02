@@ -3,7 +3,7 @@ problem_family: miplib_rootlp
 verified: True
 smoke_ok: True
 smoke_reason: 
-smoke_diagnostics: {'iterations': 8, 'gap': 0.6277641814707776, 'violation': 1.5051993943423163, 'runtime': 0.00012803077697753906}
+smoke_diagnostics: {'iterations': 8, 'gap': 0.6277641814707776, 'violation': 1.5051993943423163, 'runtime': 0.000125885009765625}
 errors: []
 warnings: ['Required features not referenced by policy: k, r_d_norm, r_p_norm, sigma, tau']
 feature_coverage: 0.0
@@ -18,4 +18,5 @@ source: def policy(state):
 
 origin: mutation
 parent: 
-score: -1.7645744899926918
+score: -1.7645737398297103
+

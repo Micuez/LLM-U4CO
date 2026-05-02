@@ -21,6 +21,7 @@ class DouglasRachfordRunner(UnrolledAlgorithmRunner):
         n = len(x_star)
         z = [0.0] * n
         damping = 1.0
+        step_clip = 1.0
         stagnation_count = 0
         best_residual = float("inf")
         trace = RunTrace()
@@ -42,6 +43,8 @@ class DouglasRachfordRunner(UnrolledAlgorithmRunner):
                 "gap": gap,
                 "residual_norm": residual,
                 "lambda_relax": damping,
+                "dual_residual": norm2(sub(z, x)),
+                "step_clip": step_clip,
                 "stagnation_count": stagnation_count,
                 "instance_features": instance.instance_features,
             }
@@ -62,6 +65,12 @@ class DouglasRachfordRunner(UnrolledAlgorithmRunner):
                 value = action.get("value")
                 if name == "damp" and value is not None:
                     damping = max(0.05, min(1.0, float(value)))
+                elif name == "set_lambda_relax" and value is not None:
+                    damping = max(0.05, min(1.95, float(value)))
+                elif name == "scale_lambda_relax" and value is not None:
+                    damping = max(0.05, min(1.95, damping * float(value)))
+                elif name == "clip_update" and value is not None:
+                    step_clip = max(1e-3, min(5.0, float(value)))
                 elif name == "restart":
                     do_restart = True
                 elif name == "fallback":
@@ -70,7 +79,7 @@ class DouglasRachfordRunner(UnrolledAlgorithmRunner):
             if do_restart:
                 z = [0.0] * n
             else:
-                z = add(z, scale(sub(y, x), damping))
+                z = add(z, scale(sub(y, x), min(damping, step_clip)))
 
             trace.objectives.append(obj)
             trace.gaps.append(gap)

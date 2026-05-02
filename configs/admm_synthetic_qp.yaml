@@ -2,6 +2,7 @@ seed: 7
 algorithm: ADMM
 problem_family: admm_qp
 budget:
+  profile: paper_native
   max_iters: 60
   time_limit_s: 10.0
 evaluation:

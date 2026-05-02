@@ -1,8 +1,8 @@
 policy_id: conservative
 origin: baseline
 split: train
-score: -0.9613891735684147
-aggregate: {'median_gap': 0.7377911743401724, 'median_violation': 0.0048480766841507705, 'median_runtime': 0.0009114742279052734, 'median_primal_residual': 0.0048480766841507705, 'median_dual_residual': 0.0056841192652762555, 'median_iterations': 70.0, 'fail_rate': 0.0}
+score: -0.9614901667582109
+aggregate: {'median_gap': 0.7377911743401724, 'median_violation': 0.0048480766841507705, 'median_runtime': 0.0015856027603149414, 'median_primal_residual': 0.0048480766841507705, 'median_dual_residual': 0.0056841192652762555, 'median_iterations': 70.0, 'fail_rate': 0.0}
 source: def policy(state):
     actions = []
     actions.append({'name': 'fallback'})
@@ -11,3 +11,11 @@ source: def policy(state):
         actions.append({'name': 'restart'})
     return {'actions': actions}
 
+verified: True
+errors: []
+warnings: ['Required features not referenced by policy: k, residual_norm']
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.862082016326081, 'violation': 0.04190604839461402, 'runtime': 0.0001461505889892578}
+feature_coverage: 0.0
+proof_obligations: ["path[1]: fallback satisfied under if state.get('stagnation_count', 0) > 5", "path[2]: fallback satisfied under else not (state.get('stagnation_count', 0) > 5)"]

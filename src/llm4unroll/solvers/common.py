@@ -23,6 +23,22 @@ class SolverBackendStatus:
     package: str = ""
 
 
+def classify_solver_support(backend_status: SolverBackendStatus) -> Dict[str, object]:
+    if backend_status.available:
+        return {
+            "support_level": "native_verified",
+            "supports_native": True,
+            "supports_surrogate": False,
+            "paper_scale_pending": True,
+        }
+    return {
+        "support_level": "surrogate_only",
+        "supports_native": False,
+        "supports_surrogate": True,
+        "paper_scale_pending": True,
+    }
+
+
 class CommandBackedSolverInterface:
     solver_name = "solver"
     python_package = ""
@@ -164,6 +180,7 @@ def make_solver_metrics(
         "backend_mode": backend_status.mode,
         "backend_detail": backend_status.detail,
     }
+    diagnostics.update(classify_solver_support(backend_status))
     if backend_status.command:
         diagnostics["command"] = backend_status.command
     if backend_status.package:

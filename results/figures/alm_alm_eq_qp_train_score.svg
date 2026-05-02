@@ -4,29 +4,46 @@
 <text x="36" y="40" font-size="24" font-family="Arial, Helvetica, sans-serif" fill="#111827">Baseline Score</text>
 <text x="36" y="62" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">chart=bar generated_from_csv=true</text>
 <line x1="84.0" y1="528.0" x2="1052.0" y2="528.0" stroke="#e5e7eb" stroke-width="1.0" />
-<text x="74.0" y="532.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.7604</text>
+<text x="74.0" y="532.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-1.238</text>
 <line x1="84.0" y1="438.4" x2="1052.0" y2="438.4" stroke="#e5e7eb" stroke-width="1.0" />
-<text x="74.0" y="442.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.6083</text>
+<text x="74.0" y="442.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.9639</text>
 <line x1="84.0" y1="348.8" x2="1052.0" y2="348.8" stroke="#e5e7eb" stroke-width="1.0" />
-<text x="74.0" y="352.8" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.4562</text>
+<text x="74.0" y="352.8" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.6898</text>
 <line x1="84.0" y1="259.2" x2="1052.0" y2="259.2" stroke="#e5e7eb" stroke-width="1.0" />
-<text x="74.0" y="263.2" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.3042</text>
+<text x="74.0" y="263.2" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.4157</text>
 <line x1="84.0" y1="169.6" x2="1052.0" y2="169.6" stroke="#e5e7eb" stroke-width="1.0" />
-<text x="74.0" y="173.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.1521</text>
+<text x="74.0" y="173.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.1416</text>
 <line x1="84.0" y1="80.0" x2="1052.0" y2="80.0" stroke="#e5e7eb" stroke-width="1.0" />
-<text x="74.0" y="84.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.0000</text>
-<line x1="84.0" y1="80.0" x2="1052.0" y2="80.0" stroke="#111827" stroke-width="1.2" />
-<rect x="428.0" y="80.0" width="84.0" height="120.2" rx="4" fill="#2563eb"><title>ALM/vanilla | score=-0.2040 | origin=baseline</title></rect>
-<text x="470.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 470.0 578.0)">ALM/vanilla</text>
-<text x="470.0" y="216.2" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.2040</text>
-<rect x="526.0" y="80.0" width="84.0" height="295.7" rx="4" fill="#2563eb"><title>ALM/conservative | score=-0.5019 | origin=baseline</title></rect>
-<text x="568.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 568.0 578.0)">ALM/conservative</text>
-<text x="568.0" y="391.7" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.5019</text>
-<rect x="624.0" y="80.0" width="84.0" height="412.9" rx="4" fill="#2563eb"><title>ALM/adaptive | score=-0.7008 | origin=baseline</title></rect>
-<text x="666.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 666.0 578.0)">ALM/adaptive</text>
-<text x="666.0" y="508.9" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.7008</text>
+<text x="74.0" y="84.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.1325</text>
+<line x1="84.0" y1="123.3" x2="1052.0" y2="123.3" stroke="#111827" stroke-width="1.2" />
+<rect x="183.0" y="123.3" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ALM/OSQP [surrogate] | score=-0.0002 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'osqp'</title></rect>
+<text x="225.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 225.0 578.0)">ALM/OSQP [surrogate]</text>
+<text x="225.0" y="140.3" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.0002</text>
+<rect x="281.0" y="123.3" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ALM/HiGHS [surrogate] | score=-0.0002 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'highspy'</title></rect>
+<text x="323.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 323.0 578.0)">ALM/HiGHS [surrogate]</text>
+<text x="323.0" y="140.3" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.0002</text>
+<rect x="379.0" y="123.3" width="84.0" height="66.7" rx="4" fill="#16a34a"><title>ALM/safe_fallback_only | score=-0.2040 | origin=baseline</title></rect>
+<text x="421.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 421.0 578.0)">ALM/safe_fallback_only</text>
+<text x="421.0" y="206.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.2040</text>
+<rect x="477.0" y="123.3" width="84.0" height="66.7" rx="4" fill="#16a34a"><title>ALM/vanilla | score=-0.2040 | origin=baseline</title></rect>
+<text x="519.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 519.0 578.0)">ALM/vanilla</text>
+<text x="519.0" y="206.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.2040</text>
+<rect x="575.0" y="123.3" width="84.0" height="164.1" rx="4" fill="#16a34a"><title>ALM/conservative | score=-0.5020 | origin=baseline</title></rect>
+<text x="617.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 617.0 578.0)">ALM/conservative</text>
+<text x="617.0" y="303.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.5020</text>
+<rect x="673.0" y="123.3" width="84.0" height="229.0" rx="4" fill="#16a34a"><title>ALM/learned_controller | score=-0.7005 | origin=baseline</title></rect>
+<text x="715.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 715.0 578.0)">ALM/learned_controller</text>
+<text x="715.0" y="368.3" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.7005</text>
+<rect x="771.0" y="123.3" width="84.0" height="229.0" rx="4" fill="#16a34a"><title>ALM/adaptive | score=-0.7005 | origin=baseline</title></rect>
+<text x="813.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 813.0 578.0)">ALM/adaptive</text>
+<text x="813.0" y="368.3" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-0.7005</text>
+<rect x="869.0" y="123.3" width="84.0" height="361.3" rx="4" fill="#16a34a"><title>ALM/llm_one_shot | score=-1.105 | origin=baseline</title></rect>
+<text x="911.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 911.0 578.0)">ALM/llm_one_shot</text>
+<text x="911.0" y="500.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">-1.105</text>
 <rect x="84" y="608" width="12" height="12" rx="2" fill="#2563eb" />
-<text x="102.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">baseline</text>
-<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=score items=3</text>
+<text x="102.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">solver_baseline</text>
+<rect x="232" y="608" width="12" height="12" rx="2" fill="#16a34a" />
+<text x="250.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">baseline</text>
+<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=score items=8</text>
 <text x="22.0" y="90.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start" transform="rotate(-90 22.0 90.0)">score</text>
 </svg>

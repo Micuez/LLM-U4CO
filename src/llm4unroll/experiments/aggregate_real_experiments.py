@@ -22,6 +22,8 @@ def main() -> None:
     patterns = [
         "results/tables/*miplib*_train.csv",
         "results/tables/*llm_lns*_train.csv",
+        "results/tables/native_probe_*_train.csv",
+        "results/tables/ablation_*miplib*_train.csv",
         "results/tables/evolution_no_llm_*miplib*_train.csv",
         "results/tables/random_search_*miplib*_train.csv",
         "results/tables/search_*miplib*_train.csv",

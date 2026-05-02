@@ -16,28 +16,37 @@
 <line x1="84.0" y1="80.0" x2="1052.0" y2="80.0" stroke="#e5e7eb" stroke-width="1.0" />
 <text x="74.0" y="84.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">1.000</text>
 <line x1="84.0" y1="304.0" x2="1052.0" y2="304.0" stroke="#111827" stroke-width="1.2" />
-<rect x="281.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/vanilla | median_gap=0.0000 | origin=baseline</title></rect>
-<text x="323.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 323.0 578.0)">LNS_REPAIR/vanilla</text>
-<text x="323.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="379.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/adaptive | median_gap=0.0000 | origin=baseline</title></rect>
-<text x="421.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 421.0 578.0)">LNS_REPAIR/adaptive</text>
-<text x="421.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="477.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/conservative | median_gap=0.0000 | origin=baseline</title></rect>
-<text x="519.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 519.0 578.0)">LNS_REPAIR/conservative</text>
-<text x="519.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="575.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#dc2626"><title>LNS_REPAIR/PySCIPOpt | median_gap=0.0000 | origin=solver_baseline | native_used=None</title></rect>
-<text x="617.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 617.0 578.0)">LNS_REPAIR/PySCIPOpt</text>
-<text x="617.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="673.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#dc2626"><title>LNS_REPAIR/OR-Tools | median_gap=0.0000 | origin=solver_baseline | native_used=None</title></rect>
-<text x="715.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 715.0 578.0)">LNS_REPAIR/OR-Tools</text>
-<text x="715.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="771.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#dc2626"><title>LNS_REPAIR/Ecole | median_gap=0.0000 | origin=solver_baseline | native_used=None</title></rect>
-<text x="813.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 813.0 578.0)">LNS_REPAIR/Ecole</text>
-<text x="813.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="134.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/vanilla | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="176.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 176.0 578.0)">LNS_REPAIR/vanilla</text>
+<text x="176.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="232.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/adaptive | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="274.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 274.0 578.0)">LNS_REPAIR/adaptive</text>
+<text x="274.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="330.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/conservative | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="372.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 372.0 578.0)">LNS_REPAIR/conservative</text>
+<text x="372.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="428.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/safe_fallback_only | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="470.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 470.0 578.0)">LNS_REPAIR/safe_fallback_only</text>
+<text x="470.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="526.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/learned_controller | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="568.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 568.0 578.0)">LNS_REPAIR/learned_controller</text>
+<text x="568.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="624.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>LNS_REPAIR/llm_one_shot | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="666.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 666.0 578.0)">LNS_REPAIR/llm_one_shot</text>
+<text x="666.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="722.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#ca8a04"><title>LNS_REPAIR/PySCIPOpt [surrogate] | median_gap=0.0000 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'pyscipopt'</title></rect>
+<text x="764.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 764.0 578.0)">LNS_REPAIR/PySCIPOpt [surrogate]</text>
+<text x="764.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="820.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#ca8a04"><title>LNS_REPAIR/OR-Tools [surrogate] | median_gap=0.0000 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'ortools'</title></rect>
+<text x="862.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 862.0 578.0)">LNS_REPAIR/OR-Tools [surrogate]</text>
+<text x="862.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="918.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#ca8a04"><title>LNS_REPAIR/Ecole [surrogate] | median_gap=0.0000 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'ecole'</title></rect>
+<text x="960.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 960.0 578.0)">LNS_REPAIR/Ecole [surrogate]</text>
+<text x="960.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
 <rect x="84" y="608" width="12" height="12" rx="2" fill="#2563eb" />
 <text x="102.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">baseline</text>
-<rect x="232" y="608" width="12" height="12" rx="2" fill="#dc2626" />
+<rect x="232" y="608" width="12" height="12" rx="2" fill="#ca8a04" />
 <text x="250.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">solver_baseline</text>
-<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=median_gap items=6</text>
+<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=median_gap items=9</text>
 <text x="22.0" y="90.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start" transform="rotate(-90 22.0 90.0)">median_gap</text>
 </svg>

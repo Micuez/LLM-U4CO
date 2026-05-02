@@ -1,0 +1,96 @@
+{
+  "rows": [
+    {
+      "label": "LLM-LNS SC exact repo script",
+      "repo_root": "baselines/LLM-LNS",
+      "repo_head": "5faa077964b0296e2f5cf2915eef0a0bb61904c6",
+      "entrypoint": "baselines/LLM-LNS/src/MILP Problems/SC_eoh_change_prompt_ACP.py",
+      "problem_family": "llm_lns_sc",
+      "exact_command": "python3 baselines/LLM-LNS/src/MILP Problems/SC_eoh_change_prompt_ACP.py",
+      "api_ready": false,
+      "openai_compatible_ready": false,
+      "module_numpy": true,
+      "module_joblib": true,
+      "module_gurobipy": true,
+      "gurobipy_license_ready": true,
+      "gurobipy_version": "12.0.2",
+      "gurobipy_detail": "model_create_ok",
+      "contains_placeholder_endpoint": true,
+      "contains_placeholder_key": true,
+      "can_attempt_exact_run": false,
+      "blockers": [
+        "upstream script still contains placeholder API credentials",
+        "missing LLM_API_KEY / LLM_API_ENDPOINT"
+      ]
+    },
+    {
+      "label": "LLM-LNS IS exact repo script",
+      "repo_root": "baselines/LLM-LNS",
+      "repo_head": "5faa077964b0296e2f5cf2915eef0a0bb61904c6",
+      "entrypoint": "baselines/LLM-LNS/src/MILP Problems/IS_eoh_change_prompt_ACP.py",
+      "problem_family": "llm_lns_is",
+      "exact_command": "python3 baselines/LLM-LNS/src/MILP Problems/IS_eoh_change_prompt_ACP.py",
+      "api_ready": false,
+      "openai_compatible_ready": false,
+      "module_numpy": true,
+      "module_joblib": true,
+      "module_gurobipy": true,
+      "gurobipy_license_ready": true,
+      "gurobipy_version": "12.0.2",
+      "gurobipy_detail": "model_create_ok",
+      "contains_placeholder_endpoint": true,
+      "contains_placeholder_key": true,
+      "can_attempt_exact_run": false,
+      "blockers": [
+        "upstream script still contains placeholder API credentials",
+        "missing LLM_API_KEY / LLM_API_ENDPOINT"
+      ]
+    },
+    {
+      "label": "LLM-LNS MVC exact repo script",
+      "repo_root": "baselines/LLM-LNS",
+      "repo_head": "5faa077964b0296e2f5cf2915eef0a0bb61904c6",
+      "entrypoint": "baselines/LLM-LNS/src/MILP Problems/MVC_eoh_change_prompt_ACP.py",
+      "problem_family": "llm_lns_mvc",
+      "exact_command": "python3 baselines/LLM-LNS/src/MILP Problems/MVC_eoh_change_prompt_ACP.py",
+      "api_ready": false,
+      "openai_compatible_ready": false,
+      "module_numpy": true,
+      "module_joblib": true,
+      "module_gurobipy": true,
+      "gurobipy_license_ready": true,
+      "gurobipy_version": "12.0.2",
+      "gurobipy_detail": "model_create_ok",
+      "contains_placeholder_endpoint": true,
+      "contains_placeholder_key": true,
+      "can_attempt_exact_run": false,
+      "blockers": [
+        "upstream script still contains placeholder API credentials",
+        "missing LLM_API_KEY / LLM_API_ENDPOINT"
+      ]
+    },
+    {
+      "label": "LLM-LNS MIKS exact repo script",
+      "repo_root": "baselines/LLM-LNS",
+      "repo_head": "5faa077964b0296e2f5cf2915eef0a0bb61904c6",
+      "entrypoint": "baselines/LLM-LNS/src/MILP Problems/MIKS_eoh_change_prompt_ACP.py",
+      "problem_family": "llm_lns_miks",
+      "exact_command": "python3 baselines/LLM-LNS/src/MILP Problems/MIKS_eoh_change_prompt_ACP.py",
+      "api_ready": false,
+      "openai_compatible_ready": false,
+      "module_numpy": true,
+      "module_joblib": true,
+      "module_gurobipy": true,
+      "gurobipy_license_ready": true,
+      "gurobipy_version": "12.0.2",
+      "gurobipy_detail": "model_create_ok",
+      "contains_placeholder_endpoint": true,
+      "contains_placeholder_key": true,
+      "can_attempt_exact_run": false,
+      "blockers": [
+        "upstream script still contains placeholder API credentials",
+        "missing LLM_API_KEY / LLM_API_ENDPOINT"
+      ]
+    }
+  ]
+}

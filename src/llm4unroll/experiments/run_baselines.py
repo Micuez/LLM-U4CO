@@ -35,6 +35,10 @@ def _solver_backend_columns(diagnostics):
     return {
         "native_used": native_used,
         "native_backend": native_backend,
+        "support_level": diagnostics.get("support_level", ""),
+        "supports_native": diagnostics.get("supports_native", False),
+        "supports_surrogate": diagnostics.get("supports_surrogate", False),
+        "paper_scale_pending": diagnostics.get("paper_scale_pending", True),
     }
 
 
@@ -74,6 +78,9 @@ def main():
             "problem_family": config["problem_family"],
             "policy_id": candidate.policy_id,
             "origin": candidate.origin,
+            "budget_profile": budget.profile,
+            "budget_max_iters": budget.max_iters,
+            "budget_time_limit_s": budget.time_limit_s,
             "native_used": "",
             "native_backend": "",
             "verified": verification.ok,
@@ -122,6 +129,9 @@ def main():
             "problem_family": config["problem_family"],
             "policy_id": solver.solver_name,
             "origin": "solver_baseline",
+            "budget_profile": budget.profile,
+            "budget_max_iters": budget.max_iters,
+            "budget_time_limit_s": budget.time_limit_s,
             "backend_mode": diagnostics.get("backend_mode", ""),
             "backend_detail": diagnostics.get("backend_detail", ""),
             "score": round(result.score, 6),

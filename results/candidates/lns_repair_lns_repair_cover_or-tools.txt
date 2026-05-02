@@ -1,7 +1,10 @@
 policy_id: OR-Tools
 origin: solver_baseline
 split: train
-score: -0.13536677426703872
-aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.001311444091796875, 'median_primal_residual': 0.0, 'median_dual_residual': 0.3104104032379415, 'median_iterations': 1.0, 'fail_rate': 0.0}
+score: -0.1353669349887159
+aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.001312516975402832, 'median_primal_residual': 0.0, 'median_dual_residual': 0.3104104032379415, 'median_iterations': 1.0, 'fail_rate': 0.0}
 available: False
+backend_status: {'solver_name': 'OR-Tools', 'available': False, 'mode': 'surrogate', 'backend_mode': 'surrogate', 'backend_detail': "ModuleNotFoundError: No module named 'ortools'", 'support_level': 'surrogate_only', 'supports_native': False, 'supports_surrogate': True, 'paper_scale_pending': True, 'package': 'ortools'}
+native_used: False
+native_backend: 
 source: OR-Tools

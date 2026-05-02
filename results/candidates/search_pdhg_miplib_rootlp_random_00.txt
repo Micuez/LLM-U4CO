@@ -1,0 +1,30 @@
+policy_id: random_00
+problem_family: miplib_rootlp
+verified: True
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.5605176668097015, 'violation': 1.2933242543762027, 'runtime': 0.0001392364501953125}
+errors: []
+warnings: ['Action scale_tau is emitted without reading state feature tau.', 'Action scale_sigma is emitted without reading state feature sigma.', 'Action scale_tau is emitted without reading state feature tau.', 'Action scale_sigma is emitted without reading state feature sigma.', 'Required features not referenced by policy: k, sigma, tau']
+feature_coverage: 0.4
+proof_obligations: ["path[1]: fallback satisfied under if ratio > 1.5, if state.get('stagnation_count', 0) >= 4", "path[2]: fallback satisfied under if ratio > 1.5, else not (state.get('stagnation_count', 0) >= 4)", "path[3]: fallback satisfied under else not (ratio > 1.5), if ratio < 0.84, if state.get('stagnation_count', 0) >= 4", "path[4]: fallback satisfied under else not (ratio > 1.5), if ratio < 0.84, else not (state.get('stagnation_count', 0) >= 4)", "path[5]: fallback satisfied under else not (ratio > 1.5), else not (ratio < 0.84), if state.get('stagnation_count', 0) >= 4", "path[6]: fallback satisfied under else not (ratio > 1.5), else not (ratio < 0.84), else not (state.get('stagnation_count', 0) >= 4)"]
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    ratio = (state.get('r_p_norm', 0.0) + 1e-9) / (state.get('r_d_norm', 0.0) + 1e-9)
+    if ratio > 1.5:
+        actions.append({'name': 'scale_tau', 'value': 1.12})
+        actions.append({'name': 'scale_sigma', 'value': 0.97})
+    elif ratio < 0.84:
+        actions.append({'name': 'scale_tau', 'value': 0.9})
+        actions.append({'name': 'scale_sigma', 'value': 1.12})
+    if state.get('stagnation_count', 0) >= 4:
+        actions.append({'name': 'restart'})
+        actions.append({'name': 'damp', 'value': 0.8})
+    else:
+        actions.append({'name': 'damp', 'value': 1.0})
+    return {'actions': actions}
+
+origin: random_search
+parent: search_seed
+score: -3.1292235448357637

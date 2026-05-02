@@ -5,6 +5,7 @@ dataset:
   list_path: data/miplib/miplib_small.txt
   benchmark_group: miplib_small
 budget:
+  profile: paper_native
   max_iters: 80
   time_limit_s: 10.0
 evaluation:

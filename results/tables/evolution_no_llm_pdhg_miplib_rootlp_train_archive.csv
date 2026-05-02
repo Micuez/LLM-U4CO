@@ -1,0 +1,12 @@
+algorithm,meta_parent,meta_split,origin,policy_id,problem_family,score,verified
+PDHG,,train,search_seed,search_seed,miplib_rootlp,-3.129216616160404,True
+PDHG,,train,mutation,search_variant_1,miplib_rootlp,-1.9957094580801629,True
+PDHG,,train,mutation,search_variant_2,miplib_rootlp,-1.7645709534772172,True
+PDHG,search_variant_2,train,evolution_no_llm,evo_g01_p00_c00,miplib_rootlp,-1.7645870993136668,True
+PDHG,search_variant_2,train,evolution_no_llm,evo_g01_p00_c01,miplib_rootlp,-1.7645750972647392,True
+PDHG,search_variant_1,train,evolution_no_llm,evo_g01_p01_c00,miplib_rootlp,-1.9957119843251303,True
+PDHG,search_variant_1,train,evolution_no_llm,evo_g01_p01_c01,miplib_rootlp,-1.9957175766048256,True
+PDHG,search_variant_2,train,evolution_no_llm,evo_g02_p00_c00,miplib_rootlp,-1.7645753830389692,True
+PDHG,search_variant_2,train,evolution_no_llm,evo_g02_p00_c01,miplib_rootlp,-1.7645710606455776,True
+PDHG,evo_g01_p00_c01,train,evolution_no_llm,evo_g02_p01_c00,miplib_rootlp,-1.7645713464274984,True
+PDHG,evo_g01_p00_c01,train,evolution_no_llm,evo_g02_p01_c01,miplib_rootlp,-1.7645727038841867,True

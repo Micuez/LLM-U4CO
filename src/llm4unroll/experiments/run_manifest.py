@@ -27,7 +27,10 @@ def load_manifest(path: str) -> Dict[str, object]:
 def run_job(job: Dict[str, object], timeout_s: float) -> Dict[str, object]:
     command = list(job["command"])
     env = dict(os.environ)
-    env["PYTHONPATH"] = "src" + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
+    extra_paths = ["src", ".vendor"]
+    if env.get("PYTHONPATH"):
+        extra_paths.append(env["PYTHONPATH"])
+    env["PYTHONPATH"] = os.pathsep.join(extra_paths)
     started = time.time()
     try:
         completed = subprocess.run(

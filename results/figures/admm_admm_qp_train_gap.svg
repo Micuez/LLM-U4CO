@@ -16,25 +16,34 @@
 <line x1="84.0" y1="80.0" x2="1052.0" y2="80.0" stroke="#e5e7eb" stroke-width="1.0" />
 <text x="74.0" y="84.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">1.000</text>
 <line x1="84.0" y1="304.0" x2="1052.0" y2="304.0" stroke="#111827" stroke-width="1.2" />
-<rect x="330.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/vanilla | median_gap=0.0000 | origin=baseline</title></rect>
-<text x="372.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 372.0 578.0)">ADMM/vanilla</text>
-<text x="372.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="428.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/adaptive | median_gap=0.0000 | origin=baseline</title></rect>
-<text x="470.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 470.0 578.0)">ADMM/adaptive</text>
-<text x="470.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="526.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/conservative | median_gap=0.0000 | origin=baseline</title></rect>
-<text x="568.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 568.0 578.0)">ADMM/conservative</text>
-<text x="568.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="624.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#dc2626"><title>ADMM/HiGHS [surrogate] | median_gap=0.0000 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'highspy'</title></rect>
-<text x="666.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 666.0 578.0)">ADMM/HiGHS [surrogate]</text>
-<text x="666.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
-<rect x="722.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#dc2626"><title>ADMM/OSQP [surrogate] | median_gap=0.0000 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'osqp'</title></rect>
-<text x="764.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 764.0 578.0)">ADMM/OSQP [surrogate]</text>
-<text x="764.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="183.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/vanilla | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="225.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 225.0 578.0)">ADMM/vanilla</text>
+<text x="225.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="281.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/adaptive | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="323.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 323.0 578.0)">ADMM/adaptive</text>
+<text x="323.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="379.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/conservative | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="421.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 421.0 578.0)">ADMM/conservative</text>
+<text x="421.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="477.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/safe_fallback_only | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="519.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 519.0 578.0)">ADMM/safe_fallback_only</text>
+<text x="519.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="575.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/learned_controller | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="617.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 617.0 578.0)">ADMM/learned_controller</text>
+<text x="617.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="673.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#2563eb"><title>ADMM/llm_one_shot | median_gap=0.0000 | origin=baseline</title></rect>
+<text x="715.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 715.0 578.0)">ADMM/llm_one_shot</text>
+<text x="715.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="771.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#ca8a04"><title>ADMM/HiGHS [surrogate] | median_gap=0.0000 | origin=solver_baseline | native_used=False | backend_mode=surrogate | backend_detail=ModuleNotFoundError: No module named 'highspy'</title></rect>
+<text x="813.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 813.0 578.0)">ADMM/HiGHS [surrogate]</text>
+<text x="813.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="869.0" y="304.0" width="84.0" height="1.0" rx="4" fill="#ca8a04"><title>ADMM/OSQP [osqp] | median_gap=0.0000 | origin=solver_baseline | native_used=True | native_backend=osqp | backend_mode=python_package | backend_detail=python package osqp importable</title></rect>
+<text x="911.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 911.0 578.0)">ADMM/OSQP [osqp]</text>
+<text x="911.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
 <rect x="84" y="608" width="12" height="12" rx="2" fill="#2563eb" />
 <text x="102.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">baseline</text>
-<rect x="232" y="608" width="12" height="12" rx="2" fill="#dc2626" />
+<rect x="232" y="608" width="12" height="12" rx="2" fill="#ca8a04" />
 <text x="250.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">solver_baseline</text>
-<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=median_gap items=5</text>
+<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=median_gap items=8</text>
 <text x="22.0" y="90.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start" transform="rotate(-90 22.0 90.0)">median_gap</text>
 </svg>

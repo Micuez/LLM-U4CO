@@ -1,0 +1,11 @@
+seed: 17
+algorithm: PCG
+problem_family: pcg_linear_system
+budget:
+  profile: paper_native
+  max_iters: 160
+  time_limit_s: 24.0
+evaluation:
+  train_instances: 6
+  validation_instances: 4
+  test_instances: 4

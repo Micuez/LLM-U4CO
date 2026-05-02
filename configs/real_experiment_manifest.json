@@ -1,6 +1,6 @@
 {
   "name": "llm4unroll_real_experiments",
-  "description": "Paper-grade experiment scaffold for native solver runs, larger benchmark subsets, search, ablation, and reporting.",
+  "description": "Paper-grade experiment scaffold for native solver runs, exact external-baseline probes, larger benchmark subsets, search, ablation, and reporting.",
   "default_timeout_s": 7200,
   "jobs": [
     {
@@ -12,7 +12,7 @@
         "-m",
         "llm4unroll.experiments.run_baselines",
         "--config",
-        "configs/pdhg_miplib_rootlp.yaml",
+        "configs/pdhg_miplib_rootlp_paper.yaml",
         "--split",
         "train"
       ],
@@ -29,12 +29,97 @@
         "-m",
         "llm4unroll.experiments.run_baselines",
         "--config",
-        "configs/pdhg_llm_lns_sc.yaml",
+        "configs/pdhg_llm_lns_sc_paper.yaml",
         "--split",
         "train"
       ],
       "artifacts": [
         "results/tables/pdhg_llm_lns_sc_train.csv"
+      ]
+    },
+    {
+      "job_id": "native_probe_pdhg_miplib_train",
+      "stage": "native_probe",
+      "description": "Explicit native-backend probe for the MIPLIB root-LP configuration",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.check_native_backends",
+        "--config",
+        "configs/pdhg_miplib_rootlp_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/native_probe_pdhg_miplib_rootlp_train.csv"
+      ]
+    },
+    {
+      "job_id": "native_probe_admm_qp_train",
+      "stage": "native_probe",
+      "description": "Explicit OSQP native-backend probe for the synthetic ADMM QP configuration",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.check_native_backends",
+        "--config",
+        "configs/admm_synthetic_qp_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/native_probe_admm_admm_qp_train.csv"
+      ]
+    },
+    {
+      "job_id": "native_probe_alm_eq_qp_train",
+      "stage": "native_probe",
+      "description": "Explicit OSQP/HiGHS native-backend probe for the synthetic ALM equality-QP configuration",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.check_native_backends",
+        "--config",
+        "configs/alm_eq_qp_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/native_probe_alm_alm_eq_qp_train.csv"
+      ]
+    },
+    {
+      "job_id": "native_probe_pcg_linear_system_train",
+      "stage": "native_probe",
+      "description": "Explicit OSQP native-backend probe for the synthetic PCG linear-system configuration",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.check_native_backends",
+        "--config",
+        "configs/pcg_linear_system_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/native_probe_pcg_pcg_linear_system_train.csv"
+      ]
+    },
+    {
+      "job_id": "solver_tracks_lns_repair_cover_train",
+      "stage": "native_probe",
+      "description": "Solver specialist track coverage for OR-Tools / PySCIPOpt / Ecole on the LNS repair cover configuration",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_solver_tracks",
+        "--config",
+        "configs/lns_repair_cover_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/solver_tracks_lns_repair_lns_repair_cover_train.csv"
       ]
     },
     {
@@ -46,7 +131,7 @@
         "-m",
         "llm4unroll.experiments.run_search",
         "--config",
-        "configs/pdhg_miplib_rootlp.yaml",
+        "configs/pdhg_miplib_rootlp_paper.yaml",
         "--split",
         "train"
       ],
@@ -64,7 +149,7 @@
         "-m",
         "llm4unroll.experiments.run_evolution_baseline",
         "--config",
-        "configs/pdhg_miplib_rootlp.yaml",
+        "configs/pdhg_miplib_rootlp_paper.yaml",
         "--split",
         "train"
       ],
@@ -81,12 +166,114 @@
         "-m",
         "llm4unroll.experiments.run_random_search",
         "--config",
-        "configs/pdhg_miplib_rootlp.yaml",
+        "configs/pdhg_miplib_rootlp_paper.yaml",
         "--split",
         "train"
       ],
       "artifacts": [
         "results/tables/random_search_pdhg_miplib_rootlp_train.csv"
+      ]
+    },
+    {
+      "job_id": "bayesian_optimisation_pdhg_miplib_train",
+      "stage": "search_baselines",
+      "description": "Bayesian-optimisation-style safe baseline on the MIPLIB root-LP subset",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_bayesian_baseline",
+        "--config",
+        "configs/pdhg_miplib_rootlp_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/bayesian_optimisation_pdhg_miplib_rootlp_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_pdhg_miplib_train",
+      "stage": "ablation",
+      "description": "Ablation sweep including verifier bypass, one-shot, evolution-free, and same-budget baselines",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/pdhg_miplib_rootlp_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_pdhg_miplib_rootlp_train.csv"
+      ]
+    },
+    {
+      "job_id": "strong_baselines_pdhg_llm_lns_sc_train",
+      "stage": "strong_baselines",
+      "description": "Direct strong-baseline comparison: LLM-LNS heuristic vs LLM4Unroll vs combined pipeline on set-cover LP assets",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_strong_baselines",
+        "--config",
+        "configs/pdhg_llm_lns_sc_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/strong_baselines_pdhg_llm_lns_sc_train.csv"
+      ]
+    },
+    {
+      "job_id": "strong_baselines_pdhg_llm_lns_is_train",
+      "stage": "strong_baselines",
+      "description": "Direct strong-baseline comparison: LLM-LNS heuristic vs LLM4Unroll vs combined pipeline on independent-set LP assets",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_strong_baselines",
+        "--config",
+        "configs/pdhg_llm_lns_is_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/strong_baselines_pdhg_llm_lns_is_train.csv"
+      ]
+    },
+    {
+      "job_id": "external_replay_pdhg_llm_lns_sc_train",
+      "stage": "strong_baselines",
+      "description": "Repo-local fullstack replay for the external-style LLM-LNS heuristic / combined pipeline on set-cover LP assets",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_external_baseline_replay",
+        "--config",
+        "configs/pdhg_llm_lns_sc_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/external_replay_pdhg_llm_lns_sc_train.csv"
+      ]
+    },
+    {
+      "job_id": "external_replay_pdhg_llm_lns_is_train",
+      "stage": "strong_baselines",
+      "description": "Repo-local fullstack replay for the external-style LLM-LNS heuristic / combined pipeline on independent-set LP assets",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_external_baseline_replay",
+        "--config",
+        "configs/pdhg_llm_lns_is_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/external_replay_pdhg_llm_lns_is_train.csv"
       ]
     },
     {
@@ -98,10 +285,324 @@
         "-m",
         "llm4unroll.experiments.run_ood",
         "--config",
-        "configs/pdhg_miplib_rootlp.yaml"
+        "configs/pdhg_miplib_rootlp_paper.yaml"
       ],
       "artifacts": [
         "results/tables/ood_pdhg_miplib_rootlp.csv"
+      ]
+    },
+    {
+      "job_id": "ood_pdhg_synthetic",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the PDHG synthetic LP setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/pdhg_synthetic_lp_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_pdhg_pdhg_lp.csv"
+      ]
+    },
+    {
+      "job_id": "ood_pdhg_llm_lns_sc",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the LLM-LNS set-cover PDHG setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/pdhg_llm_lns_sc_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_pdhg_llm_lns_sc.csv"
+      ]
+    },
+    {
+      "job_id": "ood_pdhg_llm_lns_is",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the LLM-LNS independent-set PDHG setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/pdhg_llm_lns_is_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_pdhg_llm_lns_is.csv"
+      ]
+    },
+    {
+      "job_id": "ood_admm_synthetic",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the ADMM synthetic QP setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/admm_synthetic_qp_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_admm_admm_qp.csv"
+      ]
+    },
+    {
+      "job_id": "ood_fista_lasso",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the FISTA LASSO setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/fista_lasso_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_fista_fista_lasso.csv"
+      ]
+    },
+    {
+      "job_id": "ood_alm_eq_qp",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the ALM equality-QP setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/alm_eq_qp_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_alm_alm_eq_qp.csv"
+      ]
+    },
+    {
+      "job_id": "ood_drs_feasibility",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the DRS feasibility setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/drs_feasibility_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_drs_drs_feasibility.csv"
+      ]
+    },
+    {
+      "job_id": "ood_pcg_linear_system",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the PCG linear-system setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/pcg_linear_system_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_pcg_pcg_linear_system.csv"
+      ]
+    },
+    {
+      "job_id": "ood_lns_repair_cover",
+      "stage": "generalization",
+      "description": "OOD and cross-problem transfer evaluation for the relaxation-guided LNS repair setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ood",
+        "--config",
+        "configs/lns_repair_cover_paper.yaml"
+      ],
+      "artifacts": [
+        "results/tables/ood_lns_repair_lns_repair_cover.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_pdhg_synthetic_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the PDHG synthetic LP setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/pdhg_synthetic_lp_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_pdhg_pdhg_lp_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_pdhg_llm_lns_sc_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the PDHG LLM-LNS set-cover setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/pdhg_llm_lns_sc_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_pdhg_llm_lns_sc_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_pdhg_llm_lns_is_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the PDHG LLM-LNS independent-set setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/pdhg_llm_lns_is_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_pdhg_llm_lns_is_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_admm_qp_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the ADMM synthetic QP setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/admm_synthetic_qp_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_admm_admm_qp_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_fista_lasso_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the FISTA LASSO setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/fista_lasso_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_fista_fista_lasso_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_alm_eq_qp_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the ALM equality-QP setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/alm_eq_qp_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_alm_alm_eq_qp_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_drs_feasibility_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the DRS feasibility setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/drs_feasibility_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_drs_drs_feasibility_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_pcg_linear_system_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the PCG linear-system setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/pcg_linear_system_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_pcg_pcg_linear_system_train.csv"
+      ]
+    },
+    {
+      "job_id": "ablation_lns_repair_cover_train",
+      "stage": "ablation",
+      "description": "Paper-budget ablation sweep for the LNS repair cover setting",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_ablation",
+        "--config",
+        "configs/lns_repair_cover_paper.yaml",
+        "--split",
+        "train"
+      ],
+      "artifacts": [
+        "results/tables/ablation_lns_repair_lns_repair_cover_train.csv"
+      ]
+    },
+    {
+      "job_id": "native_installation_blockers",
+      "stage": "native_probe",
+      "description": "Machine-readable blocker report for local Ecole / SCIP native installation status",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.check_native_installation_blockers"
+      ],
+      "artifacts": [
+        "results/real_experiments/native_installation_blockers.json"
+      ]
+    },
+    {
+      "job_id": "external_repo_exact_probe",
+      "stage": "strong_baselines",
+      "description": "Probe whether the cloned external LLM-LNS repository can be run bit-for-bit on this machine",
+      "command": [
+        "python3",
+        "-m",
+        "llm4unroll.experiments.run_external_repo_exact_probe"
+      ],
+      "artifacts": [
+        "results/real_experiments/external_repo_exact_probe.json"
       ]
     },
     {

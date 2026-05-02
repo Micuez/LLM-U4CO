@@ -1,7 +1,10 @@
-algorithm,fail_rate,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,origin,policy_id,problem_family,score
-LNS_REPAIR,0.0,0.31041,0.0,60,0.0,0.001421,0.0,baseline,vanilla,lns_repair_cover,-0.335383
-LNS_REPAIR,0.0,0.31041,0.0,60,0.0,0.001403,0.0,baseline,adaptive,lns_repair_cover,-0.885381
-LNS_REPAIR,0.0,0.31041,0.0,60,0.0,0.001402,0.0,baseline,conservative,lns_repair_cover,-0.53538
-LNS_REPAIR,0.0,0.31041,0.0,1,0.0,0.001511,0.0,solver_baseline,PySCIPOpt,lns_repair_cover,-0.135397
-LNS_REPAIR,0.0,0.31041,0.0,1,0.0,0.001311,0.0,solver_baseline,OR-Tools,lns_repair_cover,-0.135367
-LNS_REPAIR,0.0,0.31041,0.0,1,0.0,0.00141,0.0,solver_baseline,Ecole,lns_repair_cover,-0.135382
+algorithm,backend_detail,backend_mode,errors,fail_rate,feature_coverage,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,native_backend,native_used,origin,paper_scale_pending,policy_id,problem_family,proof_count,score,smoke_ok,smoke_reason,support_level,supports_native,supports_surrogate,verified,warnings
+LNS_REPAIR,,,,0.0,0.0,0.31041,0.0,60,0.0,0.002763,0.0,,,baseline,,vanilla,lns_repair_cover,1,-0.335584,True,,,,,True,"Required features not referenced by policy: fractionality, k, mip_gap, neighbourhood_size"
+LNS_REPAIR,,,,0.0,0.5,0.31041,0.0,60,0.0,0.001808,0.0,,,baseline,,adaptive,lns_repair_cover,6,-0.885441,True,,,,,True,"Required features not referenced by policy: k, neighbourhood_size"
+LNS_REPAIR,,,,0.0,0.25,0.31041,0.0,60,0.0,0.001825,0.0,,,baseline,,conservative,lns_repair_cover,2,-0.535444,True,,,,,True,"Required features not referenced by policy: k, mip_gap, neighbourhood_size"
+LNS_REPAIR,,,,0.0,0.0,0.31041,0.0,60,0.0,0.001563,0.0,,,baseline,,safe_fallback_only,lns_repair_cover,1,-0.335404,True,,,,,True,"Required features not referenced by policy: fractionality, k, mip_gap, neighbourhood_size"
+LNS_REPAIR,,,,0.0,0.5,0.31041,0.0,60,0.0,0.00149,0.0,,,baseline,,learned_controller,lns_repair_cover,6,-0.885394,True,,,,,True,"Required features not referenced by policy: k, neighbourhood_size"
+LNS_REPAIR,,,,0.0,0.5,0.31041,0.0,60,0.0,0.001537,0.0,,,baseline,,llm_one_shot,lns_repair_cover,6,-1.035401,True,,,,,True,"Required features not referenced by policy: k, neighbourhood_size"
+LNS_REPAIR,ModuleNotFoundError: No module named 'pyscipopt',surrogate,,0.0,,0.31041,0.0,1,0.0,0.001513,0.0,,False,solver_baseline,True,PySCIPOpt,lns_repair_cover,,-0.135397,,,surrogate_only,False,True,,
+LNS_REPAIR,ModuleNotFoundError: No module named 'ortools',surrogate,,0.0,,0.31041,0.0,1,0.0,0.001313,0.0,,False,solver_baseline,True,OR-Tools,lns_repair_cover,,-0.135367,,,surrogate_only,False,True,,
+LNS_REPAIR,ModuleNotFoundError: No module named 'ecole',surrogate,,0.0,,0.31041,0.0,1,0.0,0.001411,0.0,,False,solver_baseline,True,Ecole,lns_repair_cover,,-0.135382,,,surrogate_only,False,True,,

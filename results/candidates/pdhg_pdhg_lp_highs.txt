@@ -1,10 +1,10 @@
 policy_id: HiGHS
 origin: solver_baseline
 split: train
-score: -0.0001810708391483786
-aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.0012078678131103515, 'median_primal_residual': 0.0, 'median_dual_residual': 0.0, 'median_iterations': 1.0, 'fail_rate': 0.0}
+score: -0.0001809279605112947
+aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.0012069141387939452, 'median_primal_residual': 0.0, 'median_dual_residual': 0.0, 'median_iterations': 1.0, 'fail_rate': 0.0}
 available: False
-backend_status: {'solver_name': 'HiGHS', 'available': False, 'mode': 'surrogate', 'backend_mode': 'surrogate', 'backend_detail': "ModuleNotFoundError: No module named 'highspy'", 'command': 'highs', 'package': 'highspy'}
+backend_status: {'solver_name': 'HiGHS', 'available': False, 'mode': 'surrogate', 'backend_mode': 'surrogate', 'backend_detail': "ModuleNotFoundError: No module named 'highspy'", 'support_level': 'surrogate_only', 'supports_native': False, 'supports_surrogate': True, 'paper_scale_pending': True, 'command': 'highs', 'package': 'highspy'}
 native_used: False
 native_backend: 
 source: HiGHS

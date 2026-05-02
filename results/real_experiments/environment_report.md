@@ -2,15 +2,15 @@
 
 ## Solver backends
 
-| Name | Mode | Available | Detail |
-| --- | --- | --- | --- |
-| highspy | python_package | False | ModuleNotFoundError: No module named 'highspy' |
-| osqp | python_package | False | ModuleNotFoundError: No module named 'osqp' |
-| ortools | python_package | False | ModuleNotFoundError: No module named 'ortools' |
-| pyscipopt | python_package | False | ModuleNotFoundError: No module named 'pyscipopt' |
-| ecole | python_package | False | ModuleNotFoundError: No module named 'ecole' |
-| highs | command | False | not found |
-| scip | command | False | not found |
+| Name | Mode | Available | Support | Paper Pending | Detail |
+| --- | --- | --- | --- | --- | --- |
+| highspy | python_package | True | native_verified | True | importable |
+| osqp | python_package | True | native_verified | True | importable |
+| ortools | python_package | True | native_verified | True | importable |
+| pyscipopt | python_package | True | native_verified | True | importable |
+| ecole | python_package | False | surrogate_only | True | ModuleNotFoundError: No module named 'ecole' |
+| highs | command | False | surrogate_only | True | not found |
+| scip | command | False | surrogate_only | True | not found |
 
 ## LLM backends
 
@@ -29,5 +29,16 @@
 ## LLM-LNS
 
 - root: data/llm_lns
-- lp_files: 6
-- families: {'SC_easy_instance': 3, 'IS_easy_instance': 3, 'MVC_easy_instance': 0, 'MIKS_easy_instance': 0}
+- lp_files: 372
+- data_source: milpbench_real
+- real_lp_files: 360
+- real_levels: {'easy': 120, 'medium': 120, 'hard': 120}
+- mock_lp_files: 12
+- families: {'SC_easy_instance': 93, 'IS_easy_instance': 93, 'MVC_easy_instance': 93, 'MIKS_easy_instance': 93}
+- complete_phase2: True
+
+## External repos
+
+- LLM-LNS: True
+- MILPBench: True
+- HeuriGym: True

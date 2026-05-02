@@ -1,0 +1,14 @@
+seed: 13
+algorithm: PDHG
+problem_family: miplib_rootlp
+dataset:
+  list_path: data/miplib/miplib_small.txt
+  benchmark_group: miplib_small
+budget:
+  profile: paper_native
+  max_iters: 160
+  time_limit_s: 24.0
+evaluation:
+  train_instances: 4
+  validation_instances: 2
+  test_instances: 2

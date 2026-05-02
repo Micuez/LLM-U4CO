@@ -2,45 +2,59 @@
   "solver_backends": [
     {
       "name": "highspy",
-      "available": false,
+      "available": true,
       "mode": "python_package",
-      "detail": "ModuleNotFoundError: No module named 'highspy'"
+      "detail": "importable",
+      "support_level": "native_verified",
+      "paper_scale_pending": true
     },
     {
       "name": "osqp",
-      "available": false,
+      "available": true,
       "mode": "python_package",
-      "detail": "ModuleNotFoundError: No module named 'osqp'"
+      "detail": "importable",
+      "support_level": "native_verified",
+      "paper_scale_pending": true
     },
     {
       "name": "ortools",
-      "available": false,
+      "available": true,
       "mode": "python_package",
-      "detail": "ModuleNotFoundError: No module named 'ortools'"
+      "detail": "importable",
+      "support_level": "native_verified",
+      "paper_scale_pending": true
     },
     {
       "name": "pyscipopt",
-      "available": false,
+      "available": true,
       "mode": "python_package",
-      "detail": "ModuleNotFoundError: No module named 'pyscipopt'"
+      "detail": "importable",
+      "support_level": "native_verified",
+      "paper_scale_pending": true
     },
     {
       "name": "ecole",
       "available": false,
       "mode": "python_package",
-      "detail": "ModuleNotFoundError: No module named 'ecole'"
+      "detail": "ModuleNotFoundError: No module named 'ecole'",
+      "support_level": "surrogate_only",
+      "paper_scale_pending": true
     },
     {
       "name": "highs",
       "available": false,
       "mode": "command",
-      "detail": "not found"
+      "detail": "not found",
+      "support_level": "surrogate_only",
+      "paper_scale_pending": true
     },
     {
       "name": "scip",
       "available": false,
       "mode": "command",
-      "detail": "not found"
+      "detail": "not found",
+      "support_level": "surrogate_only",
+      "paper_scale_pending": true
     }
   ],
   "llm_backends": [
@@ -64,12 +78,36 @@
   },
   "llm_lns": {
     "root": "data/llm_lns",
-    "lp_files": 6,
+    "lp_files": 372,
     "families": {
-      "SC_easy_instance": 3,
-      "IS_easy_instance": 3,
-      "MVC_easy_instance": 0,
-      "MIKS_easy_instance": 0
+      "SC_easy_instance": 93,
+      "IS_easy_instance": 93,
+      "MVC_easy_instance": 93,
+      "MIKS_easy_instance": 93
+    },
+    "real_lp_files": 360,
+    "mock_lp_files": 12,
+    "real_levels": {
+      "easy": 120,
+      "medium": 120,
+      "hard": 120
+    },
+    "data_source": "milpbench_real",
+    "missing_families": [],
+    "complete_phase2": true
+  },
+  "external_repos": [
+    {
+      "name": "LLM-LNS",
+      "present": true
+    },
+    {
+      "name": "MILPBench",
+      "present": true
+    },
+    {
+      "name": "HeuriGym",
+      "present": true
     }
-  }
+  ]
 }

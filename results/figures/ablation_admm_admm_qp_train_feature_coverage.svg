@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="640" viewBox="0 0 1080 640">
+<rect width="100%" height="100%" fill="#ffffff" />
+<text x="36" y="40" font-size="24" font-family="Arial, Helvetica, sans-serif" fill="#111827">Feature Coverage</text>
+<text x="36" y="62" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">chart=bar generated_from_csv=true</text>
+<line x1="84.0" y1="528.0" x2="1052.0" y2="528.0" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="532.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">-0.1200</text>
+<line x1="84.0" y1="438.4" x2="1052.0" y2="438.4" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="442.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.1280</text>
+<line x1="84.0" y1="348.8" x2="1052.0" y2="348.8" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="352.8" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.3760</text>
+<line x1="84.0" y1="259.2" x2="1052.0" y2="259.2" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="263.2" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.6240</text>
+<line x1="84.0" y1="169.6" x2="1052.0" y2="169.6" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="173.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">0.8720</text>
+<line x1="84.0" y1="80.0" x2="1052.0" y2="80.0" stroke="#e5e7eb" stroke-width="1.0" />
+<text x="74.0" y="84.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#6b7280" text-anchor="end">1.120</text>
+<line x1="84.0" y1="484.6" x2="1052.0" y2="484.6" stroke="#111827" stroke-width="1.2" />
+<rect x="84.0" y="123.4" width="43.8" height="361.3" rx="4" fill="#2563eb"><title>learned_controller_high_budget | feature_coverage=1.000 | origin=learned_controller</title></rect>
+<text x="105.9" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 105.9 578.0)">learned_controller_high_budget</text>
+<text x="105.9" y="115.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">1.000</text>
+<rect x="141.8" y="123.4" width="43.8" height="361.3" rx="4" fill="#f97316"><title>learned_controller_paper_scale | feature_coverage=1.000 | origin=learned_controller</title></rect>
+<text x="163.6" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 163.6 578.0)">learned_controller_paper_scale</text>
+<text x="163.6" y="115.4" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">1.000</text>
+<rect x="199.5" y="304.0" width="43.8" height="180.6" rx="4" fill="#16a34a"><title>baseline/adaptive | feature_coverage=0.5000 | origin=baseline</title></rect>
+<text x="221.4" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 221.4 578.0)">baseline/adaptive</text>
+<text x="221.4" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="257.3" y="304.0" width="43.8" height="180.6" rx="4" fill="#16a34a"><title>baseline/conservative | feature_coverage=0.5000 | origin=baseline</title></rect>
+<text x="279.2" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 279.2 578.0)">baseline/conservative</text>
+<text x="279.2" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="315.1" y="304.0" width="43.8" height="180.6" rx="4" fill="#7c3aed"><title>llm_only_one_shot/llm_one_shot | feature_coverage=0.5000 | origin=llm_one_shot</title></rect>
+<text x="336.9" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 336.9 578.0)">llm_only_one_shot/llm_one_shot</text>
+<text x="336.9" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="372.8" y="304.0" width="43.8" height="180.6" rx="4" fill="#0891b2"><title>without_reflection/prompt_variant | feature_coverage=0.5000 | origin=without_reflection</title></rect>
+<text x="394.7" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 394.7 578.0)">without_reflection/prompt_variant</text>
+<text x="394.7" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="430.6" y="304.0" width="43.8" height="180.6" rx="4" fill="#ca8a04"><title>prompt_variant | feature_coverage=0.5000 | origin=prompt_variant</title></rect>
+<text x="452.5" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 452.5 578.0)">prompt_variant</text>
+<text x="452.5" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="488.4" y="304.0" width="43.8" height="180.6" rx="4" fill="#db2777"><title>random_search_same_budget/grid_candidate_1 | feature_coverage=0.5000 | origin=grid_search</title></rect>
+<text x="510.2" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 510.2 578.0)">random_search_same_budget/grid_candidate_1</text>
+<text x="510.2" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="546.1" y="304.0" width="43.8" height="180.6" rx="4" fill="#2563eb"><title>bo_same_budget/bayes_proxy_ablation | feature_coverage=0.5000 | origin=bayesian_optimisation</title></rect>
+<text x="568.0" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 568.0 578.0)">bo_same_budget/bayes_proxy_ablation</text>
+<text x="568.0" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="603.9" y="304.0" width="43.8" height="180.6" rx="4" fill="#f97316"><title>bo_same_budget_deep/bayes_proxy_ablation_deep | feature_coverage=0.5000 | origin=bayesian_optimisation</title></rect>
+<text x="625.8" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 625.8 578.0)">bo_same_budget_deep/bayes_proxy_ablation_deep</text>
+<text x="625.8" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="661.6" y="304.0" width="43.8" height="180.6" rx="4" fill="#16a34a"><title>evolution_without_llm/evolution_no_llm_ablation | feature_coverage=0.5000 | origin=evolution_without_llm</title></rect>
+<text x="683.5" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 683.5 578.0)">evolution_without_llm/evolution_no_llm_ablation</text>
+<text x="683.5" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="719.4" y="304.0" width="43.8" height="180.6" rx="4" fill="#dc2626"><title>temperature_0p3_variant | feature_coverage=0.5000 | origin=temperature_variant</title></rect>
+<text x="741.3" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 741.3 578.0)">temperature_0p3_variant</text>
+<text x="741.3" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="777.2" y="304.0" width="43.8" height="180.6" rx="4" fill="#7c3aed"><title>temperature_0p7_variant | feature_coverage=0.5000 | origin=temperature_variant</title></rect>
+<text x="799.1" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 799.1 578.0)">temperature_0p7_variant</text>
+<text x="799.1" y="296.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.5000</text>
+<rect x="834.9" y="484.6" width="43.8" height="1.0" rx="4" fill="#16a34a"><title>baseline/vanilla | feature_coverage=0.0000 | origin=baseline</title></rect>
+<text x="856.8" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 856.8 578.0)">baseline/vanilla</text>
+<text x="856.8" y="476.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="892.7" y="484.6" width="43.8" height="1.0" rx="4" fill="#ca8a04"><title>safe_fallback_only | feature_coverage=0.0000 | origin=safe_fallback_only</title></rect>
+<text x="914.6" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 914.6 578.0)">safe_fallback_only</text>
+<text x="914.6" y="476.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="950.5" y="484.6" width="43.8" height="1.0" rx="4" fill="#db2777"><title>without_evolution/model_variant | feature_coverage=0.0000 | origin=without_evolution</title></rect>
+<text x="972.4" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 972.4 578.0)">without_evolution/model_variant</text>
+<text x="972.4" y="476.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="1008.2" y="484.6" width="43.8" height="1.0" rx="4" fill="#2563eb"><title>llm_model_variant/model_variant | feature_coverage=0.0000 | origin=llm_model_variant</title></rect>
+<text x="1030.1" y="578.0" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#111827" text-anchor="middle" transform="rotate(-28 1030.1 578.0)">llm_model_variant/model_variant</text>
+<text x="1030.1" y="476.6" font-size="11" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="middle">0.0000</text>
+<rect x="84" y="608" width="12" height="12" rx="2" fill="#2563eb" />
+<text x="102.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">learned_controller_high_budget</text>
+<rect x="232" y="608" width="12" height="12" rx="2" fill="#f97316" />
+<text x="250.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">learned_controller_paper_scale</text>
+<rect x="380" y="608" width="12" height="12" rx="2" fill="#16a34a" />
+<text x="398.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">baseline</text>
+<rect x="528" y="608" width="12" height="12" rx="2" fill="#7c3aed" />
+<text x="546.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">llm_only_one_shot</text>
+<rect x="676" y="608" width="12" height="12" rx="2" fill="#0891b2" />
+<text x="694.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">without_reflection</text>
+<rect x="824" y="608" width="12" height="12" rx="2" fill="#ca8a04" />
+<text x="842.0" y="618.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">prompt_variant</text>
+<rect x="84" y="626" width="12" height="12" rx="2" fill="#db2777" />
+<text x="102.0" y="636.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">random_search_same_budget</text>
+<rect x="232" y="626" width="12" height="12" rx="2" fill="#2563eb" />
+<text x="250.0" y="636.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">bo_same_budget</text>
+<rect x="380" y="626" width="12" height="12" rx="2" fill="#f97316" />
+<text x="398.0" y="636.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">bo_same_budget_deep</text>
+<rect x="528" y="626" width="12" height="12" rx="2" fill="#16a34a" />
+<text x="546.0" y="636.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">evolution_without_llm</text>
+<rect x="676" y="626" width="12" height="12" rx="2" fill="#dc2626" />
+<text x="694.0" y="636.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">temperature_0p3</text>
+<rect x="824" y="626" width="12" height="12" rx="2" fill="#7c3aed" />
+<text x="842.0" y="636.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">temperature_0p7</text>
+<rect x="84" y="644" width="12" height="12" rx="2" fill="#ca8a04" />
+<text x="102.0" y="654.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">safe_fallback_only</text>
+<rect x="232" y="644" width="12" height="12" rx="2" fill="#db2777" />
+<text x="250.0" y="654.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">without_evolution</text>
+<rect x="380" y="644" width="12" height="12" rx="2" fill="#2563eb" />
+<text x="398.0" y="654.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start">llm_model_variant</text>
+<text x="84" y="62" font-size="13" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">metric=feature_coverage items=17</text>
+<text x="22.0" y="90.0" font-size="12" font-family="Arial, Helvetica, sans-serif" fill="#374151" text-anchor="start" transform="rotate(-90 22.0 90.0)">feature_coverage</text>
+</svg>

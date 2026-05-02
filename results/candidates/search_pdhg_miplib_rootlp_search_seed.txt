@@ -3,7 +3,7 @@ problem_family: miplib_rootlp
 verified: True
 smoke_ok: True
 smoke_reason: 
-smoke_diagnostics: {'iterations': 8, 'gap': 0.687070942452739, 'violation': 1.6006170989402282, 'runtime': 0.0001468658447265625}
+smoke_diagnostics: {'iterations': 8, 'gap': 0.687070942452739, 'violation': 1.6006170989402282, 'runtime': 0.00015425682067871094}
 errors: []
 warnings: ['Action scale_tau is emitted without reading state feature tau.', 'Action scale_sigma is emitted without reading state feature sigma.', 'Action scale_tau is emitted without reading state feature tau.', 'Action scale_sigma is emitted without reading state feature sigma.', 'Required features not referenced by policy: k, sigma, tau']
 feature_coverage: 0.4
@@ -27,4 +27,4 @@ source: def policy(state):
 
 origin: search_seed
 parent: 
-score: -3.129235651392036
+score: -3.129212401654933

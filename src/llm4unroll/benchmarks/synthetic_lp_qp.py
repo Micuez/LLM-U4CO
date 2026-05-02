@@ -22,12 +22,18 @@ def build_synthetic_instances(family: str, split: str, count: int, seed: int) ->
     builders = {
         "pdhg_lp": _build_pdhg_lp,
         "admm_qp": _build_admm_qp,
+        "admm_qp_relaxation": _build_admm_qp_relaxation,
         "fista_lasso": _build_fista_lasso,
+        "fista_sparse_coding": _build_fista_sparse_coding,
         "setcover_relaxation": _build_setcover_relaxation,
         "alm_eq_qp": _build_alm_eq_qp,
+        "alm_cover_relaxation": _build_alm_cover_relaxation,
         "drs_feasibility": _build_drs_feasibility,
+        "drs_affine_box_shifted": _build_drs_affine_box_shifted,
         "pcg_linear_system": _build_pcg_linear_system,
+        "pcg_graph_laplacian": _build_pcg_graph_laplacian,
         "lns_repair_cover": _build_lns_repair_cover,
+        "lns_repair_cover_dense": _build_lns_repair_cover_dense,
     }
     if family not in builders:
         raise ValueError("Unknown synthetic family: %s" % family)
@@ -69,6 +75,19 @@ def _build_admm_qp(rng: random.Random, idx: int, split: str) -> ProblemInstance:
     )
 
 
+def _build_admm_qp_relaxation(rng: random.Random, idx: int, split: str) -> ProblemInstance:
+    n = 18 if split == "train" else 28 if split == "validation" else 38
+    x_star = [(rng.random() - 0.5) * 1.8 for _ in range(n)]
+    diag_q = [0.25 + rng.random() * 1.2 for _ in range(n)]
+    q = [-diag_q[i] * x_star[i] + 0.1 * (rng.random() - 0.5) for i in range(n)]
+    return ProblemInstance(
+        name="admm_relax_%s_%02d" % (split, idx),
+        family="admm_qp_relaxation",
+        payload={"diag_q": diag_q, "q": q, "lower": -1.5, "upper": 1.5, "x_star": x_star},
+        instance_features={"n": float(n), "box_width": 3.0},
+    )
+
+
 def _build_fista_lasso(rng: random.Random, idx: int, split: str) -> ProblemInstance:
     n = 18 if split == "train" else 28 if split == "validation" else 36
     m = n + n // 2
@@ -82,6 +101,25 @@ def _build_fista_lasso(rng: random.Random, idx: int, split: str) -> ProblemInsta
     return ProblemInstance(
         name="fista_%s_%02d" % (split, idx),
         family="fista_lasso",
+        payload={"A": a, "b": b, "lambda": lam, "x_true": x_true},
+        instance_features={"n": float(n), "m": float(m), "sparsity": float(sum(1 for x in x_true if x == 0.0)) / n},
+    )
+
+
+def _build_fista_sparse_coding(rng: random.Random, idx: int, split: str) -> ProblemInstance:
+    n = 22 if split == "train" else 32 if split == "validation" else 44
+    m = n * 2
+    a = _rand_matrix(rng, m, n, scale=0.6)
+    x_true = [0.0] * n
+    active = max(3, n // 4)
+    for pos in rng.sample(list(range(n)), active):
+        x_true[pos] = (rng.random() - 0.5) * 3.0
+    noise = [0.02 * (rng.random() - 0.5) for _ in range(m)]
+    b = [sum(a_i_j * x_j for a_i_j, x_j in zip(row, x_true)) + noise_i for row, noise_i in zip(a, noise)]
+    lam = 0.12
+    return ProblemInstance(
+        name="fista_sparse_%s_%02d" % (split, idx),
+        family="fista_sparse_coding",
         payload={"A": a, "b": b, "lambda": lam, "x_true": x_true},
         instance_features={"n": float(n), "m": float(m), "sparsity": float(sum(1 for x in x_true if x == 0.0)) / n},
     )
@@ -127,6 +165,30 @@ def _build_alm_eq_qp(rng: random.Random, idx: int, split: str) -> ProblemInstanc
     )
 
 
+def _build_alm_cover_relaxation(rng: random.Random, idx: int, split: str) -> ProblemInstance:
+    rows = 9 if split == "train" else 14 if split == "validation" else 18
+    cols = 16 if split == "train" else 24 if split == "validation" else 30
+    a = []
+    for _ in range(rows):
+        row = [1.0 if rng.random() < 0.22 else 0.0 for _ in range(cols)]
+        if sum(row) == 0:
+            row[rng.randrange(cols)] = 1.0
+        a.append(row)
+    x_star = [0.0] * cols
+    for j in range(cols):
+        if rng.random() < 0.18:
+            x_star[j] = 0.4 + 0.5 * rng.random()
+    b = [sum(row[j] * x_star[j] for j in range(cols)) for row in a]
+    reg = 0.5
+    c = [0.2 + rng.random() for _ in range(cols)]
+    return ProblemInstance(
+        name="alm_cover_%s_%02d" % (split, idx),
+        family="alm_cover_relaxation",
+        payload={"A": a, "b": b, "c": c, "reg": reg, "x_star": x_star},
+        instance_features={"n": float(cols), "m": float(rows)},
+    )
+
+
 def _build_drs_feasibility(rng: random.Random, idx: int, split: str) -> ProblemInstance:
     n = 10 if split == "train" else 16 if split == "validation" else 22
     m = max(2, n // 5)
@@ -137,6 +199,20 @@ def _build_drs_feasibility(rng: random.Random, idx: int, split: str) -> ProblemI
         name="drs_%s_%02d" % (split, idx),
         family="drs_feasibility",
         payload={"A": a, "b": b, "x_star": x_star, "lower": 0.0, "upper": 1.0},
+        instance_features={"n": float(n), "m": float(m)},
+    )
+
+
+def _build_drs_affine_box_shifted(rng: random.Random, idx: int, split: str) -> ProblemInstance:
+    n = 12 if split == "train" else 18 if split == "validation" else 26
+    m = max(3, n // 4)
+    x_star = [-0.3 + 1.2 * rng.random() for _ in range(n)]
+    a = _rand_matrix(rng, m, n, scale=0.65)
+    b = [sum(row[j] * x_star[j] for j in range(n)) for row in a]
+    return ProblemInstance(
+        name="drs_shifted_%s_%02d" % (split, idx),
+        family="drs_affine_box_shifted",
+        payload={"A": a, "b": b, "x_star": x_star, "lower": -0.5, "upper": 1.2},
         instance_features={"n": float(n), "m": float(m)},
     )
 
@@ -154,6 +230,32 @@ def _build_pcg_linear_system(rng: random.Random, idx: int, split: str) -> Proble
     return ProblemInstance(
         name="pcg_%s_%02d" % (split, idx),
         family="pcg_linear_system",
+        payload={"H": h, "rhs": rhs, "x_star": x_star},
+        instance_features={"n": float(n)},
+    )
+
+
+def _build_pcg_graph_laplacian(rng: random.Random, idx: int, split: str) -> ProblemInstance:
+    n = 16 if split == "train" else 24 if split == "validation" else 32
+    weights = [[0.0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        for j in range(i + 1, n):
+            if rng.random() < 0.18:
+                weight = 0.2 + rng.random()
+                weights[i][j] = weight
+                weights[j][i] = weight
+    h = [[0.0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        degree = sum(weights[i]) + 1.0
+        h[i][i] = degree
+        for j in range(n):
+            if i != j and weights[i][j] > 0.0:
+                h[i][j] = -weights[i][j]
+    x_star = [(rng.random() - 0.5) * 0.6 for _ in range(n)]
+    rhs = [sum(h[i][j] * x_star[j] for j in range(n)) for i in range(n)]
+    return ProblemInstance(
+        name="pcg_graph_%s_%02d" % (split, idx),
+        family="pcg_graph_laplacian",
         payload={"H": h, "rhs": rhs, "x_star": x_star},
         instance_features={"n": float(n)},
     )
@@ -181,6 +283,38 @@ def _build_lns_repair_cover(rng: random.Random, idx: int, split: str) -> Problem
     return ProblemInstance(
         name="lns_%s_%02d" % (split, idx),
         family="lns_repair_cover",
+        payload={
+            "cover_matrix": cover,
+            "costs": costs,
+            "x_star": x_star,
+            "fractional_target": fractional_target,
+        },
+        instance_features={"n": float(cols), "m": float(rows)},
+    )
+
+
+def _build_lns_repair_cover_dense(rng: random.Random, idx: int, split: str) -> ProblemInstance:
+    rows = 10 if split == "train" else 14 if split == "validation" else 20
+    cols = 16 if split == "train" else 24 if split == "validation" else 30
+    cover = []
+    for _ in range(rows):
+        row = [1.0 if rng.random() < 0.42 else 0.0 for _ in range(cols)]
+        if sum(row) == 0:
+            row[rng.randrange(cols)] = 1.0
+        cover.append(row)
+    costs = [0.3 + 1.5 * rng.random() for _ in range(cols)]
+    x_star = [0.0] * cols
+    for i in range(cols):
+        if rng.random() < 0.25:
+            x_star[i] = 1.0
+    for row in cover:
+        if sum(row[j] * x_star[j] for j in range(cols)) < 1.0:
+            picks = [j for j in range(cols) if row[j] > 0]
+            x_star[min(picks, key=lambda j: costs[j])] = 1.0
+    fractional_target = [0.75 * value + 0.25 * rng.random() for value in x_star]
+    return ProblemInstance(
+        name="lns_dense_%s_%02d" % (split, idx),
+        family="lns_repair_cover_dense",
         payload={
             "cover_matrix": cover,
             "costs": costs,

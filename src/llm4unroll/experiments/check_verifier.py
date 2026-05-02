@@ -7,7 +7,22 @@ from llm4unroll.registry.algorithm_registry import ALGORITHM_REGISTRY
 
 
 def build_verifier_tables() -> tuple[list[dict[str, object]], list[dict[str, object]]]:
-    variants = ["vanilla", "adaptive", "conservative", "search_variant_1", "search_variant_2"]
+    variants = [
+        "vanilla",
+        "adaptive",
+        "conservative",
+        "safe_fallback_only",
+        "learned_controller",
+        "learned_controller_high_budget",
+        "learned_controller_paper_scale",
+        "llm_one_shot",
+        "prompt_variant",
+        "model_variant",
+        "grid_candidate_1",
+        "grid_candidate_2",
+        "search_variant_1",
+        "search_variant_2",
+    ]
     positive_rows: list[dict[str, object]] = []
     negative_rows: list[dict[str, object]] = []
 

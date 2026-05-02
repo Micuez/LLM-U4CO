@@ -1,0 +1,11 @@
+seed: 11
+algorithm: PDHG
+problem_family: llm_lns_is
+budget:
+  profile: paper_native
+  max_iters: 160
+  time_limit_s: 24.0
+evaluation:
+  train_instances: 6
+  validation_instances: 4
+  test_instances: 4

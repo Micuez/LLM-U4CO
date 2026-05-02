@@ -1,8 +1,8 @@
 policy_id: conservative
 origin: baseline
 split: train
-score: -0.5353803066005122
-aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.0014017820358276367, 'median_primal_residual': 0.0, 'median_dual_residual': 0.3104104032379415, 'median_iterations': 60.0, 'fail_rate': 0.0}
+score: -0.5354436832975403
+aggregate: {'median_gap': 0.0, 'median_violation': 0.0, 'median_runtime': 0.0018249750137329102, 'median_primal_residual': 0.0, 'median_dual_residual': 0.3104104032379415, 'median_iterations': 60.0, 'fail_rate': 0.0}
 source: def policy(state):
     actions = []
     actions.append({'name': 'fallback'})
@@ -11,3 +11,11 @@ source: def policy(state):
         actions.append({'name': 'restart'})
     return {'actions': actions}
 
+verified: True
+errors: []
+warnings: ['Required features not referenced by policy: k, mip_gap, neighbourhood_size']
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.0, 'violation': 0.0, 'runtime': 0.000202178955078125}
+feature_coverage: 0.25
+proof_obligations: ["path[1]: fallback satisfied under if state.get('stagnation_count', 0) > 5 and state.get('fractionality', 0.0) > 0.15", "path[2]: fallback satisfied under else not (state.get('stagnation_count', 0) > 5 and state.get('fractionality', 0.0) > 0.15)"]

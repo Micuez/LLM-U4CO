@@ -1,0 +1,18 @@
+policy_id: safe_fallback_only
+origin: baseline
+split: train
+score: -0.7478502943061149
+aggregate: {'median_gap': 0.7243581873585077, 'median_violation': 0.0015246527332893885, 'median_runtime': 0.001822352409362793, 'median_primal_residual': 0.0015246527332893885, 'median_dual_residual': 0.001789768343467998, 'median_iterations': 70.0, 'fail_rate': 0.0}
+source: def policy(state):
+    actions = []
+    actions.append({'name': 'fallback'})
+    return {'actions': actions}
+
+verified: True
+errors: []
+warnings: ['Required features not referenced by policy: k, residual_norm']
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.8232668260832832, 'violation': 0.03323145597307856, 'runtime': 0.0002980232238769531}
+feature_coverage: 0.0
+proof_obligations: ['path[1]: fallback satisfied under root']

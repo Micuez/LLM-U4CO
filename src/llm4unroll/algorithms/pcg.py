@@ -21,6 +21,7 @@ class PCGRunner(UnrolledAlgorithmRunner):
         r = sub(rhs, _sym_matvec(h, x))
         p = list(r)
         damping = 1.0
+        step_clip = 1.0
         stagnation_count = 0
         best_residual = norm2(r)
         trace = RunTrace()
@@ -34,10 +35,14 @@ class PCGRunner(UnrolledAlgorithmRunner):
             direction_curvature = dot(p, _sym_matvec(h, p))
             state = {
                 "k": k,
+                "obj": _quadratic_objective(h, rhs, x),
+                "obj_prev": trace.objectives[-1] if trace.objectives else _quadratic_objective(h, rhs, x),
+                "gap": norm2(sub(x, x_star)) / max(norm2(x_star), 1e-9),
                 "residual_norm": residual_norm,
                 "residual_ratio": residual_ratio,
                 "direction_curvature": direction_curvature,
                 "precond_quality": 1.0,
+                "step_clip": step_clip,
                 "stagnation_count": stagnation_count,
                 "instance_features": instance.instance_features,
             }
@@ -57,6 +62,8 @@ class PCGRunner(UnrolledAlgorithmRunner):
                 value = action.get("value")
                 if name == "damp" and value is not None:
                     damping = max(0.05, min(1.0, float(value)))
+                elif name == "clip_update" and value is not None:
+                    step_clip = max(1e-3, min(5.0, float(value)))
                 elif name == "restart":
                     do_restart = True
                 elif name == "fallback":
@@ -67,7 +74,7 @@ class PCGRunner(UnrolledAlgorithmRunner):
 
             hp = _sym_matvec(h, p)
             denom = max(dot(p, hp), 1e-9)
-            alpha = damping * dot(r, r) / denom
+            alpha = min(step_clip, damping * dot(r, r) / denom)
             x = add(x, scale(p, alpha))
             r_next = sub(r, scale(hp, alpha))
             beta = dot(r_next, r_next) / max(dot(r, r), 1e-9)

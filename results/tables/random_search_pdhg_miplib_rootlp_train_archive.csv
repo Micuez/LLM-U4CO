@@ -1,0 +1,12 @@
+algorithm,meta_parent,meta_split,origin,policy_id,problem_family,score,verified
+PDHG,,train,search_seed,search_seed,miplib_rootlp,-3.129212401654933,True
+PDHG,,train,mutation,search_variant_1,miplib_rootlp,-1.9957134947079762,True
+PDHG,,train,mutation,search_variant_2,miplib_rootlp,-1.7645737398297103,True
+PDHG,search_seed,train,random_search,random_00,miplib_rootlp,-3.1292235448357637,True
+PDHG,random_01_s1,train,random_search,random_01,miplib_rootlp,-1.7645728467736497,True
+PDHG,search_seed,train,random_search,random_02,miplib_rootlp,-3.1292082584663348,True
+PDHG,random_03_s0,train,random_search,random_03,miplib_rootlp,-1.9957125775562101,True
+PDHG,search_variant_2,train,random_search,random_04,miplib_rootlp,-1.7645969574212135,True
+PDHG,random_05_s0,train,random_search,random_05,miplib_rootlp,-1.7645717750993586,True
+PDHG,random_06_s1,train,random_search,random_06,miplib_rootlp,-1.9957078482676467,True
+PDHG,random_07_s0,train,random_search,random_07,miplib_rootlp,-1.9957179736230821,True

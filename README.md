@@ -87,6 +87,8 @@ python3 -m pip install ecole
 ```bash
 PYTHONPATH=src python3 -m llm4unroll.experiments.run_baselines --config configs/pdhg_miplib_rootlp.yaml --split train
 PYTHONPATH=src python3 -m llm4unroll.experiments.run_baselines --config configs/pdhg_llm_lns_sc.yaml --split train
+PYTHONPATH=src python3 -m llm4unroll.experiments.run_strong_baselines --config configs/pdhg_llm_lns_sc.yaml --split train
+PYTHONPATH=src python3 -m llm4unroll.experiments.run_strong_baselines --config configs/pdhg_llm_lns_is.yaml --split train
 PYTHONPATH=src python3 -m llm4unroll.experiments.run_evolution_baseline --config configs/pdhg_miplib_rootlp.yaml --split train
 PYTHONPATH=src python3 -m llm4unroll.experiments.run_random_search --config configs/pdhg_miplib_rootlp.yaml --split train
 PYTHONPATH=src python3 -m llm4unroll.experiments.run_search --config configs/search_openai_compatible.example.yaml --split train
@@ -172,6 +174,10 @@ python3 -m pip install pyscipopt
 python3 -m pip install ecole
 ```
 
+For a repo-local setup, installing into `.vendor/` also works because `src/llm4unroll/__init__.py` prepends that directory to `sys.path` when present.
+
+The bundled configs now also support budget presets through `budget.profile`, including `heurigym_small`, `heurigym_medium`, and `paper_native`.
+
 Notes:
 
 - `PySCIPOpt` and `Ecole` usually need a working SCIP installation or compatible binary environment.
@@ -211,6 +217,30 @@ It writes baseline, search, ablation, and OOD figures under `results/figures/`, 
 It also writes a standalone verifier appendix page at `results/figures/verifier_report.html`.
 For a denser paper-style appendix layout, it also writes `results/figures/verifier_appendix.html`.
 
+For machine-readable implementation and verification coverage, inspect:
+
+- `results/review/verified_tracks_status.json`
+- `results/review/verified_tracks_status.md`
+- `results/review/plan_implementation_status.json`
+- `results/review/plan_implementation_status.md`
+
+## Verified track map
+
+The table below only lists tracks that already have a runner, config, and result artifacts wired together in the current repository.
+
+| Track | Runner | Representative config | Key state/actions | Verified outputs | train-small-test-large | cross-problem transfer |
+| --- | --- | --- | --- | --- | --- | --- |
+| PDHG synthetic LP | `PDHGRunner` | `configs/pdhg_synthetic_lp.yaml` | `r_p_norm / r_d_norm / tau / sigma / restart / scale_tau / scale_sigma` | `results/tables/pdhg_pdhg_lp_train.csv` | `pdhg_lp` | `pdhg_lp -> setcover_relaxation`, `pdhg_lp -> miplib_rootlp` |
+| PDHG MIPLIB root-LP | `PDHGRunner` | `configs/pdhg_miplib_rootlp.yaml` | `gap / violation / tau / sigma / native probe` | `results/tables/pdhg_miplib_rootlp_train.csv`, `results/tables/native_probe_pdhg_miplib_rootlp_train.csv` | `miplib_rootlp` | `miplib_rootlp -> llm_lns_sc` |
+| PDHG LLM-LNS SC | `PDHGRunner` | `configs/pdhg_llm_lns_sc.yaml` | `mip-style LP relaxation / residual balancing / solver baseline` | `results/tables/pdhg_llm_lns_sc_train.csv` | `llm_lns_sc` | `llm_lns_sc -> llm_lns_is` |
+| PDHG LLM-LNS IS | `PDHGRunner` | `configs/pdhg_llm_lns_is.yaml` | `instance_features / residual balancing / solver baseline` | `results/tables/pdhg_llm_lns_is_train.csv` | `llm_lns_is` | `llm_lns_is -> llm_lns_sc` |
+| ADMM synthetic QP | `ADMMRunner` | `configs/admm_synthetic_qp.yaml` | `r_p_norm / r_d_norm / rho / scale_rho / restart / native probe` | `results/tables/admm_admm_qp_train.csv`, `results/tables/native_probe_admm_admm_qp_train.csv` | `admm_qp` | `admm_qp -> admm_qp_relaxation` |
+| FISTA LASSO | `FISTARunner` | `configs/fista_lasso.yaml` | `obj / obj_prev / gap / momentum / restart / scale_tau` | `results/tables/fista_fista_lasso_train.csv` | `fista_lasso` | `fista_lasso -> fista_sparse_coding` |
+| ALM equality-QP | `ALMRunner` | `configs/alm_eq_qp.yaml` | `violation / rho / dual_residual / grad_norm / clip_update / native probe` | `results/tables/alm_alm_eq_qp_train.csv`, `results/tables/native_probe_alm_alm_eq_qp_train.csv` | `alm_eq_qp` | `alm_eq_qp -> alm_cover_relaxation` |
+| DRS feasibility | `DouglasRachfordRunner` | `configs/drs_feasibility.yaml` | `residual_norm / lambda_relax / dual_residual / set_lambda_relax / clip_update` | `results/tables/drs_drs_feasibility_train.csv` | `drs_feasibility` | `drs_feasibility -> drs_affine_box_shifted` |
+| PCG linear system | `PCGRunner` | `configs/pcg_linear_system.yaml` | `residual_ratio / direction_curvature / gap / clip_update / restart / native probe` | `results/tables/pcg_pcg_linear_system_train.csv`, `results/tables/native_probe_pcg_pcg_linear_system_train.csv` | `pcg_linear_system` | `pcg_linear_system -> pcg_graph_laplacian` |
+| LNS repair cover | `LNSRepairRunner` | `configs/lns_repair_cover.yaml` | `mip_gap / fractionality / neighbourhood_size / repair_progress / set_neighbourhood_size` | `results/tables/lns_repair_lns_repair_cover_train.csv` | `lns_repair_cover` | `lns_repair_cover -> lns_repair_cover_dense` |
+
 ## Current status
 
 Implemented and statically closed:
@@ -220,6 +250,8 @@ Implemented and statically closed:
 - synthetic Phase 1 benchmarks and small Phase 2 LLM-LNS / MIPLIB-style loaders
 - optimisation evaluator, candidate archive, failure logs, and report generation
 - baseline, search, ablation, OOD, random-search, and evolution-without-LLM entrypoints
+- direct strong-baseline entrypoints for LLM-LNS heuristic vs LLM4Unroll vs combined pipeline
+- standalone Bayesian-optimisation-style baseline, and minimal + high-budget + paper-scale learned-controller exports
 - mock LLM, local OpenAI-compatible model, and remote API search entrypoints
 - native-or-fallback solver interfaces for HiGHS, OSQP, OR-Tools, PySCIPOpt, and Ecole
 - verifier appendix pages, native backend usage report, and SVG figure pipeline
@@ -227,7 +259,7 @@ Implemented and statically closed:
 Implemented with surrogate fallback:
 
 - solver baselines still run when native backends are missing
-- Phase 2 data path still runs when only bundled mock LP assets are available
+- the Phase 2 data path still keeps a bundled mock LP fallback, but the local setup now prefers real MILPBench-backed LLM-LNS LP assets when present
 - search still runs when only `mock` LLM is available
 
 ## Remaining work
@@ -235,14 +267,15 @@ Implemented with surrogate fallback:
 Real-experiment-only work:
 
 - install full native solver environments and rerun the same entrypoints in `native` mode
-- replace bundled mock/small benchmark assets with real MIPLIB subsets and larger LLM-LNS assets
+- continue expanding the real LLM-LNS data path from the current easy / medium MILPBench assets to full hard coverage, plus larger real MIPLIB subsets
 - run large-budget search, ablation, and OOD experiments for paper tables
 - compare against true external baselines under the same hardware and timeout budget
 
 Framework extensions not fully implemented yet:
 
-- Bayesian optimisation or grid-search baseline
-- learned-controller baseline
+- larger-budget Bayesian optimisation and grid-search sweeps beyond the new standalone baseline entrypoint
+- native solver coverage beyond the new local `highspy / osqp / ortools / pyscipopt` multi-track probes, with `ecole / scip` still missing locally
+- stronger learned-controller baselines beyond the new minimal + high-budget + paper-scale trained `PDHG / ADMM / FISTA / DRS / ALM / PCG / LNS_REPAIR` coverage
 - explicit `LLM one-shot without verifier` runner as a first-class experiment
 - full paper-grade ablation matrix:
   - without verifier
@@ -254,7 +287,6 @@ Framework extensions not fully implemented yet:
   - PySCIPOpt callback-level primal heuristic / LNS callback insertion
   - Ecole-generated train-small-test-large benchmark mainline
   - OR-Tools-specific PDLP / CP-SAT / routing baseline track
-- full-strength LLM-LNS heuristic vs. LLM4Unroll vs. combined pipeline comparison
-- HeuriGym-style agentic heuristic benchmark integration
+- full-strength external-system reproduction beyond the new high-fidelity `LLM-LNS heuristic` / `combined pipeline` contrast tracks and repo-local fullstack replay
 
 In short: the framework itself is already end-to-end runnable, while the main unfinished items are large real experiments and a few paper-grade baseline/ablation extensions.

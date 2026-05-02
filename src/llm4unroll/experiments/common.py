@@ -21,6 +21,33 @@ from llm4unroll.dsl.guards import RuntimeSafetyGuard
 from llm4unroll.registry.algorithm_registry import ALGORITHM_REGISTRY
 from llm4unroll.utils import load_simple_yaml, seed_everything
 
+HEURIGYM_BUDGET_PRESETS: Dict[str, Dict[str, object]] = {
+    "default": {
+        "max_iters": 60,
+        "time_limit_s": 10.0,
+        "same_budget_candidates": 8,
+        "controller_train_multiplier": 1.0,
+    },
+    "heurigym_small": {
+        "max_iters": 96,
+        "time_limit_s": 12.0,
+        "same_budget_candidates": 12,
+        "controller_train_multiplier": 1.5,
+    },
+    "heurigym_medium": {
+        "max_iters": 128,
+        "time_limit_s": 18.0,
+        "same_budget_candidates": 16,
+        "controller_train_multiplier": 2.0,
+    },
+    "paper_native": {
+        "max_iters": 160,
+        "time_limit_s": 24.0,
+        "same_budget_candidates": 20,
+        "controller_train_multiplier": 2.5,
+    },
+}
+
 
 def parse_args(default_description: str):
     parser = argparse.ArgumentParser(description=default_description)
@@ -53,11 +80,17 @@ def make_instances(problem_family: str, split: str, count: int, seed: int, datas
     if problem_family in {
         "pdhg_lp",
         "admm_qp",
+        "admm_qp_relaxation",
         "fista_lasso",
+        "fista_sparse_coding",
         "alm_eq_qp",
+        "alm_cover_relaxation",
         "drs_feasibility",
+        "drs_affine_box_shifted",
         "pcg_linear_system",
+        "pcg_graph_laplacian",
         "lns_repair_cover",
+        "lns_repair_cover_dense",
     }:
         return build_synthetic_instances(problem_family, split, count, seed)
     if problem_family.startswith("llm_lns_"):
@@ -81,7 +114,18 @@ def make_instances(problem_family: str, split: str, count: int, seed: int, datas
 
 def make_budget(config: Dict[str, object]) -> RunBudget:
     budget = config["budget"]
-    return RunBudget(max_iters=int(budget["max_iters"]), time_limit_s=float(budget.get("time_limit_s", 30.0)))
+    profile = str(budget.get("profile", "default"))
+    preset = dict(HEURIGYM_BUDGET_PRESETS.get(profile, HEURIGYM_BUDGET_PRESETS["default"]))
+    preset.update({key: value for key, value in budget.items() if key != "profile"})
+    native_probe_time_limit_s = float(preset.get("native_probe_time_limit_s", preset.get("time_limit_s", 30.0)))
+    return RunBudget(
+        max_iters=int(preset["max_iters"]),
+        time_limit_s=float(preset.get("time_limit_s", 30.0)),
+        profile=profile,
+        same_budget_candidates=int(preset.get("same_budget_candidates", 8)),
+        controller_train_multiplier=float(preset.get("controller_train_multiplier", 1.0)),
+        native_probe_time_limit_s=native_probe_time_limit_s,
+    )
 
 
 def bootstrap(config_path: str, split: str = "train"):

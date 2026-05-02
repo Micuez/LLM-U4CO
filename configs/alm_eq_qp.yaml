@@ -2,6 +2,7 @@ seed: 17
 algorithm: ALM
 problem_family: alm_eq_qp
 budget:
+  profile: paper_native
   max_iters: 70
   time_limit_s: 10.0
 evaluation:

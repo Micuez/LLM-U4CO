@@ -1,8 +1,8 @@
 policy_id: adaptive
 origin: baseline
 split: train
-score: -0.9412715280696082
-aggregate: {'median_gap': 1.9372560818957222e-05, 'median_violation': 0.0, 'median_runtime': 0.019458770751953125, 'median_primal_residual': 0.19327964155066246, 'median_dual_residual': 1.7233055240761797e-05, 'median_iterations': 80.0, 'fail_rate': 0.0}
+score: -0.9408098649227897
+aggregate: {'median_gap': 1.9372560818957222e-05, 'median_violation': 0.0, 'median_runtime': 0.016325950622558594, 'median_primal_residual': 0.19327964155066246, 'median_dual_residual': 1.7233055240761797e-05, 'median_iterations': 80.0, 'fail_rate': 0.0}
 source: def policy(state):
     actions = []
     actions.append({'name': 'fallback'})
@@ -23,6 +23,6 @@ errors: []
 warnings: ['Action set_momentum is emitted without reading state feature momentum.', 'Action scale_tau is emitted without reading state feature tau.', 'Action set_momentum is emitted without reading state feature momentum.', 'Action set_momentum is emitted without reading state feature momentum.', 'Action scale_tau is emitted without reading state feature tau.', 'Required features not referenced by policy: k, momentum, tau']
 smoke_ok: True
 smoke_reason: 
-smoke_diagnostics: {'iterations': 8, 'gap': 0.27060608757734084, 'violation': 0.0, 'runtime': 0.010529041290283203}
+smoke_diagnostics: {'iterations': 8, 'gap': 0.27060608757734084, 'violation': 0.0, 'runtime': 0.009579181671142578}
 feature_coverage: 0.4
 proof_obligations: ["path[1]: fallback satisfied under if state.get('obj', 0.0) > state.get('obj_prev', 0.0)", "path[2]: fallback satisfied under else not (state.get('obj', 0.0) > state.get('obj_prev', 0.0)), if state.get('gap', 1.0) < 0.05", "path[3]: fallback satisfied under else not (state.get('obj', 0.0) > state.get('obj_prev', 0.0)), else not (state.get('gap', 1.0) < 0.05), if state.get('stagnation_count', 0) >= 3", "path[4]: fallback satisfied under else not (state.get('obj', 0.0) > state.get('obj_prev', 0.0)), else not (state.get('gap', 1.0) < 0.05), else not (state.get('stagnation_count', 0) >= 3)"]

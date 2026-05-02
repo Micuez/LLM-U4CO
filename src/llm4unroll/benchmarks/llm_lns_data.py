@@ -31,14 +31,31 @@ def discover_llm_lns_files(root: str = "data/llm_lns") -> List[str]:
 
 def summarize_llm_lns_assets(root: str = "data/llm_lns") -> Dict[str, object]:
     files = discover_llm_lns_files(root)
+    expected_families = ("SC_easy_instance", "IS_easy_instance", "MVC_easy_instance", "MIKS_easy_instance")
     summary = {
         "root": root,
         "lp_files": len(files),
         "families": {},
+        "real_lp_files": 0,
+        "mock_lp_files": 0,
+        "real_levels": {"easy": 0, "medium": 0, "hard": 0},
+        "data_source": "mock_only",
+        "missing_families": [],
+        "complete_phase2": True,
     }
-    for family in ("SC_easy_instance", "IS_easy_instance", "MVC_easy_instance", "MIKS_easy_instance"):
+    summary["real_lp_files"] = len([path for path in files if any(token in os.path.basename(path) for token in ("_easy_", "_medium_", "_hard_"))])
+    for level in ("easy", "medium", "hard"):
+        summary["real_levels"][level] = len([path for path in files if ("_%s_" % level) in os.path.basename(path)])
+    summary["mock_lp_files"] = len(files) - int(summary["real_lp_files"])
+    if summary["real_lp_files"] > 0:
+        summary["data_source"] = "milpbench_real"
+    for family in expected_families:
         path = os.path.join(root, family, "LP")
-        summary["families"][family] = len([name for name in os.listdir(path)]) if os.path.isdir(path) else 0
+        count = len([name for name in os.listdir(path) if name.endswith(".lp")]) if os.path.isdir(path) else 0
+        summary["families"][family] = count
+        if count == 0:
+            summary["missing_families"].append(family)
+    summary["complete_phase2"] = len(summary["missing_families"]) == 0
     return summary
 
 
@@ -49,6 +66,12 @@ def load_llm_lns_instances(family: str, split: str, count: int, seed: int, root:
         for filename in os.listdir(family_dir)
         if filename.endswith(".lp")
     )
+    real_files = [
+        path for path in all_files
+        if any(token in os.path.basename(path) for token in ("_easy_", "_medium_", "_hard_"))
+    ]
+    if real_files:
+        all_files = real_files
     if not all_files:
         raise FileNotFoundError("No .lp files found under %s" % family_dir)
 

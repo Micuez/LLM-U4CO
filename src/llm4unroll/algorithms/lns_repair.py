@@ -21,6 +21,7 @@ class LNSRepairRunner(UnrolledAlgorithmRunner):
         x = [0.5 for _ in range(n)]
         neighbourhood_ratio = 0.3
         damping = 1.0
+        step_clip = 1.0
         stagnation_count = 0
         best_obj = float("inf")
         trace = RunTrace()
@@ -45,6 +46,8 @@ class LNSRepairRunner(UnrolledAlgorithmRunner):
                 "fractionality": fractionality,
                 "violation": violation,
                 "neighbourhood_size": neighbourhood_ratio,
+                "repair_progress": 1.0 - lp_gap,
+                "step_clip": step_clip,
                 "stagnation_count": stagnation_count,
                 "instance_features": instance.instance_features,
             }
@@ -64,6 +67,12 @@ class LNSRepairRunner(UnrolledAlgorithmRunner):
                 value = action.get("value")
                 if name == "damp" and value is not None:
                     damping = max(0.05, min(1.0, float(value)))
+                elif name == "set_neighbourhood_size" and value is not None:
+                    neighbourhood_ratio = max(0.05, min(0.95, float(value)))
+                elif name == "scale_neighbourhood_size" and value is not None:
+                    neighbourhood_ratio = max(0.05, min(0.95, neighbourhood_ratio * float(value)))
+                elif name == "clip_update" and value is not None:
+                    step_clip = max(0.1, min(2.0, float(value)))
                 elif name == "restart":
                     do_restart = True
                 elif name == "fallback":
@@ -76,7 +85,7 @@ class LNSRepairRunner(UnrolledAlgorithmRunner):
             move_count = max(1, int(neighbourhood_ratio * n))
             ranked = sorted(range(n), key=lambda idx: abs(x[idx] - fractional_target[idx]), reverse=True)
             for idx in ranked[:move_count]:
-                x[idx] = x[idx] + damping * (fractional_target[idx] - x[idx])
+                x[idx] = x[idx] + min(step_clip, damping) * (fractional_target[idx] - x[idx])
                 x[idx] = min(max(x[idx], 0.0), 1.0)
             neighbourhood_ratio = min(0.9, max(0.1, neighbourhood_ratio + 0.02 * (1 if violation > 0 else -1)))
 

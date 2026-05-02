@@ -1,10 +1,18 @@
 policy_id: vanilla
 origin: baseline
 split: train
-score: -0.20401767159387652
-aggregate: {'median_gap': 0.0020014316016560532, 'median_violation': 0.0006635712923085228, 'median_runtime': 0.0010374784469604492, 'median_primal_residual': 0.0006635712923085228, 'median_dual_residual': 0.002135632463107477, 'median_iterations': 70.0, 'fail_rate': 0.0}
+score: -0.2040340688041046
+aggregate: {'median_gap': 0.0020014316016560532, 'median_violation': 0.0006635712923085228, 'median_runtime': 0.0011469125747680664, 'median_primal_residual': 0.0006635712923085228, 'median_dual_residual': 0.002135632463107477, 'median_iterations': 70.0, 'fail_rate': 0.0}
 source: def policy(state):
     actions = []
     actions.append({'name': 'fallback'})
     return {'actions': actions}
 
+verified: True
+errors: []
+warnings: ['Required features not referenced by policy: k, rho, violation']
+smoke_ok: True
+smoke_reason: 
+smoke_diagnostics: {'iterations': 8, 'gap': 0.3358180552519779, 'violation': 0.23062132321776296, 'runtime': 0.000148773193359375}
+feature_coverage: 0.0
+proof_obligations: ['path[1]: fallback satisfied under root']
