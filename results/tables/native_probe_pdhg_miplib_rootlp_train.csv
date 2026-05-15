@@ -1,3 +1,0 @@
-algorithm,backend_detail,backend_mode,fail_rate,median_gap,median_runtime,native_used,paper_scale_pending,problem_family,score,solver_name,split,support_level,supports_native,supports_surrogate
-PDHG,python package highspy importable,python_package,0.0,0.0,0.02499,True,True,miplib_rootlp,-0.003702,HiGHS,train,,False,False
-PDHG,python package ortools importable,python_package,0.0,0.0,0.132734,True,True,miplib_rootlp,-0.018695,OR-Tools,train,,False,False

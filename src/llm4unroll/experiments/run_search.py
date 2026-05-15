@@ -17,12 +17,12 @@ from llm4unroll.search.population import CandidatePolicy
 
 
 def _extract_policy_code(text: str) -> str:
-    fence = re.search(r"```(?:python)?\s*(def policy\(state\):.*?)(?:```|\Z)", text, re.DOTALL)
+    fence = re.search(r"```(?:python)?\s*(def\s+policy\s*\([^)]*\)\s*(?:->\s*[^:]+)?\s*:.*?)(?:```|\Z)", text, re.DOTALL)
     if fence:
         return fence.group(1).strip() + "\n"
-    start = text.find("def policy(state):")
-    if start >= 0:
-        return text[start:].strip() + "\n"
+    start = re.search(r"def\s+policy\s*\(", text)
+    if start:
+        return text[start.start():].strip() + "\n"
     return text.strip() + "\n"
 
 

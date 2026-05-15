@@ -1,4 +1,0 @@
-algorithm,available,backend_detail,backend_mode,fail_rate,median_gap,median_iterations,median_runtime,median_violation,native_used,origin,paper_scale_pending,problem_family,score,solver_name,specialist_track,split,support_level,supports_native,supports_surrogate
-LNS_REPAIR,True,python package pyscipopt importable,python_package,0.0,0.0,1,0.007521,0.0,True,solver_specialist,True,lns_repair_cover,-0.560259,PySCIPOpt,callback_ready_primal_heuristic_track,train,,False,False
-LNS_REPAIR,True,python package ortools importable,python_package,0.0,0.332439,0,0.006432,0.0,True,solver_specialist,True,lns_repair_cover,-0.847108,OR-Tools,ortools_mip_relaxation_track,train,,False,False
-LNS_REPAIR,False,ModuleNotFoundError: No module named 'ecole',surrogate,0.0,0.0,1,0.001447,0.0,False,solver_specialist,True,lns_repair_cover,-0.135387,Ecole,ecole_benchmark_bridge_track,train,surrogate_only,False,True

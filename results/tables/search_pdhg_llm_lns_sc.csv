@@ -1,4 +1,0 @@
-algorithm,errors,fail_rate,median_gap,policy_id,score,verified
-PDHG,,0.0,0.49036,search_seed,-1.59046,True
-PDHG,,0.0,1.0,search_variant_1,-2.804635,True
-PDHG,,0.0,1.703424,search_variant_2,-3.318153,True

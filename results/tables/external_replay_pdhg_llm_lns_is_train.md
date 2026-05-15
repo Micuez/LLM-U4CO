@@ -1,7 +1,0 @@
-# External Fullstack Replay Summary
-
-| algorithm | problem_family | policy_id | origin | comparison_role | reproduction_mode | pipeline_type | pipeline_stage_count | uses_external_heuristic | uses_llm4unroll_refine | budget_profile | budget_max_iters | budget_time_limit_s | same_budget_candidates | smoke_reference | smoke_budget_iters | verified | feature_coverage | proof_count | score | median_gap | median_violation | median_runtime | median_iterations | fail_rate |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| PDHG | llm_lns_is | adaptive | external_fullstack_replay | llm4unroll_reference | repo_local_fullstack_replay | internal_reference | 1 | False | False | heurigym_small | 80 | 10.0 | 12 | is_mock_01 | 8 | True | 0.4 | 6 | -8.556332 | 15.709057 | 47.652165 | 0.002378 | 80 | 0.0 |
-| PDHG | llm_lns_is | llm_lns_heuristic_external | external_fullstack_replay | external_llm_lns_system_replay | repo_local_fullstack_replay | external_heuristic_replay | 2 | True | False | heurigym_small | 80 | 10.0 | 12 | is_mock_01 | 8 | True | 1.0 | 24 | -4.053054 | 1.227987 | 2.797878 | 0.002387 | 80 | 0.0 |
-| PDHG | llm_lns_is | llm_lns_plus_llm4unroll_external | external_fullstack_replay | external_combined_system_replay | repo_local_fullstack_replay | external_combined_replay | 3 | True | True | heurigym_small | 80 | 10.0 | 12 | is_mock_01 | 8 | True | 1.0 | 48 | -4.852067 | 1.803259 | 4.16704 | 0.002364 | 80 | 0.0 |

@@ -1,2 +1,0 @@
-# Relative paths are resolved from this file's directory.
-sample_rootlp.lp

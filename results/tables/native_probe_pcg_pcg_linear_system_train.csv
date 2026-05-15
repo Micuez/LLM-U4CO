@@ -1,2 +1,0 @@
-algorithm,backend_detail,backend_mode,fail_rate,median_gap,median_runtime,native_used,paper_scale_pending,problem_family,score,solver_name,split,support_level,supports_native,supports_surrogate
-PCG,python package osqp importable,python_package,0.0,0.0,0.00106,True,True,pcg_linear_system,-0.000162,OSQP,train,,False,False

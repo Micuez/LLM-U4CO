@@ -1,8 +1,0 @@
-algorithm,backend_detail,backend_mode,errors,fail_rate,feature_coverage,median_dual_residual,median_gap,median_iterations,median_primal_residual,median_runtime,median_violation,native_backend,native_used,origin,paper_scale_pending,policy_id,problem_family,proof_count,score,smoke_ok,smoke_reason,support_level,supports_native,supports_surrogate,verified,warnings
-PCG,,,,0.0,0.0,0.708275,3e-06,50,3e-06,0.003211,3e-06,,,baseline,,vanilla,pcg_linear_system,1,-0.46823,True,,,,,True,"Required features not referenced by policy: k, residual_norm"
-PCG,,,,0.0,0.0,0.708273,5e-06,50,4e-06,0.006049,4e-06,,,baseline,,adaptive,pcg_linear_system,3,-0.918656,True,,,,,True,"Required features not referenced by policy: k, residual_norm"
-PCG,,,,0.0,0.0,0.708271,6e-06,50,5e-06,0.003323,5e-06,,,baseline,,conservative,pcg_linear_system,2,-0.668251,True,,,,,True,"Required features not referenced by policy: k, residual_norm"
-PCG,,,,0.0,0.0,0.708275,3e-06,50,3e-06,0.003099,3e-06,,,baseline,,safe_fallback_only,pcg_linear_system,1,-0.468213,True,,,,,True,"Required features not referenced by policy: k, residual_norm"
-PCG,,,,0.0,0.0,0.708273,5e-06,50,4e-06,0.003083,4e-06,,,baseline,,learned_controller,pcg_linear_system,3,-0.918213,True,,,,,True,"Required features not referenced by policy: k, residual_norm"
-PCG,,,,0.0,0.0,0.708273,5e-06,50,4e-06,0.002946,4e-06,,,baseline,,llm_one_shot,pcg_linear_system,4,-1.218193,True,,,,,True,"Required features not referenced by policy: k, residual_norm"
-PCG,ModuleNotFoundError: No module named 'osqp',surrogate,,0.0,,0.708275,0.0,1,0.0,0.001017,0.0,,False,solver_baseline,True,OSQP,pcg_linear_system,,-0.267894,,,surrogate_only,False,True,,

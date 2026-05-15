@@ -13,6 +13,82 @@ This version now includes:
 - a lightweight multi-generation search loop
 - pluggable LLM client stubs for `mock` and `openai_compatible` providers
 
+## Code structure
+
+The repository follows a clear split between the runnable package under `src/`, experiment configs under `configs/`, helper scripts under `scripts/`, and generated artifacts under `results/`.
+
+```text
+LLM-U4CO/
+├── README.md
+├── README_zh.md
+├── pyproject.toml
+├── configs/                  # YAML experiment configs and manifest examples
+├── data/                     # Bundled synthetic and small benchmark assets
+├── results/                  # Generated tables, review docs, and real-run reports
+├── scripts/                  # One-shot reproduction and setup helpers
+└── src/llm4unroll/           # Core Python package
+    ├── algorithms/           # Unrolled runners: PDHG, ADMM, FISTA, ALM, DRS, PCG, LNS_REPAIR
+    ├── benchmarks/           # Synthetic generators and real-data loaders
+    ├── dsl/                  # Policy DSL schema, parser, transpiler, verifier, runtime guards
+    ├── evaluator/            # Metrics, smoke tests, scoring, reports, budget handling
+    ├── experiments/          # CLI entrypoints for baselines, search, ablation, OOD, manifests
+    ├── registry/             # Algorithm/problem/baseline registries
+    ├── search/               # LLM client, prompts, population archive, search adapters
+    ├── solvers/              # Native-or-surrogate solver interfaces
+    ├── learned_controller.py # Learned-controller baseline export
+    ├── policies.py           # Handwritten baseline/search seed policies
+    ├── math_utils.py
+    └── utils.py
+```
+
+### What each layer does
+
+- `src/llm4unroll/experiments/`: the operational entry layer. Most runs start here, especially `run_baselines.py`, `run_search.py`, `run_ablation.py`, `run_ood.py`, and `run_manifest.py`.
+- `src/llm4unroll/experiments/common.py`: the shared bootstrap path. It loads config, picks the algorithm runner, builds the run budget, and creates instances from the selected problem family.
+- `src/llm4unroll/registry/algorithm_registry.py`: the central contract table. Each algorithm is described here by allowed state features, required features, legal actions, and safety constraints.
+- `src/llm4unroll/dsl/`: the safety and policy layer. `schema.py` defines the contract, `verifier.py` statically checks generated policies, `transpiler.py` compiles policy code, and `guards.py` enforces runtime safety.
+- `src/llm4unroll/algorithms/`: algorithm-specific runners. Each runner inherits from `algorithms/base.py` and implements how a policy interacts with one optimisation loop.
+- `src/llm4unroll/benchmarks/`: instance construction layer. Synthetic problems come from `synthetic_lp_qp.py` and graph relaxations; small real-style data comes from `miplib.py` and `llm_lns_data.py`.
+- `src/llm4unroll/evaluator/`: execution scoring and reporting. `optimisation_evaluator.py` runs policies or solver baselines on instances and aggregates metrics into comparable scores.
+- `src/llm4unroll/search/`: policy search layer. It contains prompt templates, the OpenAI-compatible client, population management, and adapters such as FunSearch/ReEvo-style mutations.
+- `src/llm4unroll/solvers/`: baseline solver layer. These files wrap HiGHS, OSQP, OR-Tools, PySCIPOpt, and Ecole, and fall back to surrogate behavior when native backends are unavailable.
+- `configs/`: reproducible experiment recipes. The config selects the algorithm, problem family, budget profile, dataset roots, evaluation split sizes, and LLM provider settings.
+- `scripts/`: coarse-grained automation for setup, data prep, environment checks, and end-to-end reproduction.
+- `results/`: output sink for tables, logs, review reports, environment probes, and real-experiment summaries.
+
+### Core execution flow
+
+For most runs, the code path is:
+
+`configs/*.yaml`
+-> `experiments/common.py`
+-> `registry/algorithm_registry.py`
+-> `benchmarks/*` + `algorithms/*`
+-> `dsl/verifier.py` and `dsl/guards.py`
+-> `evaluator/optimisation_evaluator.py`
+-> `evaluator/report.py`
+-> `results/tables/*` and `results/logs/*`
+
+Search runs add one more layer:
+
+`experiments/run_search.py`
+-> `search/prompts.py`
+-> `search/llm_client.py`
+-> `search/population.py`
+-> `search/funsearch_adapter.py` / `search/reevo_adapter.py`
+
+### Suggested reading order
+
+If you want to understand the repository quickly, this order works well:
+
+1. `src/llm4unroll/experiments/common.py`: see how config, runner, budget, and instances are assembled.
+2. `src/llm4unroll/registry/algorithm_registry.py`: understand the state/action/safety contract for each algorithm family.
+3. `src/llm4unroll/dsl/schema.py` and `src/llm4unroll/dsl/verifier.py`: see how candidate policies are constrained.
+4. `src/llm4unroll/algorithms/base.py` plus one concrete runner such as `algorithms/pdhg.py`: understand the runtime loop.
+5. `src/llm4unroll/experiments/run_baselines.py`: see the baseline evaluation pipeline end to end.
+6. `src/llm4unroll/experiments/run_search.py` and `src/llm4unroll/search/`: see how LLM-guided search is added on top.
+7. `src/llm4unroll/solvers/` and `src/llm4unroll/benchmarks/`: fill in native backend and dataset details as needed.
+
 ## Quick start
 
 ```bash

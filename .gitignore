@@ -1,8 +1,58 @@
+# System / editor noise
 .DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# Secrets and local API configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+*secret*
+*secrets*
+*_credentials.*
+credentials.*
+configs/*local*.yaml
+configs/*local*.yml
+configs/*secret*.yaml
+configs/*secret*.yml
+configs/*credential*.yaml
+configs/*credential*.yml
+
+# Vendored dependencies, external repositories, and downloaded datasets
 .vendor/
 baselines/
 external/
 data/llm_lns/
-results/candidates/
-results/figures/
-results/logs/
+data/miplib/
+data/milpbench/
+data/heurigym/
+
+# Generated experiment artifacts. Keep source code, configs, and docs in git;
+# regenerate these from manifests instead of uploading local run outputs.
+results/*
+!results/README.md
+
+# Local run scratch space
+runs/
+outputs/
+wandb/
+mlruns/
+*.log

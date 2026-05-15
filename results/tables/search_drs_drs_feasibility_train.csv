@@ -1,7 +1,0 @@
-algorithm,errors,fail_rate,median_gap,origin,parent,policy_id,score,verified
-DRS,,0.0,0.729108,search_seed,,search_seed,-1.302638,True
-DRS,,0.0,0.728046,mutation,,search_variant_1,-1.401496,True
-DRS,,0.0,0.730872,mutation,,search_variant_2,-1.404332,True
-DRS,,0.0,0.729536,reflection,search_seed,search_seed_reflect,-1.303026,True
-DRS,,0.0,0.729288,funsearch_mutation,search_variant_1,search_variant_1_g2,-1.402786,True
-DRS,,0.0,0.73216,funsearch_mutation,search_variant_2,search_variant_2_g2,-1.405648,True

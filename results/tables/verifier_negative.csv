@@ -1,7 +1,0 @@
-algorithm,all_errors,blocked_flag,case_id,error_count,primary_error,status
-PDHG,Every return path must include a fallback action before returning. | Policy must emit a fallback action on at least one path.,1,missing_fallback,2,Every return path must include a fallback action before returning.,BLOCKED
-ADMM,Imports are not allowed in policy DSL.,1,forbidden_import,1,Imports are not allowed in policy DSL.,BLOCKED
-PCG,State feature sigma is not allowed for PCG.,1,illegal_feature,1,State feature sigma is not allowed for PCG.,BLOCKED
-LNS_REPAIR,Action set_tau is not allowed for LNS_REPAIR.,1,illegal_action,1,Action set_tau is not allowed for LNS_REPAIR.,BLOCKED
-PDHG,Conflicting actions emitted on one path: set_tau and scale_tau.,1,conflicting_actions,1,Conflicting actions emitted on one path: set_tau and scale_tau.,BLOCKED
-PDHG,Default for state feature instance_features must be dict.,1,wrong_default_kind,1,Default for state feature instance_features must be dict.,BLOCKED

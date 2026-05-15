@@ -13,6 +13,82 @@
 - HiGHS、OSQP、OR-Tools、PySCIPOpt、Ecole 的 native-or-surrogate solver baseline
 - 表格、SVG 图、verifier appendix、native backend usage 报告
 
+## 代码结构导读
+
+这个仓库的组织方式比较清晰：`src/` 放核心代码，`configs/` 放实验配方，`scripts/` 放一键脚本，`results/` 放跑出来的结果。
+
+```text
+LLM-U4CO/
+├── README.md
+├── README_zh.md
+├── pyproject.toml
+├── configs/                  # YAML 配置、backend 示例、manifest
+├── data/                     # 内置 synthetic 数据和小规模 benchmark 示例
+├── results/                  # 表格、review 文档、真实实验探针输出
+├── scripts/                  # setup / 数据准备 / 复现实验脚本
+└── src/llm4unroll/           # 核心 Python 包
+    ├── algorithms/           # PDHG、ADMM、FISTA、ALM、DRS、PCG、LNS_REPAIR runner
+    ├── benchmarks/           # synthetic 实例生成器与真实数据 loader
+    ├── dsl/                  # policy DSL、schema、parser、transpiler、verifier、guard
+    ├── evaluator/            # 指标计算、smoke test、评分、结果导出
+    ├── experiments/          # baseline/search/ablation/OOD/manifest 等 CLI 入口
+    ├── registry/             # algorithm/problem/baseline 注册表
+    ├── search/               # prompt、LLM client、population archive、搜索适配器
+    ├── solvers/              # native 或 surrogate solver 接口层
+    ├── learned_controller.py # learned-controller baseline 导出
+    ├── policies.py           # 手写 baseline 与 search seed policy
+    ├── math_utils.py
+    └── utils.py
+```
+
+### 各层职责
+
+- `src/llm4unroll/experiments/`：最上层运行入口。平时最常用的是 `run_baselines.py`、`run_search.py`、`run_ablation.py`、`run_ood.py`、`run_manifest.py`。
+- `src/llm4unroll/experiments/common.py`：公共装配层。负责读 config、选 runner、构造 budget，并按 `problem_family` 生成实例。
+- `src/llm4unroll/registry/algorithm_registry.py`：核心协议表。每条算法线在这里定义允许读取哪些状态特征、允许发出哪些动作、以及安全约束是什么。
+- `src/llm4unroll/dsl/`：策略 DSL 与安全层。`schema.py` 定义结构，`verifier.py` 做静态检查，`transpiler.py` 把策略源码编译成可执行函数，`guards.py` 负责运行时安全兜底。
+- `src/llm4unroll/algorithms/`：具体算法 runner 层。每个 runner 都继承 `algorithms/base.py`，把“策略如何介入某个优化迭代过程”实现出来。
+- `src/llm4unroll/benchmarks/`：数据与实例构造层。`synthetic_lp_qp.py` 负责 synthetic，`miplib.py` 和 `llm_lns_data.py` 负责真实风格数据载入。
+- `src/llm4unroll/evaluator/`：评估与产物输出层。`optimisation_evaluator.py` 会逐实例执行 policy 或 solver baseline，再把指标聚合成统一分数。
+- `src/llm4unroll/search/`：LLM 搜索层。这里有 prompt 模板、OpenAI-compatible client、候选池管理，以及 FunSearch / ReEvo 风格的变异逻辑。
+- `src/llm4unroll/solvers/`：solver baseline 层。对 HiGHS、OSQP、OR-Tools、PySCIPOpt、Ecole 做统一封装；native backend 不可用时，会回退到 surrogate。
+- `configs/`：实验配方层。决定算法、问题族、budget、数据路径、实例数量、LLM provider 等。
+- `scripts/`：粗粒度自动化脚本。适合 setup、数据检查、整套实验复现。
+- `results/`：输出目录。包含表格、日志、review 报告、环境探针和真实实验汇总。
+
+### 主执行链路
+
+大多数实验的代码链路可以概括成：
+
+`configs/*.yaml`
+-> `experiments/common.py`
+-> `registry/algorithm_registry.py`
+-> `benchmarks/*` + `algorithms/*`
+-> `dsl/verifier.py` 和 `dsl/guards.py`
+-> `evaluator/optimisation_evaluator.py`
+-> `evaluator/report.py`
+-> `results/tables/*` 与 `results/logs/*`
+
+如果是 search，还会再多一层：
+
+`experiments/run_search.py`
+-> `search/prompts.py`
+-> `search/llm_client.py`
+-> `search/population.py`
+-> `search/funsearch_adapter.py` / `search/reevo_adapter.py`
+
+### 推荐阅读顺序
+
+如果你想较快读懂这个仓库，我建议按下面顺序看：
+
+1. `src/llm4unroll/experiments/common.py`：先看 config、runner、budget、instance 是怎么装起来的。
+2. `src/llm4unroll/registry/algorithm_registry.py`：再看每条算法线的状态/动作/安全约束。
+3. `src/llm4unroll/dsl/schema.py` 和 `src/llm4unroll/dsl/verifier.py`：理解 policy 为什么不会“随便生成随便跑”。
+4. `src/llm4unroll/algorithms/base.py` + 任意一个具体 runner（建议 `algorithms/pdhg.py`）：理解迭代过程如何接入策略。
+5. `src/llm4unroll/experiments/run_baselines.py`：看 baseline 是怎么做 verifier、smoke test、evaluation、落表的。
+6. `src/llm4unroll/experiments/run_search.py` 和 `src/llm4unroll/search/`：再看 LLM 搜索是怎么叠上去的。
+7. `src/llm4unroll/solvers/` 和 `src/llm4unroll/benchmarks/`：最后按需补 solver backend 与数据侧细节。
+
 ## 当前能力矩阵
 
 下面这张表刻意区分“接口存在”“surrogate 可跑”“native 已验证”和“论文级仍待补齐”，避免把它们混成一团：
@@ -129,6 +205,14 @@ PYTHONPATH=src python3 -m llm4unroll.experiments.run_search --config configs/sea
 ```bash
 PYTHONPATH=src python3 -m llm4unroll.experiments.run_ablation --config configs/pdhg_synthetic_lp.yaml
 PYTHONPATH=src python3 -m llm4unroll.experiments.run_ood --config configs/pdhg_miplib_rootlp.yaml
+PYTHONPATH=src python3 -m llm4unroll.experiments.build_report_figures
+```
+
+如果 manifest 产物检查只缺 LLM-LNS 的 paper-budget ablation，可以单独补跑：
+
+```bash
+PYTHONPATH=src python3 -m llm4unroll.experiments.run_ablation --config configs/pdhg_llm_lns_sc_paper.yaml --split train
+PYTHONPATH=src python3 -m llm4unroll.experiments.run_ablation --config configs/pdhg_llm_lns_is_paper.yaml --split train
 PYTHONPATH=src python3 -m llm4unroll.experiments.build_report_figures
 ```
 
